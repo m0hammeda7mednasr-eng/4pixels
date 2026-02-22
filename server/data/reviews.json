@@ -1,0 +1,98 @@
+[
+  {
+    "id": "1",
+    "name": {
+      "en": "Sarah Johnson",
+      "ar": "سارة جونسون"
+    },
+    "image": "https://i.pravatar.cc/300?img=1",
+    "text": {
+      "en": "Excellent quality and professional service! The team delivered beyond our expectations. Highly recommended for anyone looking for top-notch development.",
+      "ar": "جودة ممتازة وخدمة احترافية! الفريق قدم أكثر من توقعاتنا. أنصح بشدة لأي شخص يبحث عن تطوير من الدرجة الأولى."
+    },
+    "rating": 5,
+    "verified": true,
+    "active": true,
+    "createdAt": "2024-01-15T10:00:00.000Z"
+  },
+  {
+    "id": "2",
+    "name": {
+      "en": "Michael Chen",
+      "ar": "مايكل تشين"
+    },
+    "image": "https://i.pravatar.cc/300?img=12",
+    "text": {
+      "en": "Outstanding work! They transformed our vision into reality with precision and creativity. The attention to detail was impressive.",
+      "ar": "عمل رائع! حولوا رؤيتنا إلى واقع بدقة وإبداع. الاهتمام بالتفاصيل كان مذهلاً."
+    },
+    "rating": 5,
+    "verified": true,
+    "active": true,
+    "createdAt": "2024-01-20T14:30:00.000Z"
+  },
+  {
+    "id": "3",
+    "name": {
+      "en": "Emma Williams",
+      "ar": "إيما ويليامز"
+    },
+    "image": "https://i.pravatar.cc/300?img=5",
+    "text": {
+      "en": "Professional team with great communication skills. They kept us updated throughout the project and delivered on time.",
+      "ar": "فريق محترف مع مهارات تواصل رائعة. أبقونا على اطلاع طوال المشروع وسلموا في الوقت المحدد."
+    },
+    "rating": 5,
+    "verified": true,
+    "active": true,
+    "createdAt": "2024-02-01T09:15:00.000Z"
+  },
+  {
+    "id": "4",
+    "name": {
+      "en": "David Martinez",
+      "ar": "ديفيد مارتينيز"
+    },
+    "image": "https://i.pravatar.cc/300?img=13",
+    "text": {
+      "en": "Amazing experience from start to finish. The quality of work exceeded our expectations and the support was fantastic.",
+      "ar": "تجربة رائعة من البداية للنهاية. جودة العمل فاقت توقعاتنا والدعم كان رائعاً."
+    },
+    "rating": 5,
+    "verified": true,
+    "active": true,
+    "createdAt": "2024-02-10T16:45:00.000Z"
+  },
+  {
+    "id": "5",
+    "name": {
+      "en": "Lisa Anderson",
+      "ar": "ليزا أندرسون"
+    },
+    "image": "https://i.pravatar.cc/300?img=9",
+    "text": {
+      "en": "Highly skilled developers who understand business needs. They delivered a solution that perfectly fits our requirements.",
+      "ar": "مطورون ماهرون جداً يفهمون احتياجات الأعمال. قدموا حلاً يناسب متطلباتنا تماماً."
+    },
+    "rating": 5,
+    "verified": true,
+    "active": true,
+    "createdAt": "2024-02-15T11:20:00.000Z"
+  },
+  {
+    "id": "6",
+    "name": {
+      "en": "James Wilson",
+      "ar": "جيمس ويلسون"
+    },
+    "image": "https://i.pravatar.cc/300?img=14",
+    "text": {
+      "en": "Best decision we made for our digital transformation. The team is responsive, creative, and delivers quality work consistently.",
+      "ar": "أفضل قرار اتخذناه للتحول الرقمي. الفريق متجاوب ومبدع ويقدم عملاً عالي الجودة باستمرار."
+    },
+    "rating": 5,
+    "verified": true,
+    "active": true,
+    "createdAt": "2024-02-20T13:00:00.000Z"
+  }
+]

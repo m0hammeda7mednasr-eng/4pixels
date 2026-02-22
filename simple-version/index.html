@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Four Pixels | Digital Agency</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="light">
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">Four Pixels</div>
+            <nav class="nav" id="nav">
+                <a href="#home">الرئيسية</a>
+                <a href="#services">الخدمات</a>
+                <a href="#projects">المشاريع</a>
+                <a href="#about">من نحن</a>
+                <a href="#contact">التواصل</a>
+            </nav>
+            <div class="header-actions">
+                <button onclick="toggleLanguage()" class="icon-btn" id="langBtn">EN</button>
+                <button onclick="toggleTheme()" class="icon-btn" id="themeBtn">🌙</button>
+                <button onclick="toggleMenu()" class="menu-btn" id="menuBtn">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-bg"></div>
+        <div class="container hero-content">
+            <h1 class="hero-title" data-en="Transform Your Digital Presence" data-ar="حوّل حضورك الرقمي">حوّل حضورك الرقمي</h1>
+            <p class="hero-subtitle" data-en="We create stunning digital experiences that drive results" data-ar="نصنع تجارب رقمية مذهلة تحقق النتائج">نصنع تجارب رقمية مذهلة تحقق النتائج</p>
+            <div class="hero-buttons">
+                <a href="#contact" class="btn btn-primary">ابدأ الآن</a>
+                <a href="#projects" class="btn btn-outline">شاهد أعمالنا</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="section">
+        <div class="container">
+            <h2 class="section-title">خدماتنا</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">💻</div>
+                    <h3>تطوير المواقع</h3>
+                    <p>تطوير مواقع مخصصة بأحدث التقنيات</p>
+                    <div class="service-price">$2,500</div>
+                    <ul class="service-features">
+                        <li>✓ تصميم متجاوب</li>
+                        <li>✓ محسّن لمحركات البحث</li>
+                        <li>✓ أداء سريع</li>
+                        <li>✓ واجهة مستخدم عصرية</li>
+                    </ul>
+                    <a href="#contact" class="btn btn-primary">اطلب الخدمة</a>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">📱</div>
+                    <h3>تطوير تطبيقات الجوال</h3>
+                    <p>تطبيقات جوال أصلية ومتعددة المنصات</p>
+                    <div class="service-price">$5,000</div>
+                    <ul class="service-features">
+                        <li>✓ iOS و Android</li>
+                        <li>✓ تكامل سحابي</li>
+                        <li>✓ إشعارات فورية</li>
+                        <li>✓ دعم وضع عدم الاتصال</li>
+                    </ul>
+                    <a href="#contact" class="btn btn-primary">اطلب الخدمة</a>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">📊</div>
+                    <h3>التسويق الرقمي</h3>
+                    <p>حلول تسويق رقمي متكاملة لتنمية أعمالك</p>
+                    <div class="service-price">$1,500</div>
+                    <ul class="service-features">
+                        <li>✓ إدارة وسائل التواصل</li>
+                        <li>✓ تحسين محركات البحث</li>
+                        <li>✓ إنشاء المحتوى</li>
+                        <li>✓ تحليلات وتقارير</li>
+                    </ul>
+                    <a href="#contact" class="btn btn-primary">اطلب الخدمة</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="section">
+        <div class="container">
+            <h2 class="section-title">مشاريعنا</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-image" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                        <div class="project-overlay">
+                            <h3>منصة تجارة إلكترونية</h3>
+                            <p>Web Development</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-image" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                        <div class="project-overlay">
+                            <h3>تطبيق مطعم</h3>
+                            <p>Mobile App</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-image" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                        <div class="project-overlay">
+                            <h3>موقع شركة</h3>
+                            <p>Web Development</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-image" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                        <div class="project-overlay">
+                            <h3>حملة تواصل اجتماعي</h3>
+                            <p>Digital Marketing</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section">
+        <div class="container">
+            <h2 class="section-title">من نحن</h2>
+            <div class="about-content">
+                <p>فور بيكسلز هي وكالة رقمية رائدة متخصصة في إنشاء تجارب رقمية مذهلة تحقق النتائج. تأسست بشغف للابتكار والتميز، نساعد الشركات على تحويل حضورها الرقمي.</p>
+                
+                <div class="mission-vision">
+                    <div class="mv-card">
+                        <h3>رؤيتنا</h3>
+                        <p>أن نكون الشريك الرقمي الأكثر ثقة للشركات في جميع أنحاء العالم</p>
+                    </div>
+                    <div class="mv-card">
+                        <h3>مهمتنا</h3>
+                        <p>تمكين الشركات بحلول رقمية متطورة تحقق نتائج قابلة للقياس</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section">
+        <div class="container">
+            <h2 class="section-title">تواصل معنا</h2>
+            
+            <div class="social-links">
+                <a href="https://wa.me/1234567890" target="_blank" class="social-btn whatsapp">
+                    <span class="social-icon">📱</span>
+                    <span>WhatsApp</span>
+                </a>
+                <a href="https://instagram.com/fourpixels" target="_blank" class="social-btn instagram">
+                    <span class="social-icon">📷</span>
+                    <span>Instagram</span>
+                </a>
+                <a href="https://linkedin.com/company/fourpixels" target="_blank" class="social-btn linkedin">
+                    <span class="social-icon">💼</span>
+                    <span>LinkedIn</span>
+                </a>
+                <a href="https://facebook.com/fourpixels" target="_blank" class="social-btn facebook">
+                    <span class="social-icon">👥</span>
+                    <span>Facebook</span>
+                </a>
+                <a href="mailto:info@fourpixels.com" class="social-btn email">
+                    <span class="social-icon">✉️</span>
+                    <span>Email</span>
+                </a>
+            </div>
+
+            <form class="contact-form" onsubmit="handleSubmit(event)">
+                <input type="text" placeholder="الاسم" required>
+                <input type="email" placeholder="البريد الإلكتروني" required>
+                <input type="tel" placeholder="الهاتف">
+                <input type="text" placeholder="الشركة">
+                <textarea placeholder="الرسالة" rows="5" required></textarea>
+                <button type="submit" class="btn btn-primary">إرسال الرسالة</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Four Pixels. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

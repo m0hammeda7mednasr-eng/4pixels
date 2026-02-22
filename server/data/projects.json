@@ -1,0 +1,128 @@
+[
+  {
+    "id": "1",
+    "title": {
+      "en": "E-Commerce Platform",
+      "ar": "منصة تجارة إلكترونية"
+    },
+    "description": {
+      "en": "A complete e-commerce solution with payment integration",
+      "ar": "حل متكامل للتجارة الإلكترونية مع تكامل الدفع"
+    },
+    "category": "Web Development",
+    "tags": ["React", "Node.js", "MongoDB", "Stripe"],
+    "images": ["https://via.placeholder.com/800x600/667eea/ffffff?text=E-Commerce"],
+    "videos": [],
+    "client": {
+      "en": "Tech Store Inc.",
+      "ar": "شركة متجر التقنية"
+    },
+    "externalLink": "",
+    "featured": true
+  },
+  {
+    "id": "2",
+    "title": {
+      "en": "Restaurant Mobile App",
+      "ar": "تطبيق مطعم"
+    },
+    "description": {
+      "en": "Food ordering app with real-time tracking",
+      "ar": "تطبيق طلب طعام مع تتبع فوري"
+    },
+    "category": "Mobile App",
+    "tags": ["React Native", "Firebase", "Maps API"],
+    "images": ["https://via.placeholder.com/800x600/764ba2/ffffff?text=Restaurant+App"],
+    "videos": [],
+    "client": {
+      "en": "Delicious Restaurant",
+      "ar": "مطعم لذيذ"
+    },
+    "externalLink": "",
+    "featured": true
+  },
+  {
+    "id": "3",
+    "title": {
+      "en": "Corporate Website",
+      "ar": "موقع شركة"
+    },
+    "description": {
+      "en": "Professional corporate website with CMS",
+      "ar": "موقع شركة احترافي مع نظام إدارة محتوى"
+    },
+    "category": "Web Development",
+    "tags": ["WordPress", "PHP", "MySQL"],
+    "images": ["https://via.placeholder.com/800x600/f093fb/ffffff?text=Corporate+Site"],
+    "videos": [],
+    "client": {
+      "en": "Business Solutions Ltd.",
+      "ar": "شركة حلول الأعمال"
+    },
+    "externalLink": "",
+    "featured": false
+  },
+  {
+    "id": "4",
+    "title": {
+      "en": "Social Media Campaign",
+      "ar": "حملة تواصل اجتماعي"
+    },
+    "description": {
+      "en": "Successful social media marketing campaign",
+      "ar": "حملة تسويق ناجحة على وسائل التواصل"
+    },
+    "category": "Digital Marketing",
+    "tags": ["Instagram", "Facebook", "Content Creation"],
+    "images": ["https://via.placeholder.com/800x600/4facfe/ffffff?text=Social+Campaign"],
+    "videos": [],
+    "client": {
+      "en": "Fashion Brand",
+      "ar": "علامة أزياء"
+    },
+    "externalLink": "",
+    "featured": false
+  },
+  {
+    "id": "5",
+    "title": {
+      "en": "Fitness Tracking App",
+      "ar": "تطبيق تتبع اللياقة"
+    },
+    "description": {
+      "en": "Health and fitness tracking mobile application",
+      "ar": "تطبيق جوال لتتبع الصحة واللياقة"
+    },
+    "category": "Mobile App",
+    "tags": ["Flutter", "HealthKit", "Firebase"],
+    "images": ["https://via.placeholder.com/800x600/00f2fe/ffffff?text=Fitness+App"],
+    "videos": [],
+    "client": {
+      "en": "FitLife Gym",
+      "ar": "نادي فت لايف"
+    },
+    "externalLink": "",
+    "featured": true
+  },
+  {
+    "id": "6",
+    "title": {
+      "en": "Real Estate Portal",
+      "ar": "بوابة عقارات"
+    },
+    "description": {
+      "en": "Property listing and management platform",
+      "ar": "منصة لعرض وإدارة العقارات"
+    },
+    "category": "Web Development",
+    "tags": ["Vue.js", "Laravel", "PostgreSQL"],
+    "images": ["https://via.placeholder.com/800x600/43e97b/ffffff?text=Real+Estate"],
+    "videos": [],
+    "client": {
+      "en": "Prime Properties",
+      "ar": "العقارات الممتازة"
+    },
+    "externalLink": "",
+    "featured": false
+  }
+]

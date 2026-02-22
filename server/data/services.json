@@ -1,0 +1,129 @@
+[
+  {
+    "id": "1",
+    "title": {
+      "en": "Web Development",
+      "ar": "تطوير المواقع"
+    },
+    "description": {
+      "en": "Custom website development with modern technologies",
+      "ar": "تطوير مواقع مخصصة بأحدث التقنيات"
+    },
+    "category": "Web Development",
+    "price": 2500,
+    "deliveryTime": "2-4 weeks",
+    "features": {
+      "en": [
+        "Responsive Design",
+        "SEO Optimized",
+        "Fast Performance",
+        "Modern UI/UX"
+      ],
+      "ar": [
+        "تصميم متجاوب",
+        "محسّن لمحركات البحث",
+        "أداء سريع",
+        "واجهة مستخدم عصرية"
+      ]
+    },
+    "image": "",
+    "video": "",
+    "faq": [],
+    "active": true
+  },
+  {
+    "id": "2",
+    "title": {
+      "en": "Mobile App Development",
+      "ar": "تطوير تطبيقات الجوال"
+    },
+    "description": {
+      "en": "Native and cross-platform mobile applications",
+      "ar": "تطبيقات جوال أصلية ومتعددة المنصات"
+    },
+    "category": "Mobile Development",
+    "price": 5000,
+    "deliveryTime": "4-8 weeks",
+    "features": {
+      "en": [
+        "iOS & Android",
+        "Cloud Integration",
+        "Push Notifications",
+        "Offline Support"
+      ],
+      "ar": [
+        "iOS و Android",
+        "تكامل سحابي",
+        "إشعارات فورية",
+        "دعم وضع عدم الاتصال"
+      ]
+    },
+    "image": "",
+    "video": "",
+    "faq": [],
+    "active": true
+  },
+  {
+    "id": "3",
+    "title": {
+      "en": "Digital Marketing",
+      "ar": "التسويق الرقمي"
+    },
+    "description": {
+      "en": "Complete digital marketing solutions to grow your business",
+      "ar": "حلول تسويق رقمي متكاملة لتنمية أعمالك"
+    },
+    "category": "Digital Marketing",
+    "price": 1500,
+    "deliveryTime": "Ongoing",
+    "features": {
+      "en": [
+        "Social Media Management",
+        "SEO & SEM",
+        "Content Creation",
+        "Analytics & Reports"
+      ],
+      "ar": [
+        "إدارة وسائل التواصل",
+        "تحسين محركات البحث",
+        "إنشاء المحتوى",
+        "تحليلات وتقارير"
+      ]
+    },
+    "image": "",
+    "video": "",
+    "faq": [],
+    "active": true
+  },
+  {
+    "id": "1771747971853pfa0ufaz7",
+    "title": {
+      "en": "ؤسيب",
+      "ar": "سيب"
+    },
+    "description": {
+      "en": "سيب",
+      "ar": "سيب"
+    },
+    "name": {
+      "en": "",
+      "ar": ""
+    },
+    "text": {
+      "en": "",
+      "ar": ""
+    },
+    "price": 10,
+    "deliveryTime": "سيب",
+    "features": {
+      "en": [],
+      "ar": []
+    },
+    "rating": 5,
+    "image": "",
+    "images": [],
+    "category": "E-Commerce Solutions",
+    "active": true,
+    "createdAt": "2026-02-22T08:12:51.855Z"
+  }
+]
