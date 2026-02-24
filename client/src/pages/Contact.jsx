@@ -76,14 +76,14 @@ const Contact = () => {
       icon: <FiPhone />,
       title: { en: 'Call Us', ar: 'اتصل بنا' },
       description: { en: 'Available Monday to Friday, 9 AM to 6 PM', ar: 'متاح من الإثنين إلى الجمعة، من 9 صباحًا إلى 6 مساءً' },
-      link: 'tel:+201234567890',
-      linkText: '+20 123 456 7890'
+      link: 'tel:+201066184859',
+      linkText: '+20 106 618 4859'
     },
     {
       icon: <FaWhatsapp />,
       title: { en: 'WhatsApp', ar: 'واتساب' },
       description: { en: 'Chat with us directly on WhatsApp for quick responses', ar: 'تحدث معنا مباشرة على واتساب للحصول على ردود سريعة' },
-      link: 'https://wa.me/201234567890',
+      link: 'https://wa.me/201066184859',
       linkText: 'Start Chat'
     },
     {
