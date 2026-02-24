@@ -266,6 +266,16 @@ body.dark .services-showcase-footer a {
   color: #5eead4;
 }
 
+body[dir='rtl'] .services-showcase-top,
+body[dir='rtl'] .services-toolbar-label,
+body[dir='rtl'] .services-summary-card {
+  text-align: right;
+}
+
+body[dir='rtl'] .services-showcase-footer a svg {
+  transform: rotate(180deg);
+}
+
 .services-showcase-loading,
 .services-empty-state {
   min-height: 260px;
@@ -290,6 +300,15 @@ body.dark .services-empty-state p {
 @media (max-width: 720px) {
   .services-summary-grid {
     grid-template-columns: 1fr;
+  }
+
+  .services-category-list {
+    width: 100%;
+  }
+
+  .services-category-list button {
+    flex: 1;
+    min-width: 92px;
   }
 
   .services-showcase-grid {

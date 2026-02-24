@@ -59,6 +59,15 @@ body.dark .portfolio-search input {
   color: var(--text-dark);
 }
 
+body[dir='rtl'] .portfolio-search svg {
+  left: auto;
+  right: 12px;
+}
+
+body[dir='rtl'] .portfolio-search input {
+  padding: 0 38px 0 12px;
+}
+
 .portfolio-filters {
   display: inline-flex;
   align-items: center;
@@ -161,6 +170,15 @@ body.dark .portfolio-card-body p {
   font-size: 0.9rem;
 }
 
+body[dir='rtl'] .portfolio-card-link svg {
+  transform: rotate(180deg);
+}
+
+body[dir='rtl'] .portfolio-header,
+body[dir='rtl'] .portfolio-card-body {
+  text-align: right;
+}
+
 .portfolio-loading,
 .portfolio-empty {
   min-height: 240px;
@@ -189,10 +207,14 @@ body.dark .portfolio-empty p {
 
   .portfolio-filters {
     width: 100%;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    padding-bottom: 4px;
   }
 
   .portfolio-filters button {
     flex: 1;
     min-width: 84px;
+    white-space: nowrap;
   }
 }

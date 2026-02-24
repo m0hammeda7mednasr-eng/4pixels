@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { FiSearch, FiArrowRight } from 'react-icons/fi';
 import { useLanguage } from '../context/LanguageContext';
 import api from '../services/api';
+import { getCategoryLabel, PRIMARY_CATEGORIES } from '../utils/categoryLabels';
 import './Projects.css';
 
 const Projects = () => {
@@ -28,7 +29,14 @@ const Projects = () => {
     fetchProjects();
   }, []);
 
-  const categories = useMemo(() => ['all', ...new Set(projects.map((p) => p.category).filter(Boolean))], [projects]);
+  const categories = useMemo(() => {
+    const availableCategories = Array.from(new Set(projects.map((project) => project.category).filter(Boolean)));
+    const orderedPrimary = PRIMARY_CATEGORIES.filter((category) => availableCategories.includes(category));
+    const remainingCategories = availableCategories.filter(
+      (category) => !PRIMARY_CATEGORIES.includes(category)
+    );
+    return ['all', ...orderedPrimary, ...remainingCategories];
+  }, [projects]);
 
   const filteredProjects = useMemo(() => {
     return projects.filter((project) => {
@@ -46,8 +54,8 @@ const Projects = () => {
           <h1 className="section-title">{t('projects')}</h1>
           <p>
             {language === 'en'
-              ? 'A curated portfolio of digital products that helped clients launch faster and scale smarter.'
-              : 'مجموعة مختارة من المشاريع الرقمية التي ساعدت عملاءنا على النمو بسرعة.'}
+              ? 'Portfolio cases across Shopify stores, automation workflows, and systems operations.'
+              : 'نماذج أعمال عبر متاجر شوبيفاي وتدفقات الأتمتة وحلول الأنظمة والبيانات.'}
           </p>
         </div>
 
@@ -70,7 +78,7 @@ const Projects = () => {
                 onClick={() => setActiveCategory(cat)}
                 className={activeCategory === cat ? 'active' : ''}
               >
-                {cat === 'all' ? (language === 'en' ? 'All' : 'الكل') : cat}
+                {cat === 'all' ? (language === 'en' ? 'All' : 'الكل') : getCategoryLabel(cat, language)}
               </button>
             ))}
           </div>
@@ -94,7 +102,7 @@ const Projects = () => {
                   <img src={project.images?.[0]} alt={project.title?.[language]} loading="lazy" />
                 </Link>
                 <div className="portfolio-card-body">
-                  <span>{project.category}</span>
+                  <span>{getCategoryLabel(project.category, language)}</span>
                   <h3>{project.title?.[language]}</h3>
                   <p>{project.description?.[language]}</p>
                   <Link to={`/projects/${project.id}`} className="portfolio-card-link">

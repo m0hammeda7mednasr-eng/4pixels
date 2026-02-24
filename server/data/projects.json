@@ -2,127 +2,133 @@
   {
     "id": "1",
     "title": {
-      "en": "E-Commerce Platform",
-      "ar": "منصة تجارة إلكترونية"
+      "en": "Fashion Shopify Store Launch",
+      "ar": "إطلاق متجر أزياء على شوبيفاي"
     },
     "description": {
-      "en": "A complete e-commerce solution with payment integration",
-      "ar": "حل متكامل للتجارة الإلكترونية مع تكامل الدفع"
+      "en": "Full Shopify launch with premium storefront, smart collections, and checkout optimization.",
+      "ar": "إطلاق كامل لمتجر شوبيفاي بواجهة احترافية وتصنيفات ذكية وتحسين تجربة الدفع."
     },
-    "category": "Web Development",
-    "tags": ["React", "Node.js", "MongoDB", "Stripe"],
-    "images": ["https://via.placeholder.com/800x600/667eea/ffffff?text=E-Commerce"],
+    "category": "Shopify",
+    "tags": ["Shopify", "Theme Customization", "Conversion Rate", "Checkout UX"],
+    "images": ["https://via.placeholder.com/1200x800/0f766e/ffffff?text=Shopify+Fashion+Store"],
     "videos": [],
     "client": {
-      "en": "Tech Store Inc.",
-      "ar": "شركة متجر التقنية"
+      "en": "Noor Style",
+      "ar": "نور ستايل"
     },
     "externalLink": "",
-    "featured": true
+    "featured": true,
+    "createdAt": "2025-05-12T10:00:00.000Z"
   },
   {
     "id": "2",
     "title": {
-      "en": "Restaurant Mobile App",
-      "ar": "تطبيق مطعم"
+      "en": "Electronics Shopify Migration",
+      "ar": "نقل متجر إلكترونيات إلى شوبيفاي"
     },
     "description": {
-      "en": "Food ordering app with real-time tracking",
-      "ar": "تطبيق طلب طعام مع تتبع فوري"
+      "en": "Migrated products, orders, and customer data to Shopify with zero downtime deployment.",
+      "ar": "ترحيل المنتجات والطلبات وبيانات العملاء إلى شوبيفاي بدون توقف فعلي."
     },
-    "category": "Mobile App",
-    "tags": ["React Native", "Firebase", "Maps API"],
-    "images": ["https://via.placeholder.com/800x600/764ba2/ffffff?text=Restaurant+App"],
+    "category": "Shopify",
+    "tags": ["Shopify Migration", "Data Mapping", "Inventory Sync", "SEO Redirects"],
+    "images": ["https://via.placeholder.com/1200x800/0284c7/ffffff?text=Shopify+Migration"],
     "videos": [],
     "client": {
-      "en": "Delicious Restaurant",
-      "ar": "مطعم لذيذ"
+      "en": "Pixel Gadgets",
+      "ar": "بيكسل جادجتس"
     },
     "externalLink": "",
-    "featured": true
+    "featured": true,
+    "createdAt": "2025-06-04T09:30:00.000Z"
   },
   {
     "id": "3",
     "title": {
-      "en": "Corporate Website",
-      "ar": "موقع شركة"
+      "en": "AI Lead Qualification Automation",
+      "ar": "أتمتة تأهيل العملاء بالذكاء الاصطناعي"
     },
     "description": {
-      "en": "Professional corporate website with CMS",
-      "ar": "موقع شركة احترافي مع نظام إدارة محتوى"
+      "en": "Automated lead scoring with AI and routed qualified leads directly to sales teams.",
+      "ar": "أتمتة تقييم العملاء المحتملين بالذكاء الاصطناعي وتحويل المؤهلين مباشرة لفريق المبيعات."
     },
-    "category": "Web Development",
-    "tags": ["WordPress", "PHP", "MySQL"],
-    "images": ["https://via.placeholder.com/800x600/f093fb/ffffff?text=Corporate+Site"],
+    "category": "Automation",
+    "tags": ["AI Automation", "Lead Scoring", "CRM Integration", "Webhook Flows"],
+    "images": ["https://via.placeholder.com/1200x800/0ea5e9/ffffff?text=AI+Lead+Automation"],
     "videos": [],
     "client": {
-      "en": "Business Solutions Ltd.",
-      "ar": "شركة حلول الأعمال"
+      "en": "Next Horizon",
+      "ar": "نكست هورايزن"
     },
     "externalLink": "",
-    "featured": false
+    "featured": true,
+    "createdAt": "2025-07-18T14:20:00.000Z"
   },
   {
     "id": "4",
     "title": {
-      "en": "Social Media Campaign",
-      "ar": "حملة تواصل اجتماعي"
+      "en": "CRM + WhatsApp Sales Automation",
+      "ar": "أتمتة مبيعات CRM وواتساب"
     },
     "description": {
-      "en": "Successful social media marketing campaign",
-      "ar": "حملة تسويق ناجحة على وسائل التواصل"
+      "en": "Connected CRM stages with WhatsApp templates to automate follow-ups and close deals faster.",
+      "ar": "ربط مراحل CRM بقوالب واتساب لأتمتة المتابعة وتسريع إغلاق الصفقات."
     },
-    "category": "Digital Marketing",
-    "tags": ["Instagram", "Facebook", "Content Creation"],
-    "images": ["https://via.placeholder.com/800x600/4facfe/ffffff?text=Social+Campaign"],
+    "category": "Automation",
+    "tags": ["CRM Automation", "WhatsApp API", "Deal Pipeline", "No-code Workflows"],
+    "images": ["https://via.placeholder.com/1200x800/14b8a6/ffffff?text=CRM+Automation"],
     "videos": [],
     "client": {
-      "en": "Fashion Brand",
-      "ar": "علامة أزياء"
+      "en": "Sales Orbit",
+      "ar": "سيلز أوربت"
     },
     "externalLink": "",
-    "featured": false
+    "featured": false,
+    "createdAt": "2025-08-10T11:45:00.000Z"
   },
   {
     "id": "5",
     "title": {
-      "en": "Fitness Tracking App",
-      "ar": "تطبيق تتبع اللياقة"
+      "en": "ERP Inventory Operations System",
+      "ar": "نظام تشغيل مخزون ERP"
     },
     "description": {
-      "en": "Health and fitness tracking mobile application",
-      "ar": "تطبيق جوال لتتبع الصحة واللياقة"
+      "en": "Designed ERP-ready inventory operations with role-based access and weekly performance dashboards.",
+      "ar": "تصميم نظام تشغيل مخزون متوافق مع ERP بصلاحيات أدوار ولوحات متابعة أسبوعية."
     },
-    "category": "Mobile App",
-    "tags": ["Flutter", "HealthKit", "Firebase"],
-    "images": ["https://via.placeholder.com/800x600/00f2fe/ffffff?text=Fitness+App"],
+    "category": "Systems",
+    "tags": ["ERP", "Inventory Management", "Operations", "Reporting"],
+    "images": ["https://via.placeholder.com/1200x800/2563eb/ffffff?text=ERP+Operations"],
     "videos": [],
     "client": {
-      "en": "FitLife Gym",
-      "ar": "نادي فت لايف"
+      "en": "United Distributors",
+      "ar": "يونايتد ديستربيوترز"
     },
     "externalLink": "",
-    "featured": true
+    "featured": false,
+    "createdAt": "2025-09-02T16:10:00.000Z"
   },
   {
     "id": "6",
     "title": {
-      "en": "Real Estate Portal",
-      "ar": "بوابة عقارات"
+      "en": "Google Sheets Data Entry Workflow",
+      "ar": "تدفق عمل إدخال البيانات عبر Google Sheets"
     },
     "description": {
-      "en": "Property listing and management platform",
-      "ar": "منصة لعرض وإدارة العقارات"
+      "en": "Created a controlled data-entry pipeline in Google Sheets with validation and audit tracking.",
+      "ar": "بناء مسار إدخال بيانات منضبط على Google Sheets مع قواعد تحقق وتتبع للمراجعة."
     },
-    "category": "Web Development",
-    "tags": ["Vue.js", "Laravel", "PostgreSQL"],
-    "images": ["https://via.placeholder.com/800x600/43e97b/ffffff?text=Real+Estate"],
+    "category": "Systems",
+    "tags": ["Google Sheets", "Data Entry", "Validation Rules", "Dashboards"],
+    "images": ["https://via.placeholder.com/1200x800/4f46e5/ffffff?text=Google+Sheets+System"],
     "videos": [],
     "client": {
-      "en": "Prime Properties",
-      "ar": "العقارات الممتازة"
+      "en": "Insight Hub",
+      "ar": "إنسايت هب"
     },
     "externalLink": "",
-    "featured": false
+    "featured": true,
+    "createdAt": "2025-10-06T13:15:00.000Z"
   }
 ]

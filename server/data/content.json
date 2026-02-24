@@ -1,8 +1,8 @@
 {
   "siteInfo": {
     "siteName": "Four Pixels",
-    "tagline": "Transform Your Digital Presence",
-    "description": "Professional web development, mobile apps, and digital marketing services",
+    "tagline": "Shopify, Automation, and Systems",
+    "description": "Professional Shopify builds, AI automation, CRM/ERP systems, and Google Sheets operations.",
     "email": "Mohammedahmed@gmail.com",
     "phone": "+20 106 618 4859",
     "whatsapp": "+201066184859",
@@ -21,15 +21,15 @@
   },
   "hero": {
     "title": {
-      "en": "Transform Your Digital Presence",
-      "ar": "حوّل حضورك الرقمي"
+      "en": "Build Better Digital Operations",
+      "ar": "ابنِ عمليات رقمية أقوى"
     },
     "subtitle": {
-      "en": "Professional web development and digital solutions",
-      "ar": "تطوير مواقع احترافية وحلول رقمية"
+      "en": "From Shopify stores to AI automation and business systems, we deliver execution that scales.",
+      "ar": "من متاجر شوبيفاي إلى الأتمتة والأنظمة، ننفذ حلولًا عملية قابلة للتوسع."
     },
     "ctaText": {
-      "en": "Get Started",
+      "en": "Start Now",
       "ar": "ابدأ الآن"
     }
   }

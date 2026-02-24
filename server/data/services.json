@@ -2,28 +2,28 @@
   {
     "id": "1",
     "title": {
-      "en": "Web Development",
-      "ar": "تطوير المواقع"
+      "en": "Shopify Store Development",
+      "ar": "تطوير متاجر شوبيفاي"
     },
     "description": {
-      "en": "Custom website development with modern technologies",
-      "ar": "تطوير مواقع مخصصة بأحدث التقنيات"
+      "en": "Custom Shopify stores with premium UI, high speed, and conversion-focused checkout.",
+      "ar": "متاجر شوبيفاي مخصصة بتصميم احترافي وسرعة عالية وتجربة شراء ترفع التحويل."
     },
-    "category": "Web Development",
-    "price": 2500,
-    "deliveryTime": "2-4 weeks",
+    "category": "Shopify",
+    "price": 2200,
+    "deliveryTime": "10-18 days",
     "features": {
       "en": [
-        "Responsive Design",
-        "SEO Optimized",
-        "Fast Performance",
-        "Modern UI/UX"
+        "Custom storefront and theme sections",
+        "Payment and shipping setup",
+        "Product and collection architecture",
+        "Launch checklist and post-launch support"
       ],
       "ar": [
-        "تصميم متجاوب",
-        "محسّن لمحركات البحث",
-        "أداء سريع",
-        "واجهة مستخدم عصرية"
+        "واجهة متجر مخصصة وأقسام احترافية",
+        "إعداد كامل للدفع والشحن",
+        "هيكلة المنتجات والتصنيفات",
+        "خطة إطلاق ودعم بعد التشغيل"
       ]
     },
     "image": "",
@@ -34,28 +34,28 @@
   {
     "id": "2",
     "title": {
-      "en": "Mobile App Development",
-      "ar": "تطوير تطبيقات الجوال"
+      "en": "AI & Workflow Automation",
+      "ar": "الأتمتة والذكاء الاصطناعي"
     },
     "description": {
-      "en": "Native and cross-platform mobile applications",
-      "ar": "تطبيقات جوال أصلية ومتعددة المنصات"
+      "en": "Automate repetitive tasks with AI flows, CRM triggers, and multi-channel notifications.",
+      "ar": "أتمتة العمليات المتكررة بتدفقات ذكاء اصطناعي وربط CRM وتنبيهات متعددة القنوات."
     },
-    "category": "Mobile Development",
-    "price": 5000,
-    "deliveryTime": "4-8 weeks",
+    "category": "Automation",
+    "price": 1800,
+    "deliveryTime": "7-14 days",
     "features": {
       "en": [
-        "iOS & Android",
-        "Cloud Integration",
-        "Push Notifications",
-        "Offline Support"
+        "AI lead qualification and routing",
+        "CRM and WhatsApp automation",
+        "Approval flows and task orchestration",
+        "Monitoring dashboard and alerts"
       ],
       "ar": [
-        "iOS و Android",
-        "تكامل سحابي",
-        "إشعارات فورية",
-        "دعم وضع عدم الاتصال"
+        "تصنيف العملاء المحتملين بالذكاء الاصطناعي",
+        "أتمتة متكاملة مع CRM وواتساب",
+        "تدفقات موافقات وإدارة مهام",
+        "لوحة متابعة وتنبيهات فورية"
       ]
     },
     "image": "",
@@ -66,28 +66,28 @@
   {
     "id": "3",
     "title": {
-      "en": "Digital Marketing",
-      "ar": "التسويق الرقمي"
+      "en": "Systems & Data Operations",
+      "ar": "أنظمة وتشغيل البيانات"
     },
     "description": {
-      "en": "Complete digital marketing solutions to grow your business",
-      "ar": "حلول تسويق رقمي متكاملة لتنمية أعمالك"
+      "en": "Build CRM/ERP-ready data systems, Google Sheets operations, and scalable data entry workflows.",
+      "ar": "بناء أنظمة بيانات جاهزة لـ CRM وERP مع تشغيل Google Sheets وتدفقات إدخال بيانات قابلة للتوسع."
     },
-    "category": "Digital Marketing",
-    "price": 1500,
-    "deliveryTime": "Ongoing",
+    "category": "Systems",
+    "price": 1600,
+    "deliveryTime": "6-12 days",
     "features": {
       "en": [
-        "Social Media Management",
-        "SEO & SEM",
-        "Content Creation",
-        "Analytics & Reports"
+        "CRM/ERP data structure and cleanup",
+        "Google Sheets dashboards and formulas",
+        "Bulk data entry process design",
+        "Data quality and governance checks"
       ],
       "ar": [
-        "إدارة وسائل التواصل",
-        "تحسين محركات البحث",
-        "إنشاء المحتوى",
-        "تحليلات وتقارير"
+        "هيكلة وتنظيف بيانات CRM وERP",
+        "لوحات Google Sheets ومعادلات متقدمة",
+        "تصميم عمليات إدخال بيانات بكميات كبيرة",
+        "فحوصات جودة البيانات والحوكمة"
       ]
     },
     "image": "",

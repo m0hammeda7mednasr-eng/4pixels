@@ -1,219 +1,183 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
-import { FaLinkedin, FaGithub, FaFacebook, FaInstagram, FaTiktok, FaYoutube, FaBehance, FaDribbble } from 'react-icons/fa';
-import { FiChevronDown } from 'react-icons/fi';
+import { motion } from 'framer-motion';
+import {
+  FaLinkedin,
+  FaGithub,
+  FaFacebook,
+  FaInstagram,
+  FaTiktok,
+  FaYoutube,
+  FaBehance,
+  FaDribbble,
+  FaWhatsapp
+} from 'react-icons/fa';
 import { FaXTwitter } from 'react-icons/fa6';
+import { FiMail, FiPhone, FiMapPin } from 'react-icons/fi';
 import { useLanguage } from '../context/LanguageContext';
 import api from '../services/api';
+import { PRIMARY_CATEGORIES, getCategoryLabel } from '../utils/categoryLabels';
 import './Footer.css';
 
 const Footer = () => {
   const { language } = useLanguage();
-  const [openSection, setOpenSection] = useState(null);
   const [content, setContent] = useState(null);
 
   useEffect(() => {
+    const fetchContent = async () => {
+      try {
+        const response = await api.get('/content');
+        setContent(response.data);
+      } catch (err) {
+        console.error('Failed to fetch content:', err.userMessage || err.message);
+      }
+    };
+
     fetchContent();
   }, []);
 
-  const fetchContent = async () => {
-    try {
-      const response = await api.get('/content');
-      setContent(response.data);
-    } catch (err) {
-      console.error('Failed to fetch content:', err);
-    }
-  };
+  const solutionLinks = useMemo(() => {
+    return PRIMARY_CATEGORIES.map((category) => ({
+      label: getCategoryLabel(category, language),
+      to: '/services'
+    }));
+  }, [language]);
 
-  const services = [
-    { name: { en: 'Web Development', ar: 'تطوير المواقع' }, link: '/services' },
-    { name: { en: 'Mobile Apps', ar: 'تطبيقات الجوال' }, link: '/services' },
-    { name: { en: 'Digital Marketing', ar: 'التسويق الرقمي' }, link: '/services' },
-    { name: { en: 'UI/UX Design', ar: 'تصميم واجهات المستخدم' }, link: '/services' },
-  ];
-
-  const company = [
-    { name: { en: 'About Us', ar: 'من نحن' }, link: '/about' },
-    { name: { en: 'Projects', ar: 'المشاريع' }, link: '/projects' },
-    { name: { en: 'Contact', ar: 'التواصل' }, link: '/contact' },
+  const companyLinks = [
+    { label: { en: 'About Us', ar: 'من نحن' }, to: '/about' },
+    { label: { en: 'Projects', ar: 'المشاريع' }, to: '/projects' },
+    { label: { en: 'Contact', ar: 'التواصل' }, to: '/contact' },
+    { label: { en: 'Admin Login', ar: 'دخول الأدمن' }, to: '/login' }
   ];
 
   const socialLinks = [
-    { icon: <FaFacebook />, name: 'Facebook', key: 'facebook', color: '#1877F2' },
-    { icon: <FaInstagram />, name: 'Instagram', key: 'instagram', color: '#E4405F' },
-    { icon: <FaXTwitter />, name: 'Twitter', key: 'twitter', color: '#000000' },
-    { icon: <FaLinkedin />, name: 'LinkedIn', key: 'linkedin', color: '#0A66C2' },
-    { icon: <FaGithub />, name: 'GitHub', key: 'github', color: '#181717' },
-    { icon: <FaYoutube />, name: 'YouTube', key: 'youtube', color: '#FF0000' },
-    { icon: <FaTiktok />, name: 'TikTok', key: 'tiktok', color: '#000000' },
-    { icon: <FaBehance />, name: 'Behance', key: 'behance', color: '#1769FF' },
-    { icon: <FaDribbble />, name: 'Dribbble', key: 'dribbble', color: '#EA4C89' },
-  ].filter(social => content?.socialMedia?.[social.key]); // Only show if URL exists
+    { icon: <FaFacebook />, key: 'facebook', name: 'Facebook' },
+    { icon: <FaInstagram />, key: 'instagram', name: 'Instagram' },
+    { icon: <FaXTwitter />, key: 'twitter', name: 'Twitter' },
+    { icon: <FaLinkedin />, key: 'linkedin', name: 'LinkedIn' },
+    { icon: <FaGithub />, key: 'github', name: 'GitHub' },
+    { icon: <FaYoutube />, key: 'youtube', name: 'YouTube' },
+    { icon: <FaTiktok />, key: 'tiktok', name: 'TikTok' },
+    { icon: <FaBehance />, key: 'behance', name: 'Behance' },
+    { icon: <FaDribbble />, key: 'dribbble', name: 'Dribbble' }
+  ].filter((item) => content?.socialMedia?.[item.key]);
 
-  const toggleSection = (section) => {
-    setOpenSection(openSection === section ? null : section);
-  };
+  const siteInfo = content?.siteInfo || {};
+  const contactItems = [
+    {
+      icon: <FiMail />,
+      label: language === 'en' ? 'Email' : 'البريد',
+      value: siteInfo.email || 'info@4pixels.com',
+      href: siteInfo.email ? `mailto:${siteInfo.email}` : null
+    },
+    {
+      icon: <FiPhone />,
+      label: language === 'en' ? 'Phone' : 'الهاتف',
+      value: siteInfo.phone || '+20 106 618 4859',
+      href: siteInfo.phone ? `tel:${siteInfo.phone.replace(/\s+/g, '')}` : null
+    },
+    {
+      icon: <FaWhatsapp />,
+      label: language === 'en' ? 'WhatsApp' : 'واتساب',
+      value: siteInfo.whatsapp || '+201066184859',
+      href: siteInfo.whatsapp ? `https://wa.me/${siteInfo.whatsapp.replace(/[^\d]/g, '')}` : null
+    },
+    {
+      icon: <FiMapPin />,
+      label: language === 'en' ? 'Location' : 'العنوان',
+      value: siteInfo.address || (language === 'en' ? 'Cairo, Egypt' : 'القاهرة، مصر'),
+      href: null
+    }
+  ];
 
   return (
     <footer className="footer">
-      <div className="container">
-        <div className="footer-content">
-          <motion.div 
-            className="footer-section footer-main"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
-            <div className="footer-logo-section">
-              <div className="footer-logo-container">
-                <h3 className="footer-logo-text">{content?.siteInfo?.siteName || '4Pixels'}</h3>
-              </div>
-              <p className="footer-tagline">{content?.siteInfo?.tagline || 'Digital Agency'}</p>
-            </div>
-            <p className="footer-description">
-              {content?.siteInfo?.description || (language === 'en' 
-                ? 'Transforming digital experiences with cutting-edge solutions.'
-                : 'نحوّل التجارب الرقمية بحلول متطورة.')}
+      <div className="container footer-shell">
+        <motion.div
+          className="footer-top"
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.4 }}
+        >
+          <section className="footer-brand">
+            <h3>{siteInfo.siteName || '4Pixels'}</h3>
+            <p className="footer-tagline">
+              {siteInfo.tagline || (language === 'en' ? 'Digital Delivery Studio' : 'استوديو تنفيذ رقمي')}
             </p>
-            <div className="social-links">
-              {socialLinks.map((social, index) => (
-                <motion.a
-                  key={social.name}
-                  href={content?.socialMedia?.[social.key]}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="social-link"
-                  style={{ '--social-color': social.color }}
-                  whileHover={{ scale: 1.15, y: -5 }}
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.05 }}
-                  title={social.name}
-                >
-                  {social.icon}
-                </motion.a>
+            <p className="footer-description">
+              {siteInfo.description ||
+                (language === 'en'
+                  ? 'Shopify stores, automation, and systems built for measurable growth.'
+                  : 'متاجر شوبيفاي وأتمتة وأنظمة رقمية بنتائج قابلة للقياس.')}
+            </p>
+
+            <div className="footer-socials">
+              {socialLinks.length > 0 ? (
+                socialLinks.map((item) => (
+                  <a
+                    key={item.key}
+                    href={content.socialMedia[item.key]}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={item.name}
+                  >
+                    {item.icon}
+                  </a>
+                ))
+              ) : (
+                <span className="footer-social-note">
+                  {language === 'en'
+                    ? 'Add social links from admin dashboard.'
+                    : 'أضف روابط السوشيال من لوحة الأدمن.'}
+                </span>
+              )}
+            </div>
+          </section>
+
+          <section className="footer-column">
+            <h4>{language === 'en' ? 'Solutions' : 'الحلول'}</h4>
+            <ul>
+              {solutionLinks.map((item) => (
+                <li key={item.label}>
+                  <Link to={item.to}>{item.label}</Link>
+                </li>
               ))}
-            </div>
-          </motion.div>
+            </ul>
+          </section>
 
-          {/* Desktop Sections */}
-          <div className="footer-sections-desktop">
-            <motion.div 
-              className="footer-section"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1 }}
-            >
-              <h4>{language === 'en' ? 'Services' : 'الخدمات'}</h4>
-              <ul className="footer-links">
-                {services.map((service, index) => (
-                  <motion.li
-                    key={service.name[language]}
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: index * 0.05 }}
-                  >
-                    <Link to={service.link}>{service.name[language]}</Link>
-                  </motion.li>
-                ))}
-              </ul>
-            </motion.div>
+          <section className="footer-column">
+            <h4>{language === 'en' ? 'Company' : 'الشركة'}</h4>
+            <ul>
+              {companyLinks.map((item) => (
+                <li key={item.to}>
+                  <Link to={item.to}>{item.label[language]}</Link>
+                </li>
+              ))}
+            </ul>
+          </section>
 
-            <motion.div 
-              className="footer-section"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2 }}
-            >
-              <h4>{language === 'en' ? 'Company' : 'الشركة'}</h4>
-              <ul className="footer-links">
-                {company.map((item, index) => (
-                  <motion.li
-                    key={item.name[language]}
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: index * 0.05 }}
-                  >
-                    <Link to={item.link}>{item.name[language]}</Link>
-                  </motion.li>
-                ))}
-              </ul>
-            </motion.div>
-          </div>
-
-          {/* Mobile Dropdowns */}
-          <div className="footer-sections-mobile">
-            <div className="footer-dropdown">
-              <button 
-                className="footer-dropdown-btn"
-                onClick={() => toggleSection('services')}
-              >
-                <span>{language === 'en' ? 'Services' : 'الخدمات'}</span>
-                <FiChevronDown className={openSection === 'services' ? 'rotate' : ''} />
-              </button>
-              <AnimatePresence>
-                {openSection === 'services' && (
-                  <motion.ul
-                    className="footer-dropdown-content"
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: 'auto', opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    {services.map((service) => (
-                      <li key={service.name[language]}>
-                        <Link to={service.link}>{service.name[language]}</Link>
-                      </li>
-                    ))}
-                  </motion.ul>
-                )}
-              </AnimatePresence>
-            </div>
-
-            <div className="footer-dropdown">
-              <button 
-                className="footer-dropdown-btn"
-                onClick={() => toggleSection('company')}
-              >
-                <span>{language === 'en' ? 'Company' : 'الشركة'}</span>
-                <FiChevronDown className={openSection === 'company' ? 'rotate' : ''} />
-              </button>
-              <AnimatePresence>
-                {openSection === 'company' && (
-                  <motion.ul
-                    className="footer-dropdown-content"
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: 'auto', opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    {company.map((item) => (
-                      <li key={item.name[language]}>
-                        <Link to={item.link}>{item.name[language]}</Link>
-                      </li>
-                    ))}
-                  </motion.ul>
-                )}
-              </AnimatePresence>
-            </div>
-          </div>
-        </div>
+          <section className="footer-column">
+            <h4>{language === 'en' ? 'Contact' : 'التواصل'}</h4>
+            <ul className="footer-contact-list">
+              {contactItems.map((item) => (
+                <li key={item.label}>
+                  <span className="contact-icon">{item.icon}</span>
+                  <div>
+                    <small>{item.label}</small>
+                    {item.href ? <a href={item.href}>{item.value}</a> : <span>{item.value}</span>}
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </section>
+        </motion.div>
 
         <div className="footer-bottom">
-          <motion.div 
-            className="copyright"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-          >
-            &copy; {new Date().getFullYear()} {content?.siteInfo?.siteName || '4Pixels'}. {language === 'en' ? 'All rights reserved.' : 'جميع الحقوق محفوظة.'}
-          </motion.div>
+          <span>
+            &copy; {new Date().getFullYear()} {siteInfo.siteName || '4Pixels'}
+          </span>
+          <span>{language === 'en' ? 'All rights reserved.' : 'جميع الحقوق محفوظة.'}</span>
         </div>
       </div>
     </footer>

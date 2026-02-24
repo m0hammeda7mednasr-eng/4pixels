@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { FiArrowRight, FiStar, FiTrendingUp, FiLayers, FiCheckCircle } from 'react-icons/fi';
 import { useLanguage } from '../context/LanguageContext';
 import api from '../services/api';
+import { getCategoryLabel } from '../utils/categoryLabels';
 import './Home.css';
 
 const Home = () => {
@@ -69,6 +70,22 @@ const Home = () => {
     [language]
   );
 
+  const techStack = useMemo(
+    () => [
+      'Shopify',
+      'React',
+      'Node.js',
+      language === 'en' ? 'AI Automation' : 'أتمتة ذكية',
+      'CRM',
+      'ERP',
+      'Google Sheets',
+      'Webhook',
+      'API Integration',
+      'Data Entry Ops'
+    ],
+    [language]
+  );
+
   return (
     <div className="home-page">
       <section className="home-hero">
@@ -94,6 +111,16 @@ const Home = () => {
               <Link to="/projects" className="btn btn-outline">
                 {language === 'en' ? 'See portfolio' : 'شاهد الأعمال'}
               </Link>
+            </div>
+
+            <div className="hero-tech-wrap" aria-label="Technology stack">
+              <div className="hero-tech-track">
+                {[...techStack, ...techStack].map((item, index) => (
+                  <span key={`${item}-${index}`} className="hero-tech-chip">
+                    {item}
+                  </span>
+                ))}
+              </div>
             </div>
           </motion.div>
 
@@ -172,6 +199,9 @@ const Home = () => {
                   <h3>{service.title?.[language]}</h3>
                   <span className="service-price">${service.price}</span>
                 </div>
+                <span className="service-category-home">
+                  {getCategoryLabel(service.category, language)}
+                </span>
                 <p>{service.description?.[language]}</p>
                 <div className="service-meta">
                   <span>{service.deliveryTime}</span>
@@ -211,7 +241,9 @@ const Home = () => {
                   <img src={project.images?.[0]} alt={project.title?.[language]} loading="lazy" />
                 </Link>
                 <div className="project-body">
-                  <span className="project-category-home">{project.category}</span>
+                  <span className="project-category-home">
+                    {getCategoryLabel(project.category, language)}
+                  </span>
                   <h3>{project.title?.[language]}</h3>
                   <p>{project.description?.[language]}</p>
                   <Link to={`/projects/${project.id}`} className="project-link">

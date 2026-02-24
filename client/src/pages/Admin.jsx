@@ -714,37 +714,16 @@ const Modal = ({ type, item, onClose, onSave }) => {
 
   // Categories للـ Projects
   const projectCategories = [
-    'Shopify Development',
-    'Website Development',
-    'E-Commerce',
-    'Data Entry',
-    'AI Generation',
-    'CRM Systems',
-    'Google Sheets Integration',
+    'Shopify',
     'Automation',
-    'Mobile App',
-    'Digital Marketing',
-    'UI/UX Design',
-    'Branding',
-    'SEO',
-    'Custom Software'
+    'Systems'
   ];
 
   // Categories للـ Services
   const serviceCategories = [
-    'Shopify Development',
-    'Website Development',
-    'Mobile Development',
-    'Data Entry Services',
-    'AI & Automation',
-    'CRM Solutions',
-    'Google Sheets Integration',
-    'Digital Marketing',
-    'Design Services',
-    'SEO Services',
-    'Consulting',
-    'E-Commerce Solutions',
-    'Custom Development'
+    'Shopify',
+    'Automation',
+    'Systems'
   ];
 
   // Handle image file selection

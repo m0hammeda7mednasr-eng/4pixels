@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { FiArrowRight, FiCheckCircle, FiClock, FiFilter } from 'react-icons/fi';
 import { useLanguage } from '../context/LanguageContext';
 import api from '../services/api';
+import { getCategoryLabel, PRIMARY_CATEGORIES } from '../utils/categoryLabels';
 import './Services.css';
 
 const Services = () => {
@@ -28,7 +29,17 @@ const Services = () => {
   }, []);
 
   const categories = useMemo(() => {
-    return ['all', ...new Set(services.map((service) => service.category).filter(Boolean))];
+    const availableCategories = Array.from(
+      new Set(services.map((service) => service.category).filter(Boolean))
+    );
+    const orderedPrimary = PRIMARY_CATEGORIES.filter((category) =>
+      availableCategories.includes(category)
+    );
+    const remainingCategories = availableCategories.filter(
+      (category) => !PRIMARY_CATEGORIES.includes(category)
+    );
+
+    return ['all', ...orderedPrimary, ...remainingCategories];
   }, [services]);
 
   const filteredServices = useMemo(() => {
@@ -95,7 +106,7 @@ const Services = () => {
                   ? language === 'en'
                     ? 'All services'
                     : 'كل الخدمات'
-                  : category}
+                  : getCategoryLabel(category, language)}
               </button>
             ))}
           </div>
@@ -120,7 +131,9 @@ const Services = () => {
                     transition={{ delay: index * 0.05 }}
                   >
                     <div className="services-showcase-top">
-                      <span className="service-category">{service.category || 'General'}</span>
+                      <span className="service-category">
+                        {getCategoryLabel(service.category, language) || 'General'}
+                      </span>
                       <h3>{service.title?.[language] || service.title?.en}</h3>
                       <p>{service.description?.[language] || service.description?.en}</p>
                     </div>
