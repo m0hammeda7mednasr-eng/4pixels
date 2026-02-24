@@ -214,7 +214,7 @@ const Contact = () => {
                 <input
                   id="name"
                   type="text"
-                  placeholder={language === 'en' ? 'John Doe' : 'محمد ��حمد'}
+                  placeholder={language === 'en' ? 'Mohammed Ahmed' : 'محمد أحمد'}
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   required

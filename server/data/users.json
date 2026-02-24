@@ -1,8 +1,8 @@
 [
   {
     "id": "admin-001",
-    "email": "admin@4pixels.com",
-    "password": "$2a$10$5nBOpfbURDEZe4T/BAdHb.QyTd9fRknP08Iq95Y3ZXDR/SfhTUFma",
+    "email": "Mohammedahmed@gmail.com",
+    "password": "$2a$10$7s63lAndvOl43LKm7WoPcuw35vBXFTCYUyx3xpRqVdwPW1tXnrYvG",
     "role": "admin",
     "createdAt": "2024-01-01T00:00:00.000Z"
   }

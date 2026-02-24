@@ -53,6 +53,6 @@ app.listen(PORT, '0.0.0.0', () => {
   console.log('🚀 Server running on port ' + PORT);
   console.log('🌍 Environment: ' + (process.env.NODE_ENV || 'development'));
   console.log('✅ Using local JSON database');
-  console.log('📝 Admin credentials: admin@4pixels.com / admin123');
+  console.log('📝 Admin credentials: Mohammedahmed@gmail.com / 01066184859Mm#');
   console.log('🔗 Allowed origins:', allowedOrigins.join(', '));
 });
