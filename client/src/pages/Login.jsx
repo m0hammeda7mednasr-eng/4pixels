@@ -17,13 +17,21 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  // Clear old tokens on component mount
+  React.useEffect(() => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+  }, []);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     try {
+      const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5001/api';
+      
       if (isRegister) {
         // Register
-        const response = await fetch('http://localhost:5001/api/auth/register', {
+        const response = await fetch(`${apiUrl}/auth/register`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(formData)

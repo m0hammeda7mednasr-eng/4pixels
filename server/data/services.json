@@ -94,36 +94,5 @@
     "video": "",
     "faq": [],
     "active": true
-  },
-  {
-    "id": "1771747971853pfa0ufaz7",
-    "title": {
-      "en": "ؤسيب",
-      "ar": "سيب"
-    },
-    "description": {
-      "en": "سيب",
-      "ar": "سيب"
-    },
-    "name": {
-      "en": "",
-      "ar": ""
-    },
-    "text": {
-      "en": "",
-      "ar": ""
-    },
-    "price": 10,
-    "deliveryTime": "سيب",
-    "features": {
-      "en": [],
-      "ar": []
-    },
-    "rating": 5,
-    "image": "",
-    "images": [],
-    "category": "E-Commerce Solutions",
-    "active": true,
-    "createdAt": "2026-02-22T08:12:51.855Z"
   }
 ]
