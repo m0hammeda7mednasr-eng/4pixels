@@ -5,54 +5,46 @@ import { FiMail, FiLock, FiEye, FiEyeOff } from 'react-icons/fi';
 import { useAuth } from '../context/AuthContext';
 import { useLanguage } from '../context/LanguageContext';
 import { toast, ToastContainer } from 'react-toastify';
+import api from '../services/api';
 import 'react-toastify/dist/ReactToastify.css';
 import './Login.css';
 
 const Login = () => {
-  const { t } = useLanguage();
-  const { login } = useAuth();
+  const { t, language } = useLanguage();
+  const { login, user, isAdmin } = useAuth();
   const navigate = useNavigate();
   const [isRegister, setIsRegister] = useState(false);
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  // Redirect to admin if already authenticated
+  // Redirect to admin if already authenticated as admin
   React.useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      navigate('/admin');
+    if (user && isAdmin()) {
+      navigate('/admin', { replace: true });
     }
-  }, [navigate]);
+  }, [user, isAdmin, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     try {
-      const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5001/api';
-      
       if (isRegister) {
-        // Register
-        const response = await fetch(`${apiUrl}/auth/register`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(formData)
-        });
-        const data = await response.json();
-        if (!response.ok) throw new Error(data.message);
-        
-        localStorage.setItem('token', data.token);
-        localStorage.setItem('user', JSON.stringify(data.user));
-        toast.success('Registration successful!');
-        setTimeout(() => navigate('/admin'), 1000);
-      } else {
-        // Login
+        await api.post('/auth/register', formData);
         await login(formData.email, formData.password);
-        toast.success('Login successful!');
-        setTimeout(() => navigate('/admin'), 1000);
+        toast.success(language === 'en' ? 'Registration successful' : 'تم إنشاء الحساب بنجاح');
+      } else {
+        await login(formData.email, formData.password);
+        toast.success(language === 'en' ? 'Login successful' : 'تم تسجيل الدخول بنجاح');
       }
+
+      navigate('/admin', { replace: true });
     } catch (err) {
-      toast.error(err.message || 'Authentication failed');
+      toast.error(
+        err.userMessage ||
+          err.message ||
+          (language === 'en' ? 'Authentication failed' : 'فشل التحقق من الحساب')
+      );
     } finally {
       setLoading(false);
     }
@@ -69,8 +61,16 @@ const Login = () => {
           transition={{ duration: 0.5 }}
         >
           <div className="login-header">
-            <h2>{isRegister ? 'Register' : t('login')}</h2>
-            <p>{isRegister ? 'Create your admin account' : 'Welcome back to Four Pixels'}</p>
+            <h2>{isRegister ? (language === 'en' ? 'Register' : 'تسجيل حساب') : t('login')}</h2>
+            <p>
+              {isRegister
+                ? language === 'en'
+                  ? 'Create an admin account (initial setup or admin-approved).'
+                  : 'أنشئ حساب أدمن (للإعداد الأولي أو بموافقة أدمن).'
+                : language === 'en'
+                ? 'Welcome back to Four Pixels'
+                : 'مرحبًا بعودتك إلى فور بيكسلز'}
+            </p>
           </div>
 
           <form onSubmit={handleSubmit} className="login-form">
@@ -90,7 +90,7 @@ const Login = () => {
 
             <div className="form-group">
               <label htmlFor="password">
-                <FiLock /> Password
+                <FiLock /> {language === 'en' ? 'Password' : 'كلمة المرور'}
               </label>
               <div className="password-input">
                 <input
@@ -100,12 +100,13 @@ const Login = () => {
                   value={formData.password}
                   onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                   required
-                  minLength={6}
+                  minLength={8}
                 />
                 <button
                   type="button"
                   className="toggle-password"
                   onClick={() => setShowPassword(!showPassword)}
+                  aria-label={showPassword ? 'Hide password' : 'Show password'}
                 >
                   {showPassword ? <FiEyeOff /> : <FiEye />}
                 </button>
@@ -113,7 +114,19 @@ const Login = () => {
             </div>
 
             <button type="submit" className="btn btn-primary login-btn" disabled={loading}>
-              {loading ? (isRegister ? 'Creating account...' : 'Logging in...') : (isRegister ? 'Register' : t('login'))}
+              {loading
+                ? isRegister
+                  ? language === 'en'
+                    ? 'Creating account...'
+                    : 'جارٍ إنشاء الحساب...'
+                  : language === 'en'
+                  ? 'Logging in...'
+                  : 'جارٍ تسجيل الدخول...'
+                : isRegister
+                ? language === 'en'
+                  ? 'Register'
+                  : 'تسجيل'
+                : t('login')}
             </button>
           </form>
 
@@ -123,9 +136,15 @@ const Login = () => {
               className="toggle-mode-btn"
               onClick={() => setIsRegister(!isRegister)}
             >
-              {isRegister ? 'Already have an account? Login' : 'Need an account? Register'}
+              {isRegister
+                ? language === 'en'
+                  ? 'Already have an account? Login'
+                  : 'عندك حساب بالفعل؟ سجّل دخول'
+                : language === 'en'
+                ? 'Need an account? Register'
+                : 'تحتاج حساب؟ سجّل الآن'}
             </button>
-            <Link to="/">&larr; Back to Home</Link>
+            <Link to="/">{language === 'en' ? '← Back to Home' : 'العودة للرئيسية ←'}</Link>
           </div>
         </motion.div>
 
@@ -137,7 +156,11 @@ const Login = () => {
         >
           <div className="illustration-content">
             <h3>Four Pixels</h3>
-            <p>Transform Your Digital Presence</p>
+            <p>
+              {language === 'en'
+                ? 'Transform Your Digital Presence'
+                : 'حوّل حضورك الرقمي إلى نتائج عملية'}
+            </p>
             <div className="illustration-graphic">
               <div className="graphic-circle circle-1"></div>
               <div className="graphic-circle circle-2"></div>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { FiSun, FiMoon, FiMenu, FiX, FiUser, FiLogOut } from 'react-icons/fi';
@@ -14,119 +14,98 @@ const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
 
+  const navLinks = [
+    { to: '/', label: t('home') },
+    { to: '/services', label: t('services') },
+    { to: '/projects', label: t('projects') },
+    { to: '/about', label: t('about') },
+    { to: '/contact', label: t('contact') }
+  ];
+
+  if (user && isAdmin()) {
+    navLinks.push({ to: '/admin', label: t('dashboard') });
+  }
+
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [location.pathname]);
+
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? 'hidden' : '';
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [menuOpen]);
+
   const isActive = (path) => location.pathname === path;
 
   return (
-    <motion.header 
+    <motion.header
       className="header"
-      initial={{ y: -100 }}
+      initial={{ y: -70 }}
       animate={{ y: 0 }}
-      transition={{ duration: 0.5 }}
+      transition={{ duration: 0.35 }}
     >
       <div className="container header-content">
-        {/* Menu Button - Mobile Only */}
-        <button 
-          className="menu-btn" 
-          onClick={() => setMenuOpen(!menuOpen)}
+        <button
+          className="menu-btn"
+          onClick={() => setMenuOpen((prev) => !prev)}
           aria-label="Toggle menu"
+          aria-expanded={menuOpen}
+          aria-controls="main-nav"
         >
           {menuOpen ? <FiX /> : <FiMenu />}
         </button>
 
-        {/* Logo */}
         <Link to="/" className="logo">
-          <div className="logo-container">
-            <div>
-              <div className="logo-text">4Pixels</div>
-              <div className="logo-tagline">Digital Agency</div>
-            </div>
-          </div>
+          <div className="logo-text">4Pixels</div>
+          <div className="logo-tagline">Digital Studio</div>
         </Link>
 
-        {/* Navigation Menu */}
-        <nav className={`nav ${menuOpen ? 'open' : ''}`}>
-          <Link 
-            to="/" 
-            className={isActive('/') ? 'active' : ''}
-            onClick={() => setMenuOpen(false)}
-          >
-            {t('home')}
-          </Link>
-          <Link 
-            to="/services" 
-            className={isActive('/services') ? 'active' : ''}
-            onClick={() => setMenuOpen(false)}
-          >
-            {t('services')}
-          </Link>
-          <Link 
-            to="/projects" 
-            className={isActive('/projects') ? 'active' : ''}
-            onClick={() => setMenuOpen(false)}
-          >
-            {t('projects')}
-          </Link>
-          <Link 
-            to="/about" 
-            className={isActive('/about') ? 'active' : ''}
-            onClick={() => setMenuOpen(false)}
-          >
-            {t('about')}
-          </Link>
-          <Link 
-            to="/contact" 
-            className={isActive('/contact') ? 'active' : ''}
-            onClick={() => setMenuOpen(false)}
-          >
-            {t('contact')}
-          </Link>
-          {user && isAdmin() && (
-            <Link 
-              to="/admin" 
-              className={isActive('/admin') ? 'active' : ''}
-              onClick={() => setMenuOpen(false)}
-            >
-              {t('dashboard')}
+        <nav id="main-nav" className={`nav ${menuOpen ? 'open' : ''}`}>
+          {navLinks.map((link) => (
+            <Link key={link.to} to={link.to} className={isActive(link.to) ? 'active' : ''}>
+              {link.label}
             </Link>
-          )}
+          ))}
         </nav>
 
-        {/* Actions - Right (3 buttons same size) */}
         <div className="header-actions">
-          <button 
-            onClick={toggleLanguage} 
-            className="icon-btn lang-btn"
-            title={language === 'en' ? 'العربية' : 'English'}
+          <button
+            onClick={toggleLanguage}
+            className="icon-btn"
+            title={language === 'en' ? 'Arabic' : 'English'}
+            aria-label="Toggle language"
           >
-            <span className="lang-text">{language === 'en' ? 'ع' : 'EN'}</span>
+            <span className="lang-text">{language === 'en' ? 'AR' : 'EN'}</span>
           </button>
-          <button 
-            onClick={toggleTheme} 
-            className="icon-btn theme-btn"
-            title={theme === 'light' ? 'Dark Mode' : 'Light Mode'}
+          <button
+            onClick={toggleTheme}
+            className="icon-btn"
+            title={theme === 'light' ? 'Dark mode' : 'Light mode'}
+            aria-label="Toggle theme"
           >
             {theme === 'light' ? <FiMoon /> : <FiSun />}
           </button>
           {user ? (
-            <button 
-              onClick={() => { logout(); setMenuOpen(false); }} 
-              className="icon-btn logout-btn"
-              title={t('logout')}
-            >
+            <button onClick={logout} className="icon-btn" title={t('logout')} aria-label={t('logout')}>
               <FiLogOut />
             </button>
           ) : (
-            <Link 
-              to="/login" 
-              className="icon-btn login-btn"
-              onClick={() => setMenuOpen(false)}
-              title={t('login')}
-            >
+            <Link to="/login" className="icon-btn" title={t('login')} aria-label={t('login')}>
               <FiUser />
             </Link>
           )}
         </div>
       </div>
+
+      <button
+        type="button"
+        className={`nav-overlay ${menuOpen ? 'open' : ''}`}
+        onClick={() => setMenuOpen(false)}
+        aria-hidden={!menuOpen}
+        tabIndex={menuOpen ? 0 : -1}
+      />
     </motion.header>
   );
 };

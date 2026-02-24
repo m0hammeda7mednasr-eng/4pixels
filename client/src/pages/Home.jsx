@@ -1,360 +1,270 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { FiArrowRight, FiEye } from 'react-icons/fi';
-import { SiReact, SiNodedotjs, SiPython, SiJavascript, SiMongodb, SiShopify } from 'react-icons/si';
+import { FiArrowRight, FiStar, FiTrendingUp, FiLayers, FiCheckCircle } from 'react-icons/fi';
 import { useLanguage } from '../context/LanguageContext';
 import api from '../services/api';
 import './Home.css';
-import './HeroCompact.css';
 
 const Home = () => {
   const { t, language } = useLanguage();
   const [services, setServices] = useState([]);
   const [projects, setProjects] = useState([]);
   const [reviews, setReviews] = useState([]);
+  const [content, setContent] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [servicesRes, projectsRes, reviewsRes] = await Promise.all([
+        const [servicesRes, projectsRes, reviewsRes, contentRes] = await Promise.all([
           api.get('/services'),
           api.get('/projects'),
-          api.get('/reviews')
+          api.get('/reviews'),
+          api.get('/content')
         ]);
-        setServices(servicesRes.data.slice(0, 3));
-        setProjects(projectsRes.data.slice(0, 6));
-        setReviews(reviewsRes.data);
+
+        setServices((servicesRes.data || []).slice(0, 3));
+        setProjects((projectsRes.data || []).slice(0, 6));
+        setReviews((reviewsRes.data || []).slice(0, 6));
+        setContent(contentRes.data || null);
       } catch (err) {
-        console.error('Error fetching data:', err);
+        console.error('Error fetching home data:', err);
+      } finally {
+        setLoading(false);
       }
     };
+
     fetchData();
   }, []);
 
-  const stats = [
-    { number: '150+', label: { en: 'Projects Completed', ar: 'مشروع مكتمل' } },
-    { number: '50+', label: { en: 'Happy Clients', ar: 'عميل سعيد' } },
-    { number: '5+', label: { en: 'Years Experience', ar: 'سنوات خبرة' } },
-    { number: '24/7', label: { en: 'Support', ar: 'دعم فني' } },
-  ];
+  const heroTitle =
+    content?.hero?.title?.[language] ||
+    (language === 'en' ? 'Build a Brand People Remember' : 'ابني علامة تجارية لا تنسى');
+
+  const heroSubtitle =
+    content?.hero?.subtitle?.[language] ||
+    (language === 'en'
+      ? 'We design and deliver high-converting digital products for ambitious businesses.'
+      : 'نصمم وننفذ منتجات رقمية عالية التحويل للشركات الطموحة.');
+
+  const metrics = useMemo(
+    () => [
+      {
+        value: '150+',
+        label: language === 'en' ? 'Projects delivered' : 'مشروع تم تسليمه',
+        icon: <FiLayers />
+      },
+      {
+        value: '98%',
+        label: language === 'en' ? 'Client satisfaction' : 'رضا العملاء',
+        icon: <FiStar />
+      },
+      {
+        value: '5+',
+        label: language === 'en' ? 'Years of execution' : 'سنوات خبرة',
+        icon: <FiTrendingUp />
+      }
+    ],
+    [language]
+  );
 
   return (
-    <div className="home">
-      {/* Hero Section - Compact 550px */}
-      <motion.section 
-        className="hero-compact"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.8 }}
-      >
-        {/* Animated Background with Floating Tech Icons */}
-        <div className="hero-compact-bg">
-          <motion.div 
-            className="bg-circle bg-circle-1"
-            animate={{ 
-              x: [0, 50, 0],
-              y: [0, -30, 0],
-            }}
-            transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
-          />
-          <motion.div 
-            className="bg-circle bg-circle-2"
-            animate={{ 
-              x: [0, -40, 0],
-              y: [0, 40, 0],
-            }}
-            transition={{ duration: 25, repeat: Infinity, ease: "easeInOut" }}
-          />
-          
-          {/* Floating Tech Icons */}
-          <motion.div 
-            className="floating-tech-icon tech-icon-1"
-            animate={{ 
-              y: [0, -20, 0],
-              rotate: [0, 10, 0]
-            }}
-            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+    <div className="home-page">
+      <section className="home-hero">
+        <div className="hero-orb orb-1" />
+        <div className="hero-orb orb-2" />
+        <div className="container hero-grid">
+          <motion.div
+            className="hero-copy"
+            initial={{ opacity: 0, y: 26 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.55 }}
           >
-            <SiReact />
-          </motion.div>
-          
-          <motion.div 
-            className="floating-tech-icon tech-icon-2"
-            animate={{ 
-              y: [0, 25, 0],
-              rotate: [0, -15, 0]
-            }}
-            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-          >
-            <SiNodedotjs />
-          </motion.div>
-          
-          <motion.div 
-            className="floating-tech-icon tech-icon-3"
-            animate={{ 
-              y: [0, -30, 0],
-              rotate: [0, 12, 0]
-            }}
-            transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-          >
-            <SiPython />
-          </motion.div>
-          
-          <motion.div 
-            className="floating-tech-icon tech-icon-4"
-            animate={{ 
-              y: [0, 20, 0],
-              rotate: [0, -10, 0]
-            }}
-            transition={{ duration: 9, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-          >
-            <SiJavascript />
-          </motion.div>
-          
-          <motion.div 
-            className="floating-tech-icon tech-icon-5"
-            animate={{ 
-              y: [0, -25, 0],
-              rotate: [0, 8, 0]
-            }}
-            transition={{ duration: 11, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
-          >
-            <SiMongodb />
-          </motion.div>
-          
-          <motion.div 
-            className="floating-tech-icon tech-icon-6"
-            animate={{ 
-              y: [0, 22, 0],
-              rotate: [0, -12, 0]
-            }}
-            transition={{ duration: 10.5, repeat: Infinity, ease: "easeInOut", delay: 2.5 }}
-          >
-            <SiShopify />
-          </motion.div>
-        </div>
-
-        <div className="container hero-compact-wrapper">
-          <div className="hero-compact-content">
-            {/* Title */}
-            <motion.h1
-              className="hero-compact-title"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2, duration: 0.6 }}
-            >
-              {language === 'en' 
-                ? 'Transform Your Digital Vision Into Reality'
-                : 'حوّل رؤيتك الرقمية إلى واقع'
-              }
-            </motion.h1>
-
-            {/* Subtitle */}
-            <motion.p
-              className="hero-compact-subtitle"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4, duration: 0.6 }}
-            >
-              {language === 'en' 
-                ? 'We craft exceptional digital experiences that drive growth and innovation for forward-thinking businesses worldwide.'
-                : 'نصنع تجارب رقمية استثنائية تدفع النمو والابتكار للشركات الطموحة حول العالم.'
-              }
-            </motion.p>
-
-            {/* CTA Buttons */}
-            <motion.div 
-              className="hero-compact-actions"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6, duration: 0.6 }}
-            >
-              <Link to="/contact" className="btn-compact btn-compact-primary">
-                <span>{language === 'en' ? 'Start Your Project' : 'ابدأ مشروعك'}</span>
+            <span className="hero-eyebrow">
+              {language === 'en' ? 'Digital Products. Real Growth.' : 'حلول رقمية بنتائج حقيقية'}
+            </span>
+            <h1 className="hero-title">{heroTitle}</h1>
+            <p className="hero-subtitle">{heroSubtitle}</p>
+            <div className="hero-actions">
+              <Link to="/contact" className="btn btn-primary">
+                {language === 'en' ? 'Start your project' : 'ابدأ مشروعك'}
                 <FiArrowRight />
               </Link>
-              
-              <Link to="/projects" className="btn-compact btn-compact-secondary">
-                <FiEye />
-                <span>{language === 'en' ? 'View Our Work' : 'شاهد أعمالنا'}</span>
+              <Link to="/projects" className="btn btn-outline">
+                {language === 'en' ? 'See portfolio' : 'شاهد الأعمال'}
               </Link>
-            </motion.div>
+            </div>
+          </motion.div>
 
-            {/* Stats Row */}
-            <motion.div
-              className="hero-compact-stats"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.8, duration: 0.6 }}
-            >
-              {stats.map((stat, index) => (
-                <motion.div
-                  key={index}
-                  className="stat-compact"
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 1 + index * 0.1, duration: 0.4 }}
-                >
-                  <div className="stat-compact-number">{stat.number}</div>
-                  <div className="stat-compact-label">{stat.label[language]}</div>
-                </motion.div>
-              ))}
-            </motion.div>
+          <motion.div
+            className="hero-panel"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.55, delay: 0.1 }}
+          >
+            <h3>{language === 'en' ? 'What you get with 4Pixels' : 'ماذا تحصل مع 4Pixels'}</h3>
+            <ul>
+              <li>
+                <FiCheckCircle />
+                {language === 'en' ? 'Strategic product thinking from day one' : 'تفكير استراتيجي من أول يوم'}
+              </li>
+              <li>
+                <FiCheckCircle />
+                {language === 'en' ? 'Clean UX built for conversion and retention' : 'تجربة مستخدم نظيفة لرفع التحويل'}
+              </li>
+              <li>
+                <FiCheckCircle />
+                {language === 'en' ? 'Fast execution with transparent communication' : 'تنفيذ سريع وتواصل واضح'}
+              </li>
+              <li>
+                <FiCheckCircle />
+                {language === 'en' ? 'Reliable support after launch' : 'دعم فعلي بعد الإطلاق'}
+              </li>
+            </ul>
+          </motion.div>
+        </div>
+      </section>
+
+      <section className="home-metrics section">
+        <div className="container">
+          <div className="metrics-grid">
+            {metrics.map((metric, index) => (
+              <motion.article
+                key={metric.label}
+                className="metric-card"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ delay: index * 0.08 }}
+              >
+                <span className="metric-icon">{metric.icon}</span>
+                <h3>{metric.value}</h3>
+                <p>{metric.label}</p>
+              </motion.article>
+            ))}
           </div>
         </div>
-      </motion.section>
+      </section>
 
-      {/* Services Preview */}
-      <section className="section services-preview">
+      <section className="section home-block">
         <div className="container">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
+          <div className="block-header">
             <h2 className="section-title">{t('services')}</h2>
-            <p className="section-subtitle">
-              {language === 'en' 
-                ? 'We provide comprehensive digital solutions to transform your business'
-                : 'نقدم حلولاً رقمية شاملة لتحويل أعمالك'
-              }
+            <p>
+              {language === 'en'
+                ? 'Practical, high-impact services to launch and scale your digital business.'
+                : 'خدمات عملية وعالية التأثير لإطلاق وتوسيع مشروعك الرقمي.'}
             </p>
-          </motion.div>
-          
-          {/* Horizontal Scrollable Services */}
-          <div className="services-scroll-container">
-            <div className="services-scroll-wrapper">
-              {services.map((service, index) => (
-                <motion.div
-                  key={service.id}
-                  className="service-card-horizontal"
-                  initial={{ opacity: 0, x: 50 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true, margin: "-100px" }}
-                  transition={{ delay: index * 0.1, duration: 0.5 }}
-                  whileHover={{ y: -8, transition: { duration: 0.3 } }}
-                >
-                  {service.image && (
-                    <div className="service-image-horizontal">
-                      <img 
-                        src={service.image} 
-                        alt={service.title[language]}
-                      />
-                    </div>
-                  )}
-                  <div className="service-content-horizontal">
-                    <h3>{service.title[language]}</h3>
-                    <p className="service-description">{service.description[language]}</p>
-                    <div className="service-price">${service.price}</div>
-                    <p className="service-delivery">
-                      <strong>{language === 'en' ? 'Delivery:' : 'التسليم:'}</strong> {service.deliveryTime}
-                    </p>
-                    <Link to={`/services/${service.id}`} className="btn btn-primary">
-                      {language === 'en' ? 'Learn More' : 'المزيد'}
-                    </Link>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
+          </div>
+
+          <div className="services-grid-home">
+            {services.map((service, index) => (
+              <motion.article
+                key={service.id}
+                className="service-card-home"
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.25 }}
+                transition={{ delay: index * 0.08 }}
+              >
+                <div className="service-card-head">
+                  <h3>{service.title?.[language]}</h3>
+                  <span className="service-price">${service.price}</span>
+                </div>
+                <p>{service.description?.[language]}</p>
+                <div className="service-meta">
+                  <span>{service.deliveryTime}</span>
+                  <Link to={`/services/${service.id}`}>
+                    {language === 'en' ? 'More details' : 'تفاصيل أكثر'}
+                    <FiArrowRight />
+                  </Link>
+                </div>
+              </motion.article>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Projects Preview */}
-      <section className="section projects-preview">
+      <section className="section home-block home-projects">
         <div className="container">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
+          <div className="block-header">
             <h2 className="section-title">{t('projects')}</h2>
-            <p className="text-center" style={{ maxWidth: '700px', margin: '0 auto 50px', color: 'var(--text-light-secondary)' }}>
-              {language === 'en' 
-                ? 'Explore our portfolio of successful projects across various industries'
-                : 'استكشف محفظة مشاريعنا الناجحة عبر مختلف الصناعات'
-              }
+            <p>
+              {language === 'en'
+                ? 'Selected client work across e-commerce, SaaS, and growth-focused brands.'
+                : 'نماذج أعمال مختارة عبر التجارة الإلكترونية ومنتجات SaaS.'}
             </p>
-          </motion.div>
-          {/* Horizontal Scrollable Projects */}
-          <div className="projects-scroll-container">
-            <div className="projects-scroll-wrapper">
-              {projects.map((project, index) => (
-                <motion.div
-                  key={project.id}
-                  className="project-card-horizontal"
-                  initial={{ opacity: 0, x: 50 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true, margin: "-100px" }}
-                  transition={{ delay: index * 0.1, duration: 0.5 }}
-                  whileHover={{ y: -8, transition: { duration: 0.3 } }}
-                >
-                  {project.images?.[0] && (
-                    <div className="project-image-horizontal">
-                      <img src={project.images[0]} alt={project.title[language]} />
-                    </div>
-                  )}
-                  <div className="project-overlay-horizontal">
-                    <h3>{project.title[language]}</h3>
-                    <p className="project-category">{project.category}</p>
-                    <Link to={`/projects/${project.id}`} className="btn btn-primary">
-                      {language === 'en' ? 'View Details' : 'التفاصيل'}
-                    </Link>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
+          </div>
+
+          <div className="projects-grid-home">
+            {projects.map((project, index) => (
+              <motion.article
+                key={project.id}
+                className="project-card-home"
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.25 }}
+                transition={{ delay: index * 0.06 }}
+              >
+                <Link to={`/projects/${project.id}`} className="project-media">
+                  <img src={project.images?.[0]} alt={project.title?.[language]} loading="lazy" />
+                </Link>
+                <div className="project-body">
+                  <span className="project-category-home">{project.category}</span>
+                  <h3>{project.title?.[language]}</h3>
+                  <p>{project.description?.[language]}</p>
+                  <Link to={`/projects/${project.id}`} className="project-link">
+                    {language === 'en' ? 'View case study' : 'عرض دراسة الحالة'}
+                    <FiArrowRight />
+                  </Link>
+                </div>
+              </motion.article>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Reviews Section */}
-      <section className="section reviews-section">
+      <section className="section home-block home-reviews">
         <div className="container">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="section-title">
-              {language === 'en' ? 'Customer Reviews' : 'آراء العملاء'}
-            </h2>
-          </motion.div>
+          <div className="block-header">
+            <h2 className="section-title">{language === 'en' ? 'Client Feedback' : 'آراء العملاء'}</h2>
+            <p>
+              {language === 'en'
+                ? 'Real outcomes from teams who trusted us to ship and scale.'
+                : 'نتائج حقيقية من فرق وثقت بنا في التنفيذ والتطوير.'}
+            </p>
+          </div>
 
-          <div className="reviews-scroll-container">
-            <div className="reviews-scroll-wrapper">
-              {reviews.map((review, index) => (
-                <motion.div
-                  key={review.id}
-                  className="review-card"
-                  initial={{ opacity: 0, x: 50 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true, margin: "-100px" }}
-                  transition={{ delay: index * 0.1, duration: 0.5 }}
-                >
-                  <div className="review-image-box">
-                    <img src={review.image} alt={review.name[language]} />
-                    <div className="stars-floating">
-                      {[...Array(review.rating || 5)].map((_, i) => (
-                        <span key={i}>★</span>
-                      ))}
-                    </div>
+          <div className="reviews-grid-home">
+            {reviews.map((review, index) => (
+              <motion.article
+                key={review.id}
+                className="review-card-home"
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.25 }}
+                transition={{ delay: index * 0.06 }}
+              >
+                <div className="review-top">
+                  <img src={review.image} alt={review.name?.[language]} loading="lazy" />
+                  <div>
+                    <h3>{review.name?.[language]}</h3>
+                    <span>{'★'.repeat(review.rating || 5)}</span>
                   </div>
-                  <div className="review-content">
-                    <div className="review-author">
-                      <span className="author-name">{review.name[language]}</span>
-                      {review.verified && <div className="verified-badge">✓</div>}
-                    </div>
-                    <p className="review-text">{review.text[language]}</p>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
+                </div>
+                <p>{review.text?.[language]}</p>
+              </motion.article>
+            ))}
           </div>
         </div>
       </section>
 
+      {loading && (
+        <div className="home-loading-state">
+          <div className="spinner" />
+        </div>
+      )}
     </div>
   );
 };

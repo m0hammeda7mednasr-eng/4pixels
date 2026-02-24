@@ -2,14 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaLinkedin, FaGithub, FaFacebook, FaInstagram, FaTiktok, FaYoutube, FaBehance, FaDribbble } from 'react-icons/fa';
-import { FiMail, FiPhone, FiMapPin, FiChevronDown } from 'react-icons/fi';
+import { FiChevronDown } from 'react-icons/fi';
 import { FaXTwitter } from 'react-icons/fa6';
 import { useLanguage } from '../context/LanguageContext';
 import api from '../services/api';
 import './Footer.css';
 
 const Footer = () => {
-  const { t, language } = useLanguage();
+  const { language } = useLanguage();
   const [openSection, setOpenSection] = useState(null);
   const [content, setContent] = useState(null);
 

@@ -1,18 +1,32 @@
-const jwt = require('jsonwebtoken');
+const { verifyAuthToken } = require('../utils/jwt');
+
+const getBearerToken = (req) => {
+  const authHeader = req.header('Authorization');
+  if (!authHeader) {
+    return null;
+  }
+
+  const [scheme, token] = authHeader.split(' ');
+  if (scheme?.toLowerCase() !== 'bearer' || !token) {
+    return null;
+  }
+
+  return token.trim();
+};
 
 const auth = (req, res, next) => {
-  const token = req.header('Authorization')?.replace('Bearer ', '');
+  const token = getBearerToken(req);
   
   if (!token) {
     return res.status(401).json({ message: 'No token, authorization denied' });
   }
 
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'fourpixels_secret_key_2024');
+    const decoded = verifyAuthToken(token);
     req.user = decoded;
     next();
   } catch (err) {
-    res.status(401).json({ message: 'Token is not valid' });
+    return res.status(401).json({ message: 'Token is not valid' });
   }
 };
 

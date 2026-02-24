@@ -10,7 +10,7 @@ export const translations = {
     services: 'Services',
     projects: 'Projects',
     about: 'About Us',
-    contact: 'Connections',
+    contact: 'Contact',
     login: 'Login',
     logout: 'Logout',
     dashboard: 'Admin Dashboard',

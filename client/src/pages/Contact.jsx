@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { FiMail, FiPhone, FiMapPin, FiMessageSquare, FiUser, FiBriefcase } from 'react-icons/fi';
-import { FaWhatsapp, FaLinkedin, FaGithub, FaTwitter, FaFacebook, FaInstagram, FaTiktok, FaYoutube } from 'react-icons/fa';
+import { FaWhatsapp, FaLinkedin, FaGithub, FaFacebook, FaInstagram, FaTiktok, FaYoutube } from 'react-icons/fa';
 import { useLanguage } from '../context/LanguageContext';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -57,7 +57,11 @@ const Contact = () => {
       toast.success(language === 'en' ? 'Message sent successfully! We\'ll get back to you soon.' : 'تم إرسال الرسالة بنجاح! سنرد عليك قريبًا.');
       setFormData({ name: '', email: '', phone: '', company: '', service: '', message: '' });
     } catch (err) {
-      const errorMsg = err.response?.data?.message || (language === 'en' ? 'Failed to send message. Please try again.' : 'فشل إرسال الرسالة. يرجى المحاولة مرة أخرى.');
+      const errorMsg =
+        err.userMessage ||
+        (language === 'en'
+          ? 'Failed to send message. Please try again.'
+          : 'فشل إرسال الرسالة. يرجى المحاولة مرة أخرى.');
       toast.error(errorMsg);
     } finally {
       setLoading(false);
@@ -285,6 +289,8 @@ const Contact = () => {
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   required
+                  minLength={10}
+                  maxLength={2000}
                 />
               </div>
 

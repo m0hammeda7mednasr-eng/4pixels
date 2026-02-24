@@ -1,8 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&family=Inter:wght@300;400;500;600;700;800;900&display=swap');
-
-/* ============================================
-   RESET & BASE
-   ============================================ */
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&display=swap');
 
 *,
 *::before,
@@ -13,67 +9,47 @@
 }
 
 :root {
-  --primary: #4f46e5;
-  --primary-dark: #3730a3;
-  --secondary: #7c3aed;
-  --accent: #f59e0b;
-  --success: #10b981;
-  --danger: #ef4444;
+  --primary: #0f766e;
+  --primary-dark: #115e59;
+  --secondary: #0284c7;
+  --accent: #f97316;
+  --success: #16a34a;
+  --danger: #dc2626;
 
-  --bg-light: #f8fafc;
-  --bg-dark: #0b0f1a;
+  --bg-light: #f4f7f6;
+  --bg-dark: #0b1412;
   --surface-light: #ffffff;
-  --surface-dark: #111827;
+  --surface-dark: #101a18;
 
   --text-light: #0f172a;
   --text-light-secondary: #475569;
-  --text-dark: #f1f5f9;
+  --text-dark: #ecfeff;
   --text-dark-secondary: #94a3b8;
 
-  --border-light: #e2e8f0;
-  --border-dark: #1e293b;
+  --border-light: #dce6e4;
+  --border-dark: #1f2f2b;
 
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
-  --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.12);
-  --shadow-xl: 0 20px 60px rgba(0, 0, 0, 0.15);
+  --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.08);
+  --shadow: 0 8px 22px rgba(15, 23, 42, 0.08);
+  --shadow-lg: 0 16px 40px rgba(15, 23, 42, 0.12);
+  --shadow-xl: 0 28px 80px rgba(15, 23, 42, 0.2);
 
-  /* Font size scale */
-  --text-xs: clamp(0.7rem, 1.5vw, 0.78rem);
-  --text-sm: clamp(0.82rem, 2vw, 0.9rem);
-  --text-base: clamp(0.9rem, 2.5vw, 1rem);
-  --text-lg: clamp(1rem, 3vw, 1.15rem);
-  --text-xl: clamp(1.1rem, 3.5vw, 1.3rem);
-  --text-2xl: clamp(1.3rem, 4vw, 1.6rem);
-  --text-3xl: clamp(1.6rem, 5vw, 2rem);
-  --text-4xl: clamp(1.9rem, 6vw, 2.5rem);
-  --text-5xl: clamp(2.2rem, 7vw, 3.5rem);
-
-  /* Spacing scale */
-  --space-1: 4px;
-  --space-2: 8px;
-  --space-3: 12px;
-  --space-4: 16px;
-  --space-5: 20px;
-  --space-6: 24px;
-  --space-8: 32px;
-  --space-10: 40px;
-  --space-12: 48px;
-  --space-16: 64px;
-  --space-20: 80px;
-  --space-24: 96px;
+  --text-xs: clamp(0.72rem, 1.5vw, 0.8rem);
+  --text-sm: clamp(0.82rem, 2vw, 0.92rem);
+  --text-base: clamp(0.92rem, 2.5vw, 1rem);
+  --text-lg: clamp(1rem, 3vw, 1.12rem);
+  --text-xl: clamp(1.15rem, 3.6vw, 1.32rem);
+  --text-2xl: clamp(1.32rem, 4vw, 1.62rem);
+  --text-3xl: clamp(1.62rem, 5vw, 2.1rem);
+  --text-4xl: clamp(1.95rem, 6vw, 2.8rem);
+  --text-5xl: clamp(2.4rem, 7vw, 3.7rem);
 
   --radius-sm: 8px;
   --radius: 12px;
   --radius-lg: 16px;
-  --radius-xl: 20px;
-  --radius-2xl: 24px;
-  --radius-full: 9999px;
+  --radius-xl: 22px;
+  --radius-pill: 999px;
 }
-
-/* ============================================
-   BODY
-   ============================================ */
 
 html {
   scroll-behavior: smooth;
@@ -81,12 +57,12 @@ html {
 }
 
 body {
-  font-family: 'Inter', 'Cairo', sans-serif;
+  font-family: 'Sora', sans-serif;
+  font-size: var(--text-base);
+  line-height: 1.65;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  transition: background-color 0.3s ease, color 0.3s ease;
-  line-height: 1.6;
-  font-size: var(--text-base);
+  transition: background-color 0.25s ease, color 0.25s ease;
   overflow-x: hidden;
 }
 
@@ -100,13 +76,30 @@ body.dark {
   color: var(--text-dark);
 }
 
-body[dir="rtl"] {
-  font-family: 'Cairo', 'Inter', sans-serif;
+body[dir='rtl'] {
+  font-family: 'Tajawal', sans-serif;
 }
 
-/* ============================================
-   TYPOGRAPHY
-   ============================================ */
+.skip-link {
+  position: fixed;
+  top: -120px;
+  left: 12px;
+  z-index: 2200;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: var(--surface-light);
+  border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-sm);
+}
+
+body.dark .skip-link {
+  background: var(--surface-dark);
+  border-color: var(--border-dark);
+}
+
+.skip-link:focus {
+  top: 12px;
+}
 
 h1,
 h2,
@@ -115,89 +108,85 @@ h4,
 h5,
 h6 {
   font-weight: 700;
-  line-height: 1.25;
+  line-height: 1.2;
   letter-spacing: -0.02em;
 }
 
-/* ============================================
-   LINKS & BUTTONS
-   ============================================ */
-
 a {
-  text-decoration: none;
   color: inherit;
+  text-decoration: none;
 }
 
-button {
-  cursor: pointer;
-  border: none;
-  outline: none;
+button,
+input,
+select,
+textarea {
   font-family: inherit;
 }
 
-/* ============================================
-   CONTAINER
-   ============================================ */
-
-.container {
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 clamp(16px, 4vw, 24px);
+button {
+  border: none;
+  cursor: pointer;
 }
 
-/* ============================================
-   BUTTONS - Global
-   ============================================ */
+.container {
+  width: min(1200px, 100%);
+  margin-inline: auto;
+  padding-inline: clamp(16px, 4vw, 28px);
+}
+
+.section {
+  padding: clamp(56px, 9vw, 96px) 0;
+}
+
+.section-title {
+  font-size: var(--text-4xl);
+  text-align: center;
+  margin-bottom: clamp(34px, 6vw, 56px);
+  color: var(--text-light);
+  position: relative;
+  padding-bottom: 16px;
+}
+
+body.dark .section-title {
+  color: var(--text-dark);
+}
+
+.section-title::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: clamp(74px, 12vw, 110px);
+  height: 4px;
+  transform: translateX(-50%);
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+}
 
 .btn {
-  padding: clamp(10px, 2vw, 14px) clamp(20px, 4vw, 36px);
-  border-radius: var(--radius-lg);
-  font-weight: 700;
-  font-size: var(--text-sm);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  cursor: pointer;
-  border: none;
-  text-decoration: none;
-  position: relative;
-  overflow: hidden;
-  -webkit-tap-highlight-color: transparent;
+  border-radius: var(--radius);
+  padding: 12px 24px;
+  font-weight: 700;
+  font-size: var(--text-sm);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
   touch-action: manipulation;
-}
-
-.btn::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(255, 255, 255, 0.12);
-  transform: translateX(-100%);
-  transition: transform 0.35s ease;
-}
-
-.btn:hover::before {
-  transform: translateX(0);
+  -webkit-tap-highlight-color: transparent;
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-  color: white;
-  box-shadow: 0 6px 20px rgba(79, 70, 229, 0.35);
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: #fff;
+  box-shadow: 0 10px 24px rgba(15, 118, 110, 0.32);
 }
 
 .btn-primary:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 12px 35px rgba(79, 70, 229, 0.45);
-}
-
-.btn-primary:active {
-  transform: translateY(-1px);
+  transform: translateY(-2px);
+  box-shadow: 0 16px 30px rgba(15, 118, 110, 0.4);
 }
 
 .btn-outline {
@@ -207,167 +196,32 @@ button {
 }
 
 body.dark .btn-outline {
-  border-color: var(--text-dark);
-  color: var(--text-dark);
+  border-color: #2dd4bf;
+  color: #5eead4;
 }
 
 .btn-outline:hover {
   background: var(--primary);
-  color: white;
-  transform: translateY(-3px);
-  box-shadow: var(--shadow-lg);
-}
-
-body.dark .btn-outline:hover {
-  background: var(--text-dark);
-  color: var(--bg-dark);
+  color: #fff;
 }
 
 .btn-sm {
-  padding: 8px 18px;
-  font-size: var(--text-xs);
-  border-radius: var(--radius);
+  padding: 9px 16px;
 }
 
 .btn-lg {
-  padding: clamp(14px, 2.5vw, 18px) clamp(28px, 5vw, 45px);
-  font-size: var(--text-lg);
+  padding: 15px 30px;
+  font-size: var(--text-base);
 }
 
 .btn:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-  transform: none !important;
-  box-shadow: none !important;
+  opacity: 0.65;
+  pointer-events: none;
+  box-shadow: none;
 }
 
-/* ============================================
-   SECTIONS
-   ============================================ */
-
-.section {
-  padding: clamp(50px, 8vw, 90px) 0;
-}
-
-.section-title {
-  font-size: var(--text-4xl);
-  font-weight: 800;
+.text-center {
   text-align: center;
-  margin-bottom: clamp(40px, 6vw, 60px);
-  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 50%, var(--accent) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  position: relative;
-  padding-bottom: 20px;
-}
-
-.section-title::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: clamp(60px, 10vw, 100px);
-  height: 4px;
-  background: linear-gradient(90deg, var(--primary), var(--accent));
-  border-radius: 2px;
-}
-
-/* ============================================
-   MAIN
-   ============================================ */
-
-main {
-  min-height: calc(100vh - 70px);
-}
-
-/* ============================================
-   SELECTION
-   ============================================ */
-
-::selection {
-  background: rgba(79, 70, 229, 0.25);
-  color: inherit;
-}
-
-/* ============================================
-   SCROLLBAR
-   ============================================ */
-
-::-webkit-scrollbar {
-  width: 8px;
-  height: 6px;
-}
-
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-body.dark ::-webkit-scrollbar-track {
-  background: var(--bg-dark);
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--primary);
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--primary-dark);
-}
-
-/* ============================================
-   FOCUS
-   ============================================ */
-
-:focus {
-  outline: 2px solid var(--primary);
-  outline-offset: 2px;
-}
-
-:focus:not(:focus-visible) {
-  outline: none;
-}
-
-/* ============================================
-   LOADING SHIMMER
-   ============================================ */
-
-@keyframes shimmer {
-  0% {
-    background-position: -1000px 0;
-  }
-
-  100% {
-    background-position: 1000px 0;
-  }
-}
-
-.loading-shimmer {
-  background: linear-gradient(90deg,
-      var(--border-light) 25%,
-      var(--bg-light) 50%,
-      var(--border-light) 75%);
-  background-size: 1000px 100%;
-  animation: shimmer 2s infinite;
-}
-
-body.dark .loading-shimmer {
-  background: linear-gradient(90deg,
-      var(--border-dark) 25%,
-      var(--bg-dark) 50%,
-      var(--border-dark) 75%);
-}
-
-/* ============================================
-   SPINNER
-   ============================================ */
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
 }
 
 .spinner {
@@ -381,58 +235,54 @@ body.dark .loading-shimmer {
 
 body.dark .spinner {
   border-color: var(--border-dark);
-  border-top-color: var(--primary);
+  border-top-color: #5eead4;
 }
 
-/* ============================================
-   MOBILE TOUCH IMPROVEMENTS
-   ============================================ */
-
-/* Remove tap delay on iOS */
-a,
-button,
-input,
-select,
-textarea {
-  -webkit-tap-highlight-color: transparent;
-}
-
-/* Prevent zoom on input focus (iOS) */
-@media (max-width: 768px) {
-
-  input[type="text"],
-  input[type="email"],
-  input[type="password"],
-  input[type="number"],
-  input[type="tel"],
-  input[type="url"],
-  select,
-  textarea {
-    font-size: 16px !important;
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
   }
 }
 
-/* ============================================
-   SAFE AREA (iPhone X+)
-   ============================================ */
+main {
+  min-height: calc(100vh - 72px);
+}
+
+main:focus {
+  outline: none;
+}
+
+.route-loading {
+  min-height: calc(100vh - 72px);
+  display: grid;
+  place-items: center;
+}
+
+::selection {
+  background: rgba(15, 118, 110, 0.2);
+}
+
+:focus-visible {
+  outline: 2px solid var(--secondary);
+  outline-offset: 2px;
+}
+
+@media (max-width: 768px) {
+  input,
+  textarea,
+  select {
+    font-size: 16px !important;
+  }
+}
 
 @supports (padding: max(0px)) {
   .header {
     padding-left: max(0px, env(safe-area-inset-left));
     padding-right: max(0px, env(safe-area-inset-right));
   }
-
-  .footer {
-    padding-bottom: max(20px, env(safe-area-inset-bottom));
-  }
 }
 
-/* ============================================
-   PRINT
-   ============================================ */
-
 @media print {
-
   .header,
   .footer,
   .btn {

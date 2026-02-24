@@ -1,46 +1,58 @@
 const express = require('express');
-const router = express.Router();
 const crypto = require('crypto');
 const axios = require('axios');
 const fs = require('fs').promises;
 const path = require('path');
 const { auth, adminAuth } = require('../middleware/auth');
 
-// Shopify OAuth Configuration
+const router = express.Router();
+
 const SHOPIFY_API_KEY = process.env.SHOPIFY_API_KEY;
 const SHOPIFY_API_SECRET = process.env.SHOPIFY_API_SECRET;
 const SHOPIFY_SCOPES = 'read_products,write_products,read_orders,write_orders,read_customers';
-const REDIRECT_URI = process.env.SHOPIFY_REDIRECT_URI || 'http://localhost:5000/api/shopify/callback';
-
-// Store file path
+const REDIRECT_URI = process.env.SHOPIFY_REDIRECT_URI || 'http://localhost:5001/api/shopify/callback';
+const CLIENT_URL = process.env.CLIENT_URL || process.env.FRONTEND_URL || 'http://localhost:3000';
+const SHOP_REGEX = /^[a-z0-9][a-z0-9-]*\.myshopify\.com$/i;
 const STORES_FILE = path.join(__dirname, '../data/shopify-stores.json');
 
-// Helper: Read stores from file
+const ensureShopifyConfigured = (_req, res, next) => {
+  if (!SHOPIFY_API_KEY || !SHOPIFY_API_SECRET) {
+    return res.status(503).json({ error: 'Shopify integration is not configured' });
+  }
+
+  return next();
+};
+
+const normalizeShop = (shop) => String(shop || '').trim().toLowerCase();
+
+const isValidShop = (shop) => SHOP_REGEX.test(normalizeShop(shop));
+
 const readStores = async () => {
   try {
     const data = await fs.readFile(STORES_FILE, 'utf8');
     return JSON.parse(data);
-  } catch (error) {
+  } catch (_error) {
     return [];
   }
 };
 
-// Helper: Write stores to file
 const writeStores = async (stores) => {
-  await fs.writeFile(STORES_FILE, JSON.stringify(stores, null, 2));
+  await fs.writeFile(STORES_FILE, JSON.stringify(stores, null, 2), 'utf8');
 };
 
-// Helper: Generate nonce for security
 const generateNonce = () => {
   return crypto.randomBytes(16).toString('hex');
 };
 
-// Helper: Verify HMAC
 const verifyHmac = (query) => {
   const { hmac, ...params } = query;
+  if (!hmac || typeof hmac !== 'string' || !SHOPIFY_API_SECRET) {
+    return false;
+  }
+
   const message = Object.keys(params)
     .sort()
-    .map(key => `${key}=${params[key]}`)
+    .map((key) => `${key}=${params[key]}`)
     .join('&');
 
   const generatedHash = crypto
@@ -48,70 +60,77 @@ const verifyHmac = (query) => {
     .update(message)
     .digest('hex');
 
-  return generatedHash === hmac;
+  const generatedBuffer = Buffer.from(generatedHash, 'utf8');
+  const providedBuffer = Buffer.from(hmac, 'utf8');
+
+  if (generatedBuffer.length !== providedBuffer.length) {
+    return false;
+  }
+
+  return crypto.timingSafeEqual(generatedBuffer, providedBuffer);
 };
 
-// @route   GET /api/shopify/auth
-// @desc    Initiate Shopify OAuth
-// @access  Public
-router.get('/auth', (req, res) => {
-  const { shop } = req.query;
+// Initiate Shopify OAuth (Admin only)
+router.get('/auth', auth, adminAuth, ensureShopifyConfigured, (req, res) => {
+  const shop = normalizeShop(req.query.shop);
 
   if (!shop) {
     return res.status(400).json({ error: 'Shop parameter is required' });
   }
 
-  // Validate shop domain
-  const shopRegex = /^[a-zA-Z0-9][a-zA-Z0-9\-]*\.myshopify\.com$/;
-  if (!shopRegex.test(shop)) {
+  if (!isValidShop(shop)) {
     return res.status(400).json({ error: 'Invalid shop domain' });
   }
 
   const nonce = generateNonce();
-  const installUrl = `https://${shop}/admin/oauth/authorize?client_id=${SHOPIFY_API_KEY}&scope=${SHOPIFY_SCOPES}&redirect_uri=${REDIRECT_URI}&state=${nonce}`;
+  const installUrl = `https://${shop}/admin/oauth/authorize?client_id=${SHOPIFY_API_KEY}&scope=${SHOPIFY_SCOPES}&redirect_uri=${encodeURIComponent(
+    REDIRECT_URI
+  )}&state=${nonce}`;
 
-  // Store nonce in session or temporary storage (for production, use Redis or database)
-  // For now, we'll pass it through the state parameter
-  res.json({ installUrl, nonce });
+  return res.json({ installUrl, nonce });
 });
 
-// @route   GET /api/shopify/callback
-// @desc    Shopify OAuth callback
-// @access  Public
-router.get('/callback', async (req, res) => {
-  const { code, hmac, shop, state } = req.query;
+// Shopify OAuth callback
+router.get('/callback', ensureShopifyConfigured, async (req, res) => {
+  const code = String(req.query.code || '');
+  const hmac = String(req.query.hmac || '');
+  const shop = normalizeShop(req.query.shop);
+  const state = String(req.query.state || '');
 
-  // Verify HMAC
+  if (!code || !hmac || !shop || !state) {
+    return res.status(400).send('Missing required OAuth parameters');
+  }
+
+  if (!isValidShop(shop)) {
+    return res.status(400).send('Invalid shop domain');
+  }
+
   if (!verifyHmac(req.query)) {
     return res.status(400).send('HMAC validation failed');
   }
 
   try {
-    // Exchange code for access token
-    const response = await axios.post(`https://${shop}/admin/oauth/access_token`, {
+    const tokenResponse = await axios.post(`https://${shop}/admin/oauth/access_token`, {
       client_id: SHOPIFY_API_KEY,
       client_secret: SHOPIFY_API_SECRET,
       code
     });
 
-    const { access_token } = response.data;
+    const accessToken = tokenResponse.data.access_token;
 
-    // Get shop info
     const shopInfoResponse = await axios.get(`https://${shop}/admin/api/2024-01/shop.json`, {
       headers: {
-        'X-Shopify-Access-Token': access_token
+        'X-Shopify-Access-Token': accessToken
       }
     });
 
     const shopInfo = shopInfoResponse.data.shop;
-
-    // Save store info
     const stores = await readStores();
-    const existingStoreIndex = stores.findIndex(s => s.shop === shop);
+    const existingStoreIndex = stores.findIndex((store) => store.shop === shop);
 
     const storeData = {
       shop,
-      accessToken: access_token,
+      accessToken,
       shopInfo: {
         name: shopInfo.name,
         email: shopInfo.email,
@@ -131,51 +150,51 @@ router.get('/callback', async (req, res) => {
 
     await writeStores(stores);
 
-    // Redirect to success page
-    res.redirect(`${process.env.CLIENT_URL}/admin/shopify/success?shop=${shop}`);
+    return res.redirect(`${CLIENT_URL}/admin/shopify/success?shop=${encodeURIComponent(shop)}`);
   } catch (error) {
     console.error('Shopify OAuth error:', error.response?.data || error.message);
-    res.redirect(`${process.env.CLIENT_URL}/admin/shopify/error`);
+    return res.redirect(`${CLIENT_URL}/admin/shopify?status=error`);
   }
 });
 
-// @route   GET /api/shopify/stores
-// @desc    Get all connected stores
-// @access  Private (Admin only)
-router.get('/stores', auth, adminAuth, async (req, res) => {
+// Get all connected stores (Admin only)
+router.get('/stores', auth, adminAuth, async (_req, res) => {
   try {
     const stores = await readStores();
-    // Don't send access tokens to client
     const sanitizedStores = stores.map(({ accessToken, ...store }) => store);
-    res.json(sanitizedStores);
+    return res.json(sanitizedStores);
   } catch (error) {
-    res.status(500).json({ error: 'Failed to fetch stores' });
+    return res.status(500).json({ error: 'Failed to fetch stores' });
   }
 });
 
-// @route   DELETE /api/shopify/stores/:shop
-// @desc    Disconnect a store
-// @access  Private (Admin only)
+// Disconnect a store (Admin only)
 router.delete('/stores/:shop', auth, adminAuth, async (req, res) => {
+  const shop = normalizeShop(req.params.shop);
+  if (!isValidShop(shop)) {
+    return res.status(400).json({ error: 'Invalid shop domain' });
+  }
+
   try {
-    const { shop } = req.params;
     const stores = await readStores();
-    const filteredStores = stores.filter(s => s.shop !== shop);
+    const filteredStores = stores.filter((store) => store.shop !== shop);
     await writeStores(filteredStores);
-    res.json({ message: 'Store disconnected successfully' });
+    return res.json({ message: 'Store disconnected successfully' });
   } catch (error) {
-    res.status(500).json({ error: 'Failed to disconnect store' });
+    return res.status(500).json({ error: 'Failed to disconnect store' });
   }
 });
 
-// @route   GET /api/shopify/products/:shop
-// @desc    Get products from a specific store
-// @access  Private (add auth middleware in production)
-router.get('/products/:shop', async (req, res) => {
+// Get products from a store (Admin only)
+router.get('/products/:shop', auth, adminAuth, async (req, res) => {
+  const shop = normalizeShop(req.params.shop);
+  if (!isValidShop(shop)) {
+    return res.status(400).json({ error: 'Invalid shop domain' });
+  }
+
   try {
-    const { shop } = req.params;
     const stores = await readStores();
-    const store = stores.find(s => s.shop === shop);
+    const store = stores.find((item) => item.shop === shop);
 
     if (!store) {
       return res.status(404).json({ error: 'Store not found' });
@@ -187,21 +206,23 @@ router.get('/products/:shop', async (req, res) => {
       }
     });
 
-    res.json(response.data.products);
+    return res.json(response.data.products);
   } catch (error) {
     console.error('Error fetching products:', error.response?.data || error.message);
-    res.status(500).json({ error: 'Failed to fetch products' });
+    return res.status(500).json({ error: 'Failed to fetch products' });
   }
 });
 
-// @route   GET /api/shopify/orders/:shop
-// @desc    Get orders from a specific store
-// @access  Private (add auth middleware in production)
-router.get('/orders/:shop', async (req, res) => {
+// Get orders from a store (Admin only)
+router.get('/orders/:shop', auth, adminAuth, async (req, res) => {
+  const shop = normalizeShop(req.params.shop);
+  if (!isValidShop(shop)) {
+    return res.status(400).json({ error: 'Invalid shop domain' });
+  }
+
   try {
-    const { shop } = req.params;
     const stores = await readStores();
-    const store = stores.find(s => s.shop === shop);
+    const store = stores.find((item) => item.shop === shop);
 
     if (!store) {
       return res.status(404).json({ error: 'Store not found' });
@@ -217,10 +238,10 @@ router.get('/orders/:shop', async (req, res) => {
       }
     });
 
-    res.json(response.data.orders);
+    return res.json(response.data.orders);
   } catch (error) {
     console.error('Error fetching orders:', error.response?.data || error.message);
-    res.status(500).json({ error: 'Failed to fetch orders' });
+    return res.status(500).json({ error: 'Failed to fetch orders' });
   }
 });
 

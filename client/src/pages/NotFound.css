@@ -1,0 +1,49 @@
+.not-found-page {
+  min-height: calc(100vh - 72px);
+  display: flex;
+  align-items: center;
+  padding: clamp(96px, 14vw, 150px) 0 clamp(64px, 10vw, 100px);
+}
+
+.not-found-card {
+  width: min(620px, 100%);
+  margin: 0 auto;
+  text-align: center;
+  background: var(--surface-light);
+  border: 1px solid var(--border-light);
+  border-radius: 24px;
+  padding: clamp(28px, 5vw, 44px);
+  box-shadow: var(--shadow);
+}
+
+body.dark .not-found-card {
+  background: var(--surface-dark);
+  border-color: var(--border-dark);
+}
+
+.not-found-code {
+  display: inline-flex;
+  margin-bottom: 14px;
+  font-size: clamp(2.8rem, 9vw, 5rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.not-found-card h1 {
+  font-size: clamp(1.5rem, 4vw, 2.2rem);
+  margin-bottom: 12px;
+}
+
+.not-found-card p {
+  color: var(--text-light-secondary);
+  max-width: 48ch;
+  margin: 0 auto 22px;
+}
+
+body.dark .not-found-card p {
+  color: var(--text-dark-secondary);
+}

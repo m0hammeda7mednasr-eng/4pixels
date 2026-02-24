@@ -5,6 +5,8 @@ import { LanguageProvider } from './context/LanguageContext';
 import { AuthProvider } from './context/AuthContext';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import ScrollToTop from './components/ScrollToTop';
+import AdminRoute from './components/AdminRoute';
 import Home from './pages/Home';
 import Services from './pages/Services';
 import ServiceDetail from './pages/ServiceDetail';
@@ -16,6 +18,7 @@ import Login from './pages/Login';
 import Admin from './pages/Admin';
 import ShopifyConnect from './pages/ShopifyConnect';
 import ShopifySuccess from './pages/ShopifySuccess';
+import NotFound from './pages/NotFound';
 
 function App() {
   return (
@@ -23,8 +26,12 @@ function App() {
       <ThemeProvider>
         <LanguageProvider>
           <AuthProvider>
+            <ScrollToTop />
+            <a href="#main-content" className="skip-link">
+              Skip to content
+            </a>
             <Header />
-            <main>
+            <main id="main-content" tabIndex={-1}>
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/services" element={<Services />} />
@@ -34,9 +41,31 @@ function App() {
                 <Route path="/about" element={<About />} />
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/login" element={<Login />} />
-                <Route path="/admin" element={<Admin />} />
-                <Route path="/admin/shopify" element={<ShopifyConnect />} />
-                <Route path="/admin/shopify/success" element={<ShopifySuccess />} />
+                <Route
+                  path="/admin"
+                  element={
+                    <AdminRoute>
+                      <Admin />
+                    </AdminRoute>
+                  }
+                />
+                <Route
+                  path="/admin/shopify"
+                  element={
+                    <AdminRoute>
+                      <ShopifyConnect />
+                    </AdminRoute>
+                  }
+                />
+                <Route
+                  path="/admin/shopify/success"
+                  element={
+                    <AdminRoute>
+                      <ShopifySuccess />
+                    </AdminRoute>
+                  }
+                />
+                <Route path="*" element={<NotFound />} />
               </Routes>
             </main>
             <Footer />
