@@ -214,7 +214,7 @@ const Contact = () => {
                 <input
                   id="name"
                   type="text"
-                  placeholder={language === 'en' ? 'Mohammed Ahmed' : 'محمد أحمد'}
+                  placeholder=""
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   required
@@ -228,7 +228,7 @@ const Contact = () => {
                 <input
                   id="email"
                   type="email"
-                  placeholder="email@example.com"
+                  placeholder=""
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   required
@@ -242,7 +242,7 @@ const Contact = () => {
                 <input
                   id="phone"
                   type="tel"
-                  placeholder="+20 123 456 7890"
+                  placeholder=""
                   value={formData.phone}
                   onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                 />
@@ -255,7 +255,7 @@ const Contact = () => {
                 <input
                   id="company"
                   type="text"
-                  placeholder={language === 'en' ? 'Your Company Name' : 'اسم شركتك'}
+                  placeholder=""
                   value={formData.company}
                   onChange={(e) => setFormData({ ...formData, company: e.target.value })}
                 />
@@ -281,7 +281,7 @@ const Contact = () => {
                 <label htmlFor="message">{t('message')}</label>
                 <textarea
                   id="message"
-                  placeholder={language === 'en' ? 'Tell us about your project...' : 'أخبرنا عن مشروعك...'}
+                  placeholder=""
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   required

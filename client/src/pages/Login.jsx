@@ -71,7 +71,7 @@ const Login = () => {
               <input
                 id="email"
                 type="email"
-                placeholder="Mohammedahmed@gmail.com"
+                placeholder=""
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 required
@@ -86,7 +86,7 @@ const Login = () => {
                 <input
                   id="password"
                   type={showPassword ? 'text' : 'password'}
-                  placeholder="01066184859Mm#"
+                  placeholder=""
                   value={formData.password}
                   onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                   required
