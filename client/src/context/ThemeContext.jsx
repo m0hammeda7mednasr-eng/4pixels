@@ -10,7 +10,8 @@ export const ThemeProvider = ({ children }) => {
   });
 
   useEffect(() => {
-    document.body.className = theme;
+    document.body.classList.remove('light', 'dark');
+    document.body.classList.add(theme);
     localStorage.setItem('theme', theme);
   }, [theme]);
 

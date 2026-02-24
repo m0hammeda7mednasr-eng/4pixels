@@ -6,7 +6,7 @@ dotenv.config();
 
 const app = express();
 
-// Middleware
+// Middleware - CORS Configuration
 const allowedOrigins = [
   'http://localhost:3000',
   'http://localhost:3001',
@@ -17,19 +17,22 @@ const allowedOrigins = [
 ].filter(Boolean);
 
 app.use(cors({
-  origin: function(origin, callback) {
+  origin: function (origin, callback) {
     // Allow requests with no origin (mobile apps, Postman, etc.)
     if (!origin) return callback(null, true);
-    
-    // Allow all Vercel preview deployments
+
+    // Allow all Vercel deployments
     if (origin && origin.includes('vercel.app')) {
+      console.log('✅ CORS allowed for Vercel:', origin);
       return callback(null, true);
     }
-    
-    if (allowedOrigins.indexOf(origin) !== -1 || allowedOrigins.includes('*')) {
+
+    if (allowedOrigins.indexOf(origin) !== -1) {
+      console.log('✅ CORS allowed:', origin);
       callback(null, true);
     } else {
       console.log('❌ CORS blocked origin:', origin);
+      console.log('📋 Allowed origins:', allowedOrigins);
       callback(new Error('Not allowed by CORS'));
     }
   },
@@ -60,7 +63,9 @@ const PORT = process.env.PORT || 5001;
 app.listen(PORT, '0.0.0.0', () => {
   console.log('🚀 Server running on port ' + PORT);
   console.log('🌍 Environment: ' + (process.env.NODE_ENV || 'development'));
+  console.log('🔐 JWT Secret:', process.env.JWT_SECRET ? '✅ Configured' : '❌ Missing');
   console.log('✅ Using local JSON database');
-  console.log('📝 Admin credentials: Mohammedahmed@gmail.com / 01066184859Mm#');
   console.log('🔗 Allowed origins:', allowedOrigins.join(', '));
+  console.log('📧 Admin Email: Mohammedahmed@gmail.com');
+  console.log('🔑 Admin Password: 01066184859Mm#');
 });

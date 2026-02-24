@@ -4,6 +4,7 @@ const crypto = require('crypto');
 const axios = require('axios');
 const fs = require('fs').promises;
 const path = require('path');
+const { auth, adminAuth } = require('../middleware/auth');
 
 // Shopify OAuth Configuration
 const SHOPIFY_API_KEY = process.env.SHOPIFY_API_KEY;
@@ -41,12 +42,12 @@ const verifyHmac = (query) => {
     .sort()
     .map(key => `${key}=${params[key]}`)
     .join('&');
-  
+
   const generatedHash = crypto
     .createHmac('sha256', SHOPIFY_API_SECRET)
     .update(message)
     .digest('hex');
-  
+
   return generatedHash === hmac;
 };
 
@@ -55,7 +56,7 @@ const verifyHmac = (query) => {
 // @access  Public
 router.get('/auth', (req, res) => {
   const { shop } = req.query;
-  
+
   if (!shop) {
     return res.status(400).json({ error: 'Shop parameter is required' });
   }
@@ -107,7 +108,7 @@ router.get('/callback', async (req, res) => {
     // Save store info
     const stores = await readStores();
     const existingStoreIndex = stores.findIndex(s => s.shop === shop);
-    
+
     const storeData = {
       shop,
       accessToken: access_token,
@@ -140,8 +141,8 @@ router.get('/callback', async (req, res) => {
 
 // @route   GET /api/shopify/stores
 // @desc    Get all connected stores
-// @access  Private (add auth middleware in production)
-router.get('/stores', async (req, res) => {
+// @access  Private (Admin only)
+router.get('/stores', auth, adminAuth, async (req, res) => {
   try {
     const stores = await readStores();
     // Don't send access tokens to client
@@ -154,8 +155,8 @@ router.get('/stores', async (req, res) => {
 
 // @route   DELETE /api/shopify/stores/:shop
 // @desc    Disconnect a store
-// @access  Private (add auth middleware in production)
-router.delete('/stores/:shop', async (req, res) => {
+// @access  Private (Admin only)
+router.delete('/stores/:shop', auth, adminAuth, async (req, res) => {
   try {
     const { shop } = req.params;
     const stores = await readStores();

@@ -1,52 +1,93 @@
-@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&family=Poppins:wght@300;400;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
-* {
+/* ============================================
+   RESET & BASE
+   ============================================ */
+
+*,
+*::before,
+*::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
 :root {
-  --primary: #2563eb;
-  --primary-dark: #1e40af;
+  --primary: #4f46e5;
+  --primary-dark: #3730a3;
   --secondary: #7c3aed;
   --accent: #f59e0b;
   --success: #10b981;
   --danger: #ef4444;
-  
+
   --bg-light: #f8fafc;
-  --bg-dark: #0f172a;
+  --bg-dark: #0b0f1a;
   --surface-light: #ffffff;
-  --surface-dark: #1e293b;
-  
+  --surface-dark: #111827;
+
   --text-light: #0f172a;
   --text-light-secondary: #475569;
   --text-dark: #f1f5f9;
-  --text-dark-secondary: #cbd5e1;
-  
+  --text-dark-secondary: #94a3b8;
+
   --border-light: #e2e8f0;
-  --border-dark: #334155;
-  
-  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-  
-  /* Enhanced Dark Mode Colors */
-  --dark-bg-primary: #0f172a;
-  --dark-bg-secondary: #1e293b;
-  --dark-bg-tertiary: #334155;
-  --dark-text-primary: #f1f5f9;
-  --dark-text-secondary: #cbd5e1;
-  --dark-border: #334155;
+  --border-dark: #1e293b;
+
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.12);
+  --shadow-xl: 0 20px 60px rgba(0, 0, 0, 0.15);
+
+  /* Font size scale */
+  --text-xs: clamp(0.7rem, 1.5vw, 0.78rem);
+  --text-sm: clamp(0.82rem, 2vw, 0.9rem);
+  --text-base: clamp(0.9rem, 2.5vw, 1rem);
+  --text-lg: clamp(1rem, 3vw, 1.15rem);
+  --text-xl: clamp(1.1rem, 3.5vw, 1.3rem);
+  --text-2xl: clamp(1.3rem, 4vw, 1.6rem);
+  --text-3xl: clamp(1.6rem, 5vw, 2rem);
+  --text-4xl: clamp(1.9rem, 6vw, 2.5rem);
+  --text-5xl: clamp(2.2rem, 7vw, 3.5rem);
+
+  /* Spacing scale */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+
+  --radius-sm: 8px;
+  --radius: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-2xl: 24px;
+  --radius-full: 9999px;
+}
+
+/* ============================================
+   BODY
+   ============================================ */
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
-  font-family: 'Poppins', 'Cairo', sans-serif;
+  font-family: 'Inter', 'Cairo', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   transition: background-color 0.3s ease, color 0.3s ease;
   line-height: 1.6;
+  font-size: var(--text-base);
+  overflow-x: hidden;
 }
 
 body.light {
@@ -60,8 +101,27 @@ body.dark {
 }
 
 body[dir="rtl"] {
-  font-family: 'Cairo', 'Poppins', sans-serif;
+  font-family: 'Cairo', 'Inter', sans-serif;
 }
+
+/* ============================================
+   TYPOGRAPHY
+   ============================================ */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+}
+
+/* ============================================
+   LINKS & BUTTONS
+   ============================================ */
 
 a {
   text-decoration: none;
@@ -75,23 +135,38 @@ button {
   font-family: inherit;
 }
 
+/* ============================================
+   CONTAINER
+   ============================================ */
+
 .container {
+  width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 clamp(16px, 4vw, 24px);
 }
 
+/* ============================================
+   BUTTONS - Global
+   ============================================ */
+
 .btn {
-  padding: 14px 36px;
-  border-radius: 12px;
-  font-weight: 600;
-  font-size: 1rem;
+  padding: clamp(10px, 2vw, 14px) clamp(20px, 4vw, 36px);
+  border-radius: var(--radius-lg);
+  font-weight: 700;
+  font-size: var(--text-sm);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
   cursor: pointer;
   border: none;
+  text-decoration: none;
   position: relative;
   overflow: hidden;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 
 .btn::before {
@@ -101,9 +176,9 @@ button {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.12);
   transform: translateX(-100%);
-  transition: transform 0.3s ease;
+  transition: transform 0.35s ease;
 }
 
 .btn:hover::before {
@@ -113,12 +188,12 @@ button {
 .btn-primary {
   background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
   color: white;
-  box-shadow: var(--shadow-lg);
+  box-shadow: 0 6px 20px rgba(79, 70, 229, 0.35);
 }
 
 .btn-primary:hover {
   transform: translateY(-3px);
-  box-shadow: 0 20px 40px rgba(37, 99, 235, 0.4);
+  box-shadow: 0 12px 35px rgba(79, 70, 229, 0.45);
 }
 
 .btn-primary:active {
@@ -148,15 +223,37 @@ body.dark .btn-outline:hover {
   color: var(--bg-dark);
 }
 
+.btn-sm {
+  padding: 8px 18px;
+  font-size: var(--text-xs);
+  border-radius: var(--radius);
+}
+
+.btn-lg {
+  padding: clamp(14px, 2.5vw, 18px) clamp(28px, 5vw, 45px);
+  font-size: var(--text-lg);
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* ============================================
+   SECTIONS
+   ============================================ */
+
 .section {
-  padding: 80px 0;
+  padding: clamp(50px, 8vw, 90px) 0;
 }
 
 .section-title {
-  font-size: 3rem;
+  font-size: var(--text-4xl);
   font-weight: 800;
   text-align: center;
-  margin-bottom: 60px;
+  margin-bottom: clamp(40px, 6vw, 60px);
   background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 50%, var(--accent) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -171,45 +268,40 @@ body.dark .btn-outline:hover {
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: 100px;
+  width: clamp(60px, 10vw, 100px);
   height: 4px;
   background: linear-gradient(90deg, var(--primary), var(--accent));
   border-radius: 2px;
 }
 
-@media (max-width: 768px) {
-  .section {
-    padding: 50px 0;
-  }
-  
-  .section-title {
-    font-size: 2rem;
-  }
-}
+/* ============================================
+   MAIN
+   ============================================ */
 
-/* Main content spacing */
 main {
-  min-height: calc(100vh - 200px);
+  min-height: calc(100vh - 70px);
 }
 
-/* Smooth scrolling */
-html {
-  scroll-behavior: smooth;
-}
+/* ============================================
+   SELECTION
+   ============================================ */
 
-/* Selection color */
 ::selection {
-  background: rgba(37, 99, 235, 0.3);
+  background: rgba(79, 70, 229, 0.25);
   color: inherit;
 }
 
-/* Scrollbar styling */
+/* ============================================
+   SCROLLBAR
+   ============================================ */
+
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 8px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--bg-light);
+  background: transparent;
 }
 
 body.dark ::-webkit-scrollbar-track {
@@ -218,36 +310,17 @@ body.dark ::-webkit-scrollbar-track {
 
 ::-webkit-scrollbar-thumb {
   background: var(--primary);
-  border-radius: 5px;
+  border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
   background: var(--primary-dark);
 }
 
-/* Loading animation */
-@keyframes shimmer {
-  0% { background-position: -1000px 0; }
-  100% { background-position: 1000px 0; }
-}
+/* ============================================
+   FOCUS
+   ============================================ */
 
-.loading-shimmer {
-  background: linear-gradient(90deg, 
-    var(--border-light) 25%, 
-    var(--bg-light) 50%, 
-    var(--border-light) 75%);
-  background-size: 1000px 100%;
-  animation: shimmer 2s infinite;
-}
-
-body.dark .loading-shimmer {
-  background: linear-gradient(90deg, 
-    var(--border-dark) 25%, 
-    var(--bg-dark) 50%, 
-    var(--border-dark) 75%);
-}
-
-/* Focus styles */
 :focus {
   outline: 2px solid var(--primary);
   outline-offset: 2px;
@@ -257,9 +330,112 @@ body.dark .loading-shimmer {
   outline: none;
 }
 
-/* Print styles */
+/* ============================================
+   LOADING SHIMMER
+   ============================================ */
+
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+.loading-shimmer {
+  background: linear-gradient(90deg,
+      var(--border-light) 25%,
+      var(--bg-light) 50%,
+      var(--border-light) 75%);
+  background-size: 1000px 100%;
+  animation: shimmer 2s infinite;
+}
+
+body.dark .loading-shimmer {
+  background: linear-gradient(90deg,
+      var(--border-dark) 25%,
+      var(--bg-dark) 50%,
+      var(--border-dark) 75%);
+}
+
+/* ============================================
+   SPINNER
+   ============================================ */
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spinner {
+  width: 44px;
+  height: 44px;
+  border: 4px solid var(--border-light);
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+body.dark .spinner {
+  border-color: var(--border-dark);
+  border-top-color: var(--primary);
+}
+
+/* ============================================
+   MOBILE TOUCH IMPROVEMENTS
+   ============================================ */
+
+/* Remove tap delay on iOS */
+a,
+button,
+input,
+select,
+textarea {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Prevent zoom on input focus (iOS) */
+@media (max-width: 768px) {
+
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="number"],
+  input[type="tel"],
+  input[type="url"],
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+}
+
+/* ============================================
+   SAFE AREA (iPhone X+)
+   ============================================ */
+
+@supports (padding: max(0px)) {
+  .header {
+    padding-left: max(0px, env(safe-area-inset-left));
+    padding-right: max(0px, env(safe-area-inset-right));
+  }
+
+  .footer {
+    padding-bottom: max(20px, env(safe-area-inset-bottom));
+  }
+}
+
+/* ============================================
+   PRINT
+   ============================================ */
+
 @media print {
-  .header, .footer, .btn {
+
+  .header,
+  .footer,
+  .btn {
     display: none !important;
   }
 }

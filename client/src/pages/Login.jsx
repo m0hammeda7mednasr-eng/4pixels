@@ -17,11 +17,13 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  // Clear old tokens on component mount
+  // Redirect to admin if already authenticated
   React.useEffect(() => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-  }, []);
+    const token = localStorage.getItem('token');
+    if (token) {
+      navigate('/admin');
+    }
+  }, [navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

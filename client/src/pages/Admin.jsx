@@ -3,9 +3,9 @@ import { Navigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '../context/AuthContext';
 import { toast, ToastContainer } from 'react-toastify';
-import { 
-  FiGrid, FiFolder, FiMessageSquare, 
-  FiEdit2, FiTrash2, 
+import {
+  FiGrid, FiFolder, FiMessageSquare,
+  FiEdit2, FiTrash2,
   FiPlus, FiX, FiSave, FiEye, FiDollarSign,
   FiClock, FiCheck, FiSearch
 } from 'react-icons/fi';
@@ -21,7 +21,7 @@ const Admin = () => {
   const [reviews, setReviews] = useState([]);
   const [content, setContent] = useState(null);
   const [loading, setLoading] = useState(true);
-  
+
   // Modal states
   const [showModal, setShowModal] = useState(false);
   const [modalType, setModalType] = useState('');
@@ -40,7 +40,7 @@ const Admin = () => {
         setLoading(false);
         return;
       }
-      
+
       const [servicesRes, projectsRes, messagesRes, reviewsRes, contentRes] = await Promise.all([
         api.get('/services').catch(err => ({ data: [] })),
         api.get('/projects').catch(err => ({ data: [] })),
@@ -48,7 +48,7 @@ const Admin = () => {
         api.get('/reviews/admin/all').catch(err => ({ data: [] })),
         api.get('/content').catch(err => ({ data: null }))
       ]);
-      
+
       setServices(servicesRes.data || []);
       setProjects(projectsRes.data || []);
       setMessages(messagesRes.data || []);
@@ -75,7 +75,7 @@ const Admin = () => {
 
   const deleteItem = async (type, id) => {
     if (!window.confirm(`Are you sure you want to delete this ${type}?`)) return;
-    
+
     try {
       await api.delete(`/${type}/${id}`);
       toast.success(`${type} deleted successfully`);
@@ -111,50 +111,50 @@ const Admin = () => {
   return (
     <div className="admin-dashboard">
       <ToastContainer position="top-right" autoClose={3000} />
-      
+
       <div className="admin-sidebar">
         <div className="admin-logo">
           <h2>4Pixels Admin</h2>
           <p>Dashboard</p>
         </div>
-        
+
         <nav className="admin-nav">
-          <button 
-            className={activeTab === 'overview' ? 'active' : ''} 
+          <button
+            className={activeTab === 'overview' ? 'active' : ''}
             onClick={() => setActiveTab('overview')}
           >
             <FiGrid /> Overview
           </button>
-          <button 
-            className={activeTab === 'services' ? 'active' : ''} 
+          <button
+            className={activeTab === 'services' ? 'active' : ''}
             onClick={() => setActiveTab('services')}
           >
             <FiGrid /> Services
             <span className="count">{stats.services}</span>
           </button>
-          <button 
-            className={activeTab === 'projects' ? 'active' : ''} 
+          <button
+            className={activeTab === 'projects' ? 'active' : ''}
             onClick={() => setActiveTab('projects')}
           >
             <FiFolder /> Projects
             <span className="count">{stats.projects}</span>
           </button>
-          <button 
-            className={activeTab === 'reviews' ? 'active' : ''} 
+          <button
+            className={activeTab === 'reviews' ? 'active' : ''}
             onClick={() => setActiveTab('reviews')}
           >
             <FiCheck /> Reviews
             <span className="count">{stats.activeReviews}</span>
           </button>
-          <button 
-            className={activeTab === 'messages' ? 'active' : ''} 
+          <button
+            className={activeTab === 'messages' ? 'active' : ''}
             onClick={() => setActiveTab('messages')}
           >
             <FiMessageSquare /> Messages
             {stats.unreadMessages > 0 && <span className="badge">{stats.unreadMessages}</span>}
           </button>
-          <button 
-            className={activeTab === 'content' ? 'active' : ''} 
+          <button
+            className={activeTab === 'content' ? 'active' : ''}
             onClick={() => setActiveTab('content')}
           >
             <FiEdit2 /> Content
@@ -167,28 +167,28 @@ const Admin = () => {
           {activeTab === 'overview' && (
             <OverviewTab stats={stats} services={services} messages={messages} reviews={reviews} />
           )}
-          
+
           {activeTab === 'services' && (
-            <ServicesTab 
-              services={services} 
+            <ServicesTab
+              services={services}
               onEdit={(item) => openModal('service', item)}
               onDelete={(id) => deleteItem('services', id)}
               onAdd={() => openModal('service')}
             />
           )}
-          
+
           {activeTab === 'projects' && (
-            <ProjectsTab 
-              projects={projects} 
+            <ProjectsTab
+              projects={projects}
               onEdit={(item) => openModal('project', item)}
               onDelete={(id) => deleteItem('projects', id)}
               onAdd={() => openModal('project')}
             />
           )}
-          
+
           {activeTab === 'reviews' && (
-            <ReviewsTab 
-              reviews={reviews} 
+            <ReviewsTab
+              reviews={reviews}
               onEdit={(item) => openModal('review', item)}
               onDelete={(id) => deleteItem('reviews', id)}
               onAdd={() => openModal('review')}
@@ -203,11 +203,11 @@ const Admin = () => {
               }}
             />
           )}
-          
+
           {activeTab === 'messages' && (
             <MessagesTab messages={messages} fetchData={fetchData} onDelete={(id) => deleteItem('messages', id)} />
           )}
-          
+
           {activeTab === 'content' && content && (
             <ContentTab content={content} onSave={async (updatedContent) => {
               try {
@@ -223,9 +223,9 @@ const Admin = () => {
       </div>
 
       {showModal && (
-        <Modal 
-          type={modalType} 
-          item={editingItem} 
+        <Modal
+          type={modalType}
+          item={editingItem}
           onClose={closeModal}
           onSave={() => { closeModal(); fetchData(); }}
         />
@@ -238,9 +238,9 @@ const Admin = () => {
 const OverviewTab = ({ stats, services, messages, reviews }) => {
   const recentMessages = messages.slice(0, 5);
   const recentReviews = reviews.filter(r => r.active).slice(0, 3);
-  
+
   return (
-    <motion.div 
+    <motion.div
       className="admin-content"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
@@ -252,7 +252,7 @@ const OverviewTab = ({ stats, services, messages, reviews }) => {
           <p>Welcome back! Here's what's happening with your business.</p>
         </div>
       </div>
-      
+
       <div className="stats-grid">
         <div className="stat-card primary">
           <div className="stat-icon">
@@ -263,7 +263,7 @@ const OverviewTab = ({ stats, services, messages, reviews }) => {
             <p>Active Services</p>
           </div>
         </div>
-        
+
         <div className="stat-card success">
           <div className="stat-icon">
             <FiFolder />
@@ -273,7 +273,7 @@ const OverviewTab = ({ stats, services, messages, reviews }) => {
             <p>Total Projects</p>
           </div>
         </div>
-        
+
         <div className="stat-card warning">
           <div className="stat-icon">
             <FiMessageSquare />
@@ -283,7 +283,7 @@ const OverviewTab = ({ stats, services, messages, reviews }) => {
             <p>Unread Messages</p>
           </div>
         </div>
-        
+
         <div className="stat-card info">
           <div className="stat-icon">
             <FiCheck />
@@ -309,7 +309,7 @@ const OverviewTab = ({ stats, services, messages, reviews }) => {
                     <strong>{msg.name}</strong>
                     <span className="time">{new Date(msg.createdAt).toLocaleDateString()}</span>
                   </div>
-                  <p>{msg.message.substring(0, 60)}...</p>
+                  <p>{msg.message?.substring(0, 60) || ''}...</p>
                 </div>
               ))
             ) : (
@@ -349,14 +349,14 @@ const OverviewTab = ({ stats, services, messages, reviews }) => {
 // Services Tab Component
 const ServicesTab = ({ services, onEdit, onDelete, onAdd }) => {
   const [searchTerm, setSearchTerm] = useState('');
-  
-  const filteredServices = services.filter(s => 
+
+  const filteredServices = services.filter(s =>
     s.title.en.toLowerCase().includes(searchTerm.toLowerCase()) ||
     s.title.ar.includes(searchTerm)
   );
 
   return (
-    <motion.div 
+    <motion.div
       className="admin-content"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
@@ -374,14 +374,14 @@ const ServicesTab = ({ services, onEdit, onDelete, onAdd }) => {
 
       <div className="search-bar">
         <FiSearch />
-        <input 
-          type="text" 
-          placeholder="Search services..." 
+        <input
+          type="text"
+          placeholder="Search services..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
       </div>
-      
+
       <div className="cards-grid">
         {filteredServices.map(service => (
           <div key={service.id} className="service-card">
@@ -411,7 +411,7 @@ const ServicesTab = ({ services, onEdit, onDelete, onAdd }) => {
               </span>
             </div>
             <div className="service-features">
-              {service.features.en.slice(0, 3).map((feature, idx) => (
+              {(service.features?.en || []).slice(0, 3).map((feature, idx) => (
                 <span key={idx} className="feature-tag">
                   <FiCheck /> {feature}
                 </span>
@@ -428,9 +428,9 @@ const ServicesTab = ({ services, onEdit, onDelete, onAdd }) => {
 const ProjectsTab = ({ projects, onEdit, onDelete, onAdd }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [filterCategory, setFilterCategory] = useState('all');
-  
+
   const categories = ['all', ...new Set(projects.map(p => p.category))];
-  
+
   const filteredProjects = projects.filter(p => {
     const matchesSearch = p.title.en.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesCategory = filterCategory === 'all' || p.category === filterCategory;
@@ -438,7 +438,7 @@ const ProjectsTab = ({ projects, onEdit, onDelete, onAdd }) => {
   });
 
   return (
-    <motion.div 
+    <motion.div
       className="admin-content"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
@@ -457,16 +457,16 @@ const ProjectsTab = ({ projects, onEdit, onDelete, onAdd }) => {
       <div className="filters-bar">
         <div className="search-bar">
           <FiSearch />
-          <input 
-            type="text" 
-            placeholder="Search projects..." 
+          <input
+            type="text"
+            placeholder="Search projects..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
         <div className="category-filters">
           {categories.map(cat => (
-            <button 
+            <button
               key={cat}
               className={`filter-btn ${filterCategory === cat ? 'active' : ''}`}
               onClick={() => setFilterCategory(cat)}
@@ -476,7 +476,7 @@ const ProjectsTab = ({ projects, onEdit, onDelete, onAdd }) => {
           ))}
         </div>
       </div>
-      
+
       <div className="projects-grid">
         {filteredProjects.map(project => (
           <div key={project.id} className="project-card">
@@ -510,7 +510,7 @@ const ProjectsTab = ({ projects, onEdit, onDelete, onAdd }) => {
 // Messages Tab Component
 const MessagesTab = ({ messages, fetchData, onDelete }) => {
   const [filter, setFilter] = useState('all');
-  
+
   const filteredMessages = messages.filter(m => {
     if (filter === 'unread') return !m.read;
     if (filter === 'read') return m.read;
@@ -528,7 +528,7 @@ const MessagesTab = ({ messages, fetchData, onDelete }) => {
   };
 
   return (
-    <motion.div 
+    <motion.div
       className="admin-content"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
@@ -540,19 +540,19 @@ const MessagesTab = ({ messages, fetchData, onDelete }) => {
           <p>Customer inquiries and feedback</p>
         </div>
         <div className="message-filters">
-          <button 
+          <button
             className={`filter-btn ${filter === 'all' ? 'active' : ''}`}
             onClick={() => setFilter('all')}
           >
             All ({messages.length})
           </button>
-          <button 
+          <button
             className={`filter-btn ${filter === 'unread' ? 'active' : ''}`}
             onClick={() => setFilter('unread')}
           >
             Unread ({messages.filter(m => !m.read).length})
           </button>
-          <button 
+          <button
             className={`filter-btn ${filter === 'read' ? 'active' : ''}`}
             onClick={() => setFilter('read')}
           >
@@ -560,7 +560,7 @@ const MessagesTab = ({ messages, fetchData, onDelete }) => {
           </button>
         </div>
       </div>
-      
+
       <div className="messages-list">
         {filteredMessages.map(msg => (
           <div key={msg.id} className={`message-card ${msg.read ? 'read' : 'unread'}`}>
@@ -602,7 +602,7 @@ const MessagesTab = ({ messages, fetchData, onDelete }) => {
 // Reviews Tab Component
 const ReviewsTab = ({ reviews, onEdit, onDelete, onAdd, onToggle }) => {
   const [filter, setFilter] = useState('all');
-  
+
   const filteredReviews = reviews.filter(r => {
     if (filter === 'active') return r.active;
     if (filter === 'inactive') return !r.active;
@@ -610,7 +610,7 @@ const ReviewsTab = ({ reviews, onEdit, onDelete, onAdd, onToggle }) => {
   });
 
   return (
-    <motion.div 
+    <motion.div
       className="admin-content"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
@@ -628,19 +628,19 @@ const ReviewsTab = ({ reviews, onEdit, onDelete, onAdd, onToggle }) => {
 
       <div className="filters-bar">
         <div className="category-filters">
-          <button 
+          <button
             className={`filter-btn ${filter === 'all' ? 'active' : ''}`}
             onClick={() => setFilter('all')}
           >
             All ({reviews.length})
           </button>
-          <button 
+          <button
             className={`filter-btn ${filter === 'active' ? 'active' : ''}`}
             onClick={() => setFilter('active')}
           >
             Active ({reviews.filter(r => r.active).length})
           </button>
-          <button 
+          <button
             className={`filter-btn ${filter === 'inactive' ? 'active' : ''}`}
             onClick={() => setFilter('inactive')}
           >
@@ -648,7 +648,7 @@ const ReviewsTab = ({ reviews, onEdit, onDelete, onAdd, onToggle }) => {
           </button>
         </div>
       </div>
-      
+
       <div className="reviews-grid">
         {filteredReviews.map(review => (
           <div key={review.id} className={`review-admin-card ${!review.active ? 'inactive' : ''}`}>
@@ -668,9 +668,9 @@ const ReviewsTab = ({ reviews, onEdit, onDelete, onAdd, onToggle }) => {
                 </div>
                 {review.verified && <span className="verified-badge-admin">✓ Verified</span>}
               </div>
-              <p className="review-text-preview">{review.text.en.substring(0, 100)}...</p>
+              <p className="review-text-preview">{(review.text?.en || '').substring(0, 100)}...</p>
               <div className="review-admin-actions">
-                <button 
+                <button
                   className={`btn-sm ${review.active ? 'btn-warning' : 'btn-success'}`}
                   onClick={() => onToggle(review.id)}
                 >
@@ -751,7 +751,7 @@ const Modal = ({ type, item, onClose, onSave }) => {
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
     setImageFiles(prev => [...prev, ...files]);
-    
+
     // Create previews
     files.forEach(file => {
       const reader = new FileReader();
@@ -808,15 +808,15 @@ const Modal = ({ type, item, onClose, onSave }) => {
     setFormData({
       ...formData,
       features: {
-        en: formData.features.en.filter((_, i) => i !== index),
-        ar: formData.features.ar.filter((_, i) => i !== index)
+        en: (formData.features?.en || []).filter((_, i) => i !== index),
+        ar: (formData.features?.ar || []).filter((_, i) => i !== index)
       }
     });
   };
 
   return (
     <div className="modal-overlay" onClick={onClose}>
-      <motion.div 
+      <motion.div
         className="modal-content"
         initial={{ scale: 0.9, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
@@ -828,26 +828,26 @@ const Modal = ({ type, item, onClose, onSave }) => {
             <FiX />
           </button>
         </div>
-        
+
         <form onSubmit={handleSubmit} className="modal-form">
           {type === 'review' ? (
             <>
               <div className="form-row">
                 <div className="form-group">
                   <label>Name (English)</label>
-                  <input 
-                    type="text" 
+                  <input
+                    type="text"
                     value={formData.name?.en || ''}
-                    onChange={(e) => setFormData({...formData, name: {...formData.name, en: e.target.value}})}
+                    onChange={(e) => setFormData({ ...formData, name: { ...formData.name, en: e.target.value } })}
                     required
                   />
                 </div>
                 <div className="form-group">
                   <label>Name (Arabic)</label>
-                  <input 
-                    type="text" 
+                  <input
+                    type="text"
                     value={formData.name?.ar || ''}
-                    onChange={(e) => setFormData({...formData, name: {...formData.name, ar: e.target.value}})}
+                    onChange={(e) => setFormData({ ...formData, name: { ...formData.name, ar: e.target.value } })}
                     required
                   />
                 </div>
@@ -856,18 +856,18 @@ const Modal = ({ type, item, onClose, onSave }) => {
               <div className="form-row">
                 <div className="form-group">
                   <label>Review Text (English)</label>
-                  <textarea 
+                  <textarea
                     value={formData.text?.en || ''}
-                    onChange={(e) => setFormData({...formData, text: {...formData.text, en: e.target.value}})}
+                    onChange={(e) => setFormData({ ...formData, text: { ...formData.text, en: e.target.value } })}
                     rows="4"
                     required
                   />
                 </div>
                 <div className="form-group">
                   <label>Review Text (Arabic)</label>
-                  <textarea 
+                  <textarea
                     value={formData.text?.ar || ''}
-                    onChange={(e) => setFormData({...formData, text: {...formData.text, ar: e.target.value}})}
+                    onChange={(e) => setFormData({ ...formData, text: { ...formData.text, ar: e.target.value } })}
                     rows="4"
                     required
                   />
@@ -877,15 +877,15 @@ const Modal = ({ type, item, onClose, onSave }) => {
               <div className="form-row">
                 <div className="form-group">
                   <label>Customer Image</label>
-                  <input 
-                    type="file" 
+                  <input
+                    type="file"
                     accept="image/*"
                     onChange={(e) => {
                       const file = e.target.files[0];
                       if (file) {
                         const reader = new FileReader();
                         reader.onloadend = () => {
-                          setFormData({...formData, image: reader.result});
+                          setFormData({ ...formData, image: reader.result });
                         };
                         reader.readAsDataURL(file);
                       }
@@ -902,8 +902,8 @@ const Modal = ({ type, item, onClose, onSave }) => {
                     }}
                   />
                   {formData.image && (
-                    <img 
-                      src={formData.image} 
+                    <img
+                      src={formData.image}
                       alt="Preview"
                       style={{
                         width: '100px',
@@ -918,12 +918,12 @@ const Modal = ({ type, item, onClose, onSave }) => {
                 </div>
                 <div className="form-group">
                   <label>Rating (1-5)</label>
-                  <input 
-                    type="number" 
+                  <input
+                    type="number"
                     min="1"
                     max="5"
                     value={formData.rating || 5}
-                    onChange={(e) => setFormData({...formData, rating: parseInt(e.target.value)})}
+                    onChange={(e) => setFormData({ ...formData, rating: parseInt(e.target.value) })}
                     required
                   />
                 </div>
@@ -934,19 +934,19 @@ const Modal = ({ type, item, onClose, onSave }) => {
               <div className="form-row">
                 <div className="form-group">
                   <label>Title (English)</label>
-                  <input 
-                    type="text" 
+                  <input
+                    type="text"
                     value={formData.title?.en || ''}
-                    onChange={(e) => setFormData({...formData, title: {...formData.title, en: e.target.value}})}
+                    onChange={(e) => setFormData({ ...formData, title: { ...formData.title, en: e.target.value } })}
                     required
                   />
                 </div>
                 <div className="form-group">
                   <label>Title (Arabic)</label>
-                  <input 
-                    type="text" 
+                  <input
+                    type="text"
                     value={formData.title?.ar || ''}
-                    onChange={(e) => setFormData({...formData, title: {...formData.title, ar: e.target.value}})}
+                    onChange={(e) => setFormData({ ...formData, title: { ...formData.title, ar: e.target.value } })}
                     required
                   />
                 </div>
@@ -955,18 +955,18 @@ const Modal = ({ type, item, onClose, onSave }) => {
               <div className="form-row">
                 <div className="form-group">
                   <label>Description (English)</label>
-                  <textarea 
+                  <textarea
                     value={formData.description?.en || ''}
-                    onChange={(e) => setFormData({...formData, description: {...formData.description, en: e.target.value}})}
+                    onChange={(e) => setFormData({ ...formData, description: { ...formData.description, en: e.target.value } })}
                     rows="3"
                     required
                   />
                 </div>
                 <div className="form-group">
                   <label>Description (Arabic)</label>
-                  <textarea 
+                  <textarea
                     value={formData.description?.ar || ''}
-                    onChange={(e) => setFormData({...formData, description: {...formData.description, ar: e.target.value}})}
+                    onChange={(e) => setFormData({ ...formData, description: { ...formData.description, ar: e.target.value } })}
                     rows="3"
                     required
                   />
@@ -980,7 +980,7 @@ const Modal = ({ type, item, onClose, onSave }) => {
                       <label>Category</label>
                       <select
                         value={formData.category || ''}
-                        onChange={(e) => setFormData({...formData, category: e.target.value})}
+                        onChange={(e) => setFormData({ ...formData, category: e.target.value })}
                         required
                         style={{
                           width: '100%',
@@ -1001,10 +1001,10 @@ const Modal = ({ type, item, onClose, onSave }) => {
                     </div>
                     <div className="form-group">
                       <label>Price ($)</label>
-                      <input 
-                        type="number" 
+                      <input
+                        type="number"
                         value={formData.price || 0}
-                        onChange={(e) => setFormData({...formData, price: parseInt(e.target.value)})}
+                        onChange={(e) => setFormData({ ...formData, price: parseInt(e.target.value) })}
                         required
                       />
                     </div>
@@ -1012,10 +1012,10 @@ const Modal = ({ type, item, onClose, onSave }) => {
 
                   <div className="form-group">
                     <label>Delivery Time</label>
-                    <input 
-                      type="text" 
+                    <input
+                      type="text"
                       value={formData.deliveryTime || ''}
-                      onChange={(e) => setFormData({...formData, deliveryTime: e.target.value})}
+                      onChange={(e) => setFormData({ ...formData, deliveryTime: e.target.value })}
                       placeholder="e.g., 2-4 weeks"
                       required
                     />
@@ -1023,15 +1023,15 @@ const Modal = ({ type, item, onClose, onSave }) => {
 
                   <div className="form-group">
                     <label>Service Image (Optional)</label>
-                    <input 
-                      type="file" 
+                    <input
+                      type="file"
                       accept="image/*"
                       onChange={(e) => {
                         const file = e.target.files[0];
                         if (file) {
                           const reader = new FileReader();
                           reader.onloadend = () => {
-                            setFormData({...formData, image: reader.result});
+                            setFormData({ ...formData, image: reader.result });
                           };
                           reader.readAsDataURL(file);
                         }
@@ -1048,8 +1048,8 @@ const Modal = ({ type, item, onClose, onSave }) => {
                       }}
                     />
                     {formData.image && (
-                      <img 
-                        src={formData.image} 
+                      <img
+                        src={formData.image}
                         alt="Preview"
                         style={{
                           width: '100%',
@@ -1076,14 +1076,14 @@ const Modal = ({ type, item, onClose, onSave }) => {
                       ))}
                     </div>
                     <div className="add-feature">
-                      <input 
-                        type="text" 
+                      <input
+                        type="text"
                         placeholder="Feature (English)"
                         value={newFeatureEn}
                         onChange={(e) => setNewFeatureEn(e.target.value)}
                       />
-                      <input 
-                        type="text" 
+                      <input
+                        type="text"
                         placeholder="Feature (Arabic)"
                         value={newFeatureAr}
                         onChange={(e) => setNewFeatureAr(e.target.value)}
@@ -1103,7 +1103,7 @@ const Modal = ({ type, item, onClose, onSave }) => {
                       <label>Category</label>
                       <select
                         value={formData.category || ''}
-                        onChange={(e) => setFormData({...formData, category: e.target.value})}
+                        onChange={(e) => setFormData({ ...formData, category: e.target.value })}
                         required
                         style={{
                           width: '100%',
@@ -1124,10 +1124,10 @@ const Modal = ({ type, item, onClose, onSave }) => {
                     </div>
                     <div className="form-group">
                       <label>Client</label>
-                      <input 
-                        type="text" 
+                      <input
+                        type="text"
                         value={formData.client || ''}
-                        onChange={(e) => setFormData({...formData, client: e.target.value})}
+                        onChange={(e) => setFormData({ ...formData, client: e.target.value })}
                         required
                       />
                     </div>
@@ -1135,8 +1135,8 @@ const Modal = ({ type, item, onClose, onSave }) => {
 
                   <div className="form-group">
                     <label>Project Images (Multiple)</label>
-                    <input 
-                      type="file" 
+                    <input
+                      type="file"
                       accept="image/*"
                       multiple
                       onChange={handleImageChange}
@@ -1165,8 +1165,8 @@ const Modal = ({ type, item, onClose, onSave }) => {
                             overflow: 'hidden',
                             border: '2px solid var(--admin-border)'
                           }}>
-                            <img 
-                              src={preview} 
+                            <img
+                              src={preview}
                               alt={`Preview ${index + 1}`}
                               style={{
                                 width: '100%',
@@ -1206,7 +1206,7 @@ const Modal = ({ type, item, onClose, onSave }) => {
               )}
             </>
           )}
-          
+
           <div className="modal-actions">
             <button type="submit" className="btn-primary">
               <FiSave /> Save {type}
@@ -1249,26 +1249,26 @@ const ContentTab = ({ content, onSave }) => {
     >
       <div className="tab-header">
         <h2>Content Management</h2>
-        <button className="btn btn-primary" onClick={handleSave}>
+        <button className="btn-primary" onClick={handleSave}>
           <FiSave /> Save Changes
         </button>
       </div>
 
       <div className="content-sections">
         <div className="section-tabs">
-          <button 
+          <button
             className={activeSection === 'siteInfo' ? 'active' : ''}
             onClick={() => setActiveSection('siteInfo')}
           >
             Site Info
           </button>
-          <button 
+          <button
             className={activeSection === 'socialMedia' ? 'active' : ''}
             onClick={() => setActiveSection('socialMedia')}
           >
             Social Media
           </button>
-          <button 
+          <button
             className={activeSection === 'hero' ? 'active' : ''}
             onClick={() => setActiveSection('hero')}
           >
