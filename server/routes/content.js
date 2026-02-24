@@ -14,44 +14,40 @@ router.get('/', async (req, res) => {
   }
 });
 
-// Get content by key
-router.get('/:key', async (req, res) => {
+// Get content by section (siteInfo, socialMedia, hero)
+router.get('/:section', async (req, res) => {
   try {
     const content = readJSON('content.json');
-    const item = content.find(c => c.key === req.params.key);
-    if (!item) {
-      return res.status(404).json({ message: 'Content not found' });
+    const section = content[req.params.section];
+    if (!section) {
+      return res.status(404).json({ message: 'Section not found' });
     }
-    res.json(item);
+    res.json(section);
   } catch (err) {
     res.status(500).json({ message: 'Server error' });
   }
 });
 
-// Update or create content (Admin only)
-router.put('/:key', auth, adminAuth, async (req, res) => {
+// Update content section (Admin only)
+router.put('/:section', auth, adminAuth, async (req, res) => {
   try {
     const content = readJSON('content.json');
-    const index = content.findIndex(c => c.key === req.params.key);
-    
-    if (index === -1) {
-      const newContent = {
-        key: req.params.key,
-        ...req.body,
-        updatedAt: new Date().toISOString()
-      };
-      content.push(newContent);
-      writeJSON('content.json', content);
-      res.json(newContent);
-    } else {
-      content[index] = {
-        ...content[index],
-        ...req.body,
-        updatedAt: new Date().toISOString()
-      };
-      writeJSON('content.json', content);
-      res.json(content[index]);
-    }
+    content[req.params.section] = {
+      ...content[req.params.section],
+      ...req.body
+    };
+    writeJSON('content.json', content);
+    res.json(content[req.params.section]);
+  } catch (err) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// Update entire content (Admin only)
+router.put('/', auth, adminAuth, async (req, res) => {
+  try {
+    writeJSON('content.json', req.body);
+    res.json(req.body);
   } catch (err) {
     res.status(500).json({ message: 'Server error' });
   }

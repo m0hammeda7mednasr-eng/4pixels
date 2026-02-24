@@ -19,6 +19,7 @@ const Admin = () => {
   const [projects, setProjects] = useState([]);
   const [messages, setMessages] = useState([]);
   const [reviews, setReviews] = useState([]);
+  const [content, setContent] = useState(null);
   const [loading, setLoading] = useState(true);
   
   // Modal states
@@ -40,17 +41,19 @@ const Admin = () => {
         return;
       }
       
-      const [servicesRes, projectsRes, messagesRes, reviewsRes] = await Promise.all([
+      const [servicesRes, projectsRes, messagesRes, reviewsRes, contentRes] = await Promise.all([
         api.get('/services').catch(err => ({ data: [] })),
         api.get('/projects').catch(err => ({ data: [] })),
         api.get('/messages').catch(err => ({ data: [] })),
-        api.get('/reviews/admin/all').catch(err => ({ data: [] }))
+        api.get('/reviews/admin/all').catch(err => ({ data: [] })),
+        api.get('/content').catch(err => ({ data: null }))
       ]);
       
       setServices(servicesRes.data || []);
       setProjects(projectsRes.data || []);
       setMessages(messagesRes.data || []);
       setReviews(reviewsRes.data || []);
+      setContent(contentRes.data || null);
     } catch (err) {
       console.error('Fetch error:', err);
       toast.error(err.response?.data?.message || 'Failed to fetch data');
@@ -150,6 +153,12 @@ const Admin = () => {
             <FiMessageSquare /> Messages
             {stats.unreadMessages > 0 && <span className="badge">{stats.unreadMessages}</span>}
           </button>
+          <button 
+            className={activeTab === 'content' ? 'active' : ''} 
+            onClick={() => setActiveTab('content')}
+          >
+            <FiEdit2 /> Content
+          </button>
         </nav>
       </div>
 
@@ -197,6 +206,18 @@ const Admin = () => {
           
           {activeTab === 'messages' && (
             <MessagesTab messages={messages} fetchData={fetchData} onDelete={(id) => deleteItem('messages', id)} />
+          )}
+          
+          {activeTab === 'content' && content && (
+            <ContentTab content={content} onSave={async (updatedContent) => {
+              try {
+                await api.put('/content', updatedContent);
+                toast.success('Content updated successfully');
+                fetchData();
+              } catch (err) {
+                toast.error('Failed to update content');
+              }
+            }} />
           )}
         </AnimatePresence>
       </div>
@@ -1197,6 +1218,312 @@ const Modal = ({ type, item, onClose, onSave }) => {
         </form>
       </motion.div>
     </div>
+  );
+};
+
+// Content Tab Component
+const ContentTab = ({ content, onSave }) => {
+  const [formData, setFormData] = useState(content);
+  const [activeSection, setActiveSection] = useState('siteInfo');
+
+  const handleSave = () => {
+    onSave(formData);
+  };
+
+  const updateSection = (section, field, value) => {
+    setFormData(prev => ({
+      ...prev,
+      [section]: {
+        ...prev[section],
+        [field]: value
+      }
+    }));
+  };
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -20 }}
+      className="tab-content"
+    >
+      <div className="tab-header">
+        <h2>Content Management</h2>
+        <button className="btn btn-primary" onClick={handleSave}>
+          <FiSave /> Save Changes
+        </button>
+      </div>
+
+      <div className="content-sections">
+        <div className="section-tabs">
+          <button 
+            className={activeSection === 'siteInfo' ? 'active' : ''}
+            onClick={() => setActiveSection('siteInfo')}
+          >
+            Site Info
+          </button>
+          <button 
+            className={activeSection === 'socialMedia' ? 'active' : ''}
+            onClick={() => setActiveSection('socialMedia')}
+          >
+            Social Media
+          </button>
+          <button 
+            className={activeSection === 'hero' ? 'active' : ''}
+            onClick={() => setActiveSection('hero')}
+          >
+            Hero Section
+          </button>
+        </div>
+
+        <div className="section-content">
+          {activeSection === 'siteInfo' && (
+            <div className="form-section">
+              <h3>Site Information</h3>
+              <div className="form-grid">
+                <div className="form-group">
+                  <label>Site Name</label>
+                  <input
+                    type="text"
+                    value={formData.siteInfo?.siteName || ''}
+                    onChange={(e) => updateSection('siteInfo', 'siteName', e.target.value)}
+                  />
+                </div>
+                <div className="form-group">
+                  <label>Tagline</label>
+                  <input
+                    type="text"
+                    value={formData.siteInfo?.tagline || ''}
+                    onChange={(e) => updateSection('siteInfo', 'tagline', e.target.value)}
+                  />
+                </div>
+                <div className="form-group full-width">
+                  <label>Description</label>
+                  <textarea
+                    value={formData.siteInfo?.description || ''}
+                    onChange={(e) => updateSection('siteInfo', 'description', e.target.value)}
+                    rows="3"
+                  />
+                </div>
+                <div className="form-group">
+                  <label>Email</label>
+                  <input
+                    type="email"
+                    value={formData.siteInfo?.email || ''}
+                    onChange={(e) => updateSection('siteInfo', 'email', e.target.value)}
+                  />
+                </div>
+                <div className="form-group">
+                  <label>Phone</label>
+                  <input
+                    type="text"
+                    value={formData.siteInfo?.phone || ''}
+                    onChange={(e) => updateSection('siteInfo', 'phone', e.target.value)}
+                  />
+                </div>
+                <div className="form-group">
+                  <label>WhatsApp</label>
+                  <input
+                    type="text"
+                    value={formData.siteInfo?.whatsapp || ''}
+                    onChange={(e) => updateSection('siteInfo', 'whatsapp', e.target.value)}
+                  />
+                </div>
+                <div className="form-group">
+                  <label>Address</label>
+                  <input
+                    type="text"
+                    value={formData.siteInfo?.address || ''}
+                    onChange={(e) => updateSection('siteInfo', 'address', e.target.value)}
+                  />
+                </div>
+              </div>
+            </div>
+          )}
+
+          {activeSection === 'socialMedia' && (
+            <div className="form-section">
+              <h3>Social Media Links</h3>
+              <div className="form-grid">
+                <div className="form-group">
+                  <label>Facebook</label>
+                  <input
+                    type="url"
+                    placeholder="https://facebook.com/yourpage"
+                    value={formData.socialMedia?.facebook || ''}
+                    onChange={(e) => updateSection('socialMedia', 'facebook', e.target.value)}
+                  />
+                </div>
+                <div className="form-group">
+                  <label>Instagram</label>
+                  <input
+                    type="url"
+                    placeholder="https://instagram.com/yourpage"
+                    value={formData.socialMedia?.instagram || ''}
+                    onChange={(e) => updateSection('socialMedia', 'instagram', e.target.value)}
+                  />
+                </div>
+                <div className="form-group">
+                  <label>Twitter</label>
+                  <input
+                    type="url"
+                    placeholder="https://twitter.com/yourpage"
+                    value={formData.socialMedia?.twitter || ''}
+                    onChange={(e) => updateSection('socialMedia', 'twitter', e.target.value)}
+                  />
+                </div>
+                <div className="form-group">
+                  <label>LinkedIn</label>
+                  <input
+                    type="url"
+                    placeholder="https://linkedin.com/company/yourpage"
+                    value={formData.socialMedia?.linkedin || ''}
+                    onChange={(e) => updateSection('socialMedia', 'linkedin', e.target.value)}
+                  />
+                </div>
+                <div className="form-group">
+                  <label>GitHub</label>
+                  <input
+                    type="url"
+                    placeholder="https://github.com/yourpage"
+                    value={formData.socialMedia?.github || ''}
+                    onChange={(e) => updateSection('socialMedia', 'github', e.target.value)}
+                  />
+                </div>
+                <div className="form-group">
+                  <label>YouTube</label>
+                  <input
+                    type="url"
+                    placeholder="https://youtube.com/@yourpage"
+                    value={formData.socialMedia?.youtube || ''}
+                    onChange={(e) => updateSection('socialMedia', 'youtube', e.target.value)}
+                  />
+                </div>
+                <div className="form-group">
+                  <label>TikTok</label>
+                  <input
+                    type="url"
+                    placeholder="https://tiktok.com/@yourpage"
+                    value={formData.socialMedia?.tiktok || ''}
+                    onChange={(e) => updateSection('socialMedia', 'tiktok', e.target.value)}
+                  />
+                </div>
+                <div className="form-group">
+                  <label>Behance</label>
+                  <input
+                    type="url"
+                    placeholder="https://behance.net/yourpage"
+                    value={formData.socialMedia?.behance || ''}
+                    onChange={(e) => updateSection('socialMedia', 'behance', e.target.value)}
+                  />
+                </div>
+                <div className="form-group">
+                  <label>Dribbble</label>
+                  <input
+                    type="url"
+                    placeholder="https://dribbble.com/yourpage"
+                    value={formData.socialMedia?.dribbble || ''}
+                    onChange={(e) => updateSection('socialMedia', 'dribbble', e.target.value)}
+                  />
+                </div>
+              </div>
+            </div>
+          )}
+
+          {activeSection === 'hero' && (
+            <div className="form-section">
+              <h3>Hero Section</h3>
+              <div className="form-grid">
+                <div className="form-group">
+                  <label>Title (English)</label>
+                  <input
+                    type="text"
+                    value={formData.hero?.title?.en || ''}
+                    onChange={(e) => setFormData(prev => ({
+                      ...prev,
+                      hero: {
+                        ...prev.hero,
+                        title: { ...prev.hero.title, en: e.target.value }
+                      }
+                    }))}
+                  />
+                </div>
+                <div className="form-group">
+                  <label>Title (Arabic)</label>
+                  <input
+                    type="text"
+                    value={formData.hero?.title?.ar || ''}
+                    onChange={(e) => setFormData(prev => ({
+                      ...prev,
+                      hero: {
+                        ...prev.hero,
+                        title: { ...prev.hero.title, ar: e.target.value }
+                      }
+                    }))}
+                  />
+                </div>
+                <div className="form-group">
+                  <label>Subtitle (English)</label>
+                  <input
+                    type="text"
+                    value={formData.hero?.subtitle?.en || ''}
+                    onChange={(e) => setFormData(prev => ({
+                      ...prev,
+                      hero: {
+                        ...prev.hero,
+                        subtitle: { ...prev.hero.subtitle, en: e.target.value }
+                      }
+                    }))}
+                  />
+                </div>
+                <div className="form-group">
+                  <label>Subtitle (Arabic)</label>
+                  <input
+                    type="text"
+                    value={formData.hero?.subtitle?.ar || ''}
+                    onChange={(e) => setFormData(prev => ({
+                      ...prev,
+                      hero: {
+                        ...prev.hero,
+                        subtitle: { ...prev.hero.subtitle, ar: e.target.value }
+                      }
+                    }))}
+                  />
+                </div>
+                <div className="form-group">
+                  <label>CTA Text (English)</label>
+                  <input
+                    type="text"
+                    value={formData.hero?.ctaText?.en || ''}
+                    onChange={(e) => setFormData(prev => ({
+                      ...prev,
+                      hero: {
+                        ...prev.hero,
+                        ctaText: { ...prev.hero.ctaText, en: e.target.value }
+                      }
+                    }))}
+                  />
+                </div>
+                <div className="form-group">
+                  <label>CTA Text (Arabic)</label>
+                  <input
+                    type="text"
+                    value={formData.hero?.ctaText?.ar || ''}
+                    onChange={(e) => setFormData(prev => ({
+                      ...prev,
+                      hero: {
+                        ...prev.hero,
+                        ctaText: { ...prev.hero.ctaText, ar: e.target.value }
+                      }
+                    }))}
+                  />
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    </motion.div>
   );
 };
 

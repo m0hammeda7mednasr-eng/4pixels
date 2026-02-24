@@ -1,1 +1,36 @@
-[]
+{
+  "siteInfo": {
+    "siteName": "Four Pixels",
+    "tagline": "Transform Your Digital Presence",
+    "description": "Professional web development, mobile apps, and digital marketing services",
+    "email": "Mohammedahmed@gmail.com",
+    "phone": "+20 106 618 4859",
+    "whatsapp": "+201066184859",
+    "address": "Cairo, Egypt"
+  },
+  "socialMedia": {
+    "facebook": "",
+    "instagram": "",
+    "twitter": "",
+    "linkedin": "",
+    "github": "",
+    "youtube": "",
+    "tiktok": "",
+    "behance": "",
+    "dribbble": ""
+  },
+  "hero": {
+    "title": {
+      "en": "Transform Your Digital Presence",
+      "ar": "حوّل حضورك الرقمي"
+    },
+    "subtitle": {
+      "en": "Professional web development and digital solutions",
+      "ar": "تطوير مواقع احترافية وحلول رقمية"
+    },
+    "ctaText": {
+      "en": "Get Started",
+      "ar": "ابدأ الآن"
+    }
+  }
+}
