@@ -80,7 +80,7 @@ out/
 
 # Gatsby
 .cache/
-public/
+# public/ - Commented out to allow client/public folder
 
 # Serverless
 .serverless/
