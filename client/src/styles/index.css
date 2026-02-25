@@ -78,6 +78,18 @@ body.dark {
 
 body[dir='rtl'] {
   font-family: 'Tajawal', sans-serif;
+  line-height: 1.8;
+}
+
+body[dir='rtl'] h1,
+body[dir='rtl'] h2,
+body[dir='rtl'] h3,
+body[dir='rtl'] h4,
+body[dir='rtl'] h5,
+body[dir='rtl'] h6,
+body[dir='rtl'] .btn,
+body[dir='rtl'] .section-title {
+  letter-spacing: 0;
 }
 
 .skip-link {
@@ -277,6 +289,16 @@ main:focus {
 
 @supports (padding: max(0px)) {
   .header {
+    padding-left: max(0px, env(safe-area-inset-left));
+    padding-right: max(0px, env(safe-area-inset-right));
+  }
+
+  .footer-shell {
+    padding-left: max(clamp(16px, 4vw, 28px), env(safe-area-inset-left));
+    padding-right: max(clamp(16px, 4vw, 28px), env(safe-area-inset-right));
+  }
+
+  .home-hero {
     padding-left: max(0px, env(safe-area-inset-left));
     padding-right: max(0px, env(safe-area-inset-right));
   }

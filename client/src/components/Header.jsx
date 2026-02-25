@@ -41,7 +41,7 @@ const Header = () => {
 
   return (
     <motion.header
-      className="header"
+      className={`header ${menuOpen ? 'menu-open' : ''}`}
       initial={{ y: -70 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.35 }}
@@ -74,10 +74,10 @@ const Header = () => {
           <button
             onClick={toggleLanguage}
             className="icon-btn"
-            title={language === 'en' ? 'Arabic' : 'English'}
+            title={language === 'en' ? 'English active - switch to Arabic' : 'Arabic active - switch to English'}
             aria-label="Toggle language"
           >
-            <span className="lang-text">{language === 'en' ? 'AR' : 'EN'}</span>
+            <span className="lang-text">{language.toUpperCase()}</span>
           </button>
           <button
             onClick={toggleTheme}

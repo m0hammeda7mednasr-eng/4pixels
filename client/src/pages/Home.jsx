@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { FiArrowRight, FiStar, FiTrendingUp, FiLayers, FiCheckCircle } from 'react-icons/fi';
+import { FaDatabase, FaHubspot, FaNodeJs, FaPython, FaReact, FaRobot, FaShopify } from 'react-icons/fa';
 import { useLanguage } from '../context/LanguageContext';
 import api from '../services/api';
 import { getCategoryLabel } from '../utils/categoryLabels';
@@ -72,18 +73,29 @@ const Home = () => {
 
   const techStack = useMemo(
     () => [
-      'Shopify',
-      'React',
-      'Node.js',
-      language === 'en' ? 'AI Automation' : 'أتمتة ذكية',
-      'CRM',
-      'ERP',
-      'Google Sheets',
-      'Webhook',
-      'API Integration',
-      'Data Entry Ops'
+      { label: 'Shopify', icon: <FaShopify /> },
+      { label: 'React', icon: <FaReact /> },
+      { label: 'Node.js', icon: <FaNodeJs /> },
+      { label: language === 'en' ? 'AI Automation' : 'أتمتة ذكية', icon: <FaRobot /> },
+      { label: 'CRM', icon: <FaHubspot /> },
+      { label: 'ERP', icon: <FaDatabase /> },
+      { label: 'Python', icon: <FaPython /> },
+      { label: language === 'en' ? 'Data Entry' : 'إدخال بيانات', icon: <FaDatabase /> }
     ],
     [language]
+  );
+
+  const floatingTech = useMemo(
+    () => [
+      { label: 'Shopify', icon: <FaShopify /> },
+      { label: 'React', icon: <FaReact /> },
+      { label: 'Node.js', icon: <FaNodeJs /> },
+      { label: 'Python', icon: <FaPython /> },
+      { label: 'AI', icon: <FaRobot /> },
+      { label: 'CRM', icon: <FaHubspot /> },
+      { label: 'ERP', icon: <FaDatabase /> }
+    ],
+    []
   );
 
   return (
@@ -91,6 +103,18 @@ const Home = () => {
       <section className="home-hero">
         <div className="hero-orb orb-1" />
         <div className="hero-orb orb-2" />
+        <div className="hero-floating-cloud" aria-hidden="true">
+          {floatingTech.map((item, index) => (
+            <span
+              key={item.label}
+              className={`hero-floating-badge badge-${(index % 6) + 1}`}
+              style={{ '--delay': `${index * 0.8}s` }}
+            >
+              {item.icon}
+              {item.label}
+            </span>
+          ))}
+        </div>
         <div className="container hero-grid">
           <motion.div
             className="hero-copy"
@@ -116,8 +140,9 @@ const Home = () => {
             <div className="hero-tech-wrap" aria-label="Technology stack">
               <div className="hero-tech-track">
                 {[...techStack, ...techStack].map((item, index) => (
-                  <span key={`${item}-${index}`} className="hero-tech-chip">
-                    {item}
+                  <span key={`${item.label}-${index}`} className="hero-tech-chip">
+                    {item.icon}
+                    {item.label}
                   </span>
                 ))}
               </div>

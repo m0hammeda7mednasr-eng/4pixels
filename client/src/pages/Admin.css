@@ -10,13 +10,13 @@
    ============================================ */
 
 :root {
-  --admin-primary: #6366f1;
-  --admin-primary-dark: #4f46e5;
-  --admin-secondary: #8b5cf6;
+  --admin-primary: #0f766e;
+  --admin-primary-dark: #115e59;
+  --admin-secondary: #0284c7;
   --admin-success: #10b981;
   --admin-warning: #f59e0b;
   --admin-danger: #ef4444;
-  --admin-info: #3b82f6;
+  --admin-info: #0ea5e9;
 }
 
 /* Light Mode */
@@ -28,8 +28,8 @@ body:not(.dark) {
   --admin-text-secondary: #64748b;
   --admin-border: #e2e8f0;
   --admin-hover: #f1f5f9;
-  --admin-shadow: 0 4px 20px rgba(99, 102, 241, 0.08);
-  --admin-shadow-lg: 0 10px 40px rgba(99, 102, 241, 0.15);
+  --admin-shadow: 0 4px 20px rgba(15, 118, 110, 0.08);
+  --admin-shadow-lg: 0 10px 40px rgba(2, 132, 199, 0.15);
 }
 
 /* Dark Mode */
@@ -105,6 +105,10 @@ body.dark {
   display: flex;
   flex-direction: column;
   gap: 4px;
+}
+
+.admin-mobile-nav-toggle {
+  display: none;
 }
 
 .admin-nav button {
@@ -1363,105 +1367,114 @@ body.dark {
 }
 
 /* ====================================================
-   TABLET & MOBILE: Bottom Tab Bar Navigation
+   TABLET & MOBILE: Compact Dropdown Navigation
    ==================================================== */
 
 @media (max-width: 768px) {
-
-  /* Dashboard layout */
   .admin-dashboard {
     flex-direction: column;
-    padding-bottom: 72px;
-    /* space for bottom tab bar */
+    padding-bottom: 0;
   }
 
-  /* Sidebar → sticky bottom tab bar */
   .admin-sidebar {
     width: 100%;
-    position: fixed;
-    top: auto;
-    bottom: 0;
+    position: sticky;
+    top: 70px;
     left: 0;
     right: 0;
-    height: auto;
-    min-height: 60px;
-    z-index: 200;
+    bottom: auto;
+    padding: 10px 12px;
     border-right: none;
-    border-top: 1px solid var(--admin-border);
-    border-bottom: none;
-    padding: 6px 8px;
-    padding-bottom: max(6px, env(safe-area-inset-bottom));
-    box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.14);
-    overflow: visible;
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    display: flex;
-    flex-direction: column;
-    gap: 0;
+    border-bottom: 1px solid var(--admin-border);
+    box-shadow: 0 8px 24px rgba(2, 6, 23, 0.1);
+    z-index: 130;
+    background: color-mix(in srgb, var(--admin-surface) 92%, transparent);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
   }
 
-  /* Hide the logo badge on mobile */
   .admin-logo {
     display: none;
   }
 
-  /* Nav becomes horizontal scroller */
-  .admin-nav {
-    flex-direction: row;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    gap: 4px;
+  .admin-mobile-nav-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     width: 100%;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-    -webkit-overflow-scrolling: touch;
-    scroll-snap-type: x mandatory;
+    min-height: 44px;
+    border-radius: 12px;
+    padding: 10px 12px;
+    background: var(--admin-surface-2);
+    border: 1px solid var(--admin-border);
+    color: var(--admin-text);
+    font-size: 0.9rem;
+    font-weight: 700;
   }
 
-  .admin-nav::-webkit-scrollbar {
+  .admin-mobile-nav-toggle svg {
+    transition: transform 0.2s ease;
+  }
+
+  .admin-mobile-nav-toggle.open svg {
+    transform: rotate(180deg);
+  }
+
+  .admin-nav {
     display: none;
+    margin-top: 10px;
+    flex-direction: column;
+    gap: 6px;
+    max-height: min(56vh, 360px);
+    overflow-y: auto;
+    padding-right: 2px;
+  }
+
+  .admin-nav.open {
+    display: flex;
   }
 
   .admin-nav button {
-    width: auto;
-    flex: 1;
-    min-width: 68px;
+    width: 100%;
     min-height: 44px;
-    /* Touch target */
-    justify-content: center;
-    flex-direction: column;
-    text-align: center;
-    gap: 3px;
-    font-size: 0.65rem;
-    padding: 6px 8px;
+    justify-content: flex-start;
+    flex-direction: row;
+    text-align: left;
+    gap: 10px;
+    font-size: 0.86rem;
+    padding: 10px 12px;
     border-radius: 10px;
-    scroll-snap-align: start;
-    -webkit-tap-highlight-color: transparent;
   }
 
   .admin-nav button svg {
-    font-size: 1.2rem;
-    flex-shrink: 0;
+    font-size: 1rem;
   }
 
   .admin-nav button .count,
   .admin-nav button .badge {
-    position: absolute;
-    top: 4px;
-    right: 4px;
-    margin-left: 0;
-    padding: 1px 6px;
-    font-size: 0.62rem;
+    position: static;
+    margin-left: auto;
+    padding: 2px 8px;
+    font-size: 0.7rem;
   }
 
-  /* Main content */
+  body[dir='rtl'] .admin-nav button {
+    text-align: right;
+    flex-direction: row-reverse;
+  }
+
+  body[dir='rtl'] .admin-nav button .count,
+  body[dir='rtl'] .admin-nav button .badge {
+    margin-left: 0;
+    margin-right: auto;
+  }
+
   .admin-main {
     margin-left: 0;
     padding: clamp(14px, 3vw, 22px);
-    padding-top: 20px;
+    padding-top: 18px;
   }
 
-  /* Stats */
   .stats-grid {
     grid-template-columns: 1fr 1fr;
     gap: 12px;
@@ -1482,12 +1495,10 @@ body.dark {
     font-size: 1.7rem;
   }
 
-  /* Overview */
   .overview-grid {
     grid-template-columns: 1fr;
   }
 
-  /* Content header */
   .content-header {
     flex-direction: column;
     align-items: flex-start;
@@ -1499,7 +1510,6 @@ body.dark {
     font-size: 1.35rem;
   }
 
-  /* Filters */
   .filters-bar {
     flex-direction: column;
     width: 100%;
@@ -1512,7 +1522,6 @@ body.dark {
     font-size: 0.8rem;
   }
 
-  /* Cards */
   .cards-grid,
   .projects-grid,
   .reviews-grid {
@@ -1520,12 +1529,10 @@ body.dark {
     gap: 14px;
   }
 
-  /* Modal form rows */
   .form-row {
     grid-template-columns: 1fr;
   }
 
-  /* Messages */
   .message-header {
     flex-direction: column;
     gap: 10px;
@@ -1538,7 +1545,6 @@ body.dark {
     gap: 8px;
   }
 
-  /* Content tab sections */
   .content-sections {
     flex-direction: column;
   }
@@ -1566,7 +1572,6 @@ body.dark {
     grid-template-columns: 1fr;
   }
 
-  /* Modal */
   .modal-content {
     width: calc(100vw - 24px) !important;
     max-height: 92vh;
@@ -1637,9 +1642,9 @@ body.dark {
 
 @media (max-width: 360px) {
   .admin-nav button {
-    font-size: 0.6rem;
-    min-width: 58px;
-    padding: 6px 5px;
+    font-size: 0.74rem;
+    min-width: 0;
+    padding: 9px 10px;
   }
 
   .stats-grid {

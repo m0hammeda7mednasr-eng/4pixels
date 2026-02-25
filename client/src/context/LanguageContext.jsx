@@ -65,12 +65,14 @@ export const translations = {
 
 export const LanguageProvider = ({ children }) => {
   const [language, setLanguage] = useState(() => {
-    return localStorage.getItem('language') || 'en';
+    const storedLanguage = localStorage.getItem('language');
+    return storedLanguage === 'ar' || storedLanguage === 'en' ? storedLanguage : 'en';
   });
 
   useEffect(() => {
     document.documentElement.dir = language === 'ar' ? 'rtl' : 'ltr';
     document.documentElement.lang = language;
+    document.body.setAttribute('data-language', language);
     localStorage.setItem('language', language);
   }, [language]);
 

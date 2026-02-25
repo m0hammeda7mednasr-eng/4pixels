@@ -7,7 +7,7 @@ import {
   FiGrid, FiFolder, FiMessageSquare,
   FiEdit2, FiTrash2,
   FiPlus, FiX, FiSave, FiEye, FiDollarSign,
-  FiClock, FiCheck, FiSearch
+  FiClock, FiCheck, FiSearch, FiChevronDown
 } from 'react-icons/fi';
 import api from '../services/api';
 import './Admin.css';
@@ -26,10 +26,15 @@ const Admin = () => {
   const [showModal, setShowModal] = useState(false);
   const [modalType, setModalType] = useState('');
   const [editingItem, setEditingItem] = useState(null);
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
 
   useEffect(() => {
     fetchData();
   }, []);
+
+  useEffect(() => {
+    setMobileNavOpen(false);
+  }, [activeTab]);
 
   const fetchData = async () => {
     setLoading(true);
@@ -108,6 +113,17 @@ const Admin = () => {
     revenue: services.reduce((sum, s) => sum + (s.price || 0), 0)
   };
 
+  const navItems = [
+    { key: 'overview', label: 'Overview', icon: FiGrid },
+    { key: 'services', label: 'Services', icon: FiGrid, count: stats.services },
+    { key: 'projects', label: 'Projects', icon: FiFolder, count: stats.projects },
+    { key: 'reviews', label: 'Reviews', icon: FiCheck, count: stats.activeReviews },
+    { key: 'messages', label: 'Messages', icon: FiMessageSquare, badge: stats.unreadMessages },
+    { key: 'content', label: 'Content', icon: FiEdit2 }
+  ];
+
+  const activeNavLabel = navItems.find((item) => item.key === activeTab)?.label || 'Navigation';
+
   return (
     <div className="admin-dashboard">
       <ToastContainer position="top-right" autoClose={3000} />
@@ -118,47 +134,31 @@ const Admin = () => {
           <p>Dashboard</p>
         </div>
 
-        <nav className="admin-nav">
-          <button
-            className={activeTab === 'overview' ? 'active' : ''}
-            onClick={() => setActiveTab('overview')}
-          >
-            <FiGrid /> Overview
-          </button>
-          <button
-            className={activeTab === 'services' ? 'active' : ''}
-            onClick={() => setActiveTab('services')}
-          >
-            <FiGrid /> Services
-            <span className="count">{stats.services}</span>
-          </button>
-          <button
-            className={activeTab === 'projects' ? 'active' : ''}
-            onClick={() => setActiveTab('projects')}
-          >
-            <FiFolder /> Projects
-            <span className="count">{stats.projects}</span>
-          </button>
-          <button
-            className={activeTab === 'reviews' ? 'active' : ''}
-            onClick={() => setActiveTab('reviews')}
-          >
-            <FiCheck /> Reviews
-            <span className="count">{stats.activeReviews}</span>
-          </button>
-          <button
-            className={activeTab === 'messages' ? 'active' : ''}
-            onClick={() => setActiveTab('messages')}
-          >
-            <FiMessageSquare /> Messages
-            {stats.unreadMessages > 0 && <span className="badge">{stats.unreadMessages}</span>}
-          </button>
-          <button
-            className={activeTab === 'content' ? 'active' : ''}
-            onClick={() => setActiveTab('content')}
-          >
-            <FiEdit2 /> Content
-          </button>
+        <button
+          type="button"
+          className={`admin-mobile-nav-toggle ${mobileNavOpen ? 'open' : ''}`}
+          onClick={() => setMobileNavOpen((prev) => !prev)}
+          aria-expanded={mobileNavOpen}
+        >
+          <span>{activeNavLabel}</span>
+          <FiChevronDown />
+        </button>
+
+        <nav className={`admin-nav ${mobileNavOpen ? 'open' : ''}`}>
+          {navItems.map((item) => {
+            const Icon = item.icon;
+            return (
+              <button
+                key={item.key}
+                className={activeTab === item.key ? 'active' : ''}
+                onClick={() => setActiveTab(item.key)}
+              >
+                <Icon /> {item.label}
+                {typeof item.count === 'number' && <span className="count">{item.count}</span>}
+                {item.badge > 0 && <span className="badge">{item.badge}</span>}
+              </button>
+            );
+          })}
         </nav>
       </div>
 
