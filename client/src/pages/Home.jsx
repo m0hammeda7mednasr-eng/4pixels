@@ -232,6 +232,12 @@ const Home = () => {
             </p>
           </div>
 
+          {reviews.length > 4 && (
+            <div className="reviews-scroll-hint">
+              <FiArrowRight />
+            </div>
+          )}
+
           <div className="reviews-grid-home">
             {reviews.map((review, index) => (
               <motion.article

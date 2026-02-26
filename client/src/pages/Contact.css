@@ -344,8 +344,9 @@ body.dark .social-media-section h3 {
 
 .social-links-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(clamp(90px, 20vw, 130px), 1fr));
-  gap: clamp(8px, 1.5vw, 12px);
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(10px, 2vw, 14px);
+  max-width: 100%;
 }
 
 .social-link-card {
@@ -526,8 +527,20 @@ body.dark .map-placeholder p {
   }
 
   .social-links-grid {
-    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-    gap: 8px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+
+  .social-link-card {
+    padding: clamp(10px, 2vw, 14px) clamp(6px, 1.5vw, 10px);
+  }
+
+  .social-icon {
+    font-size: clamp(1.3rem, 3.5vw, 1.6rem);
+  }
+
+  .social-name {
+    font-size: clamp(0.65rem, 1.6vw, 0.75rem);
   }
 
   .map-container {
