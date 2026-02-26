@@ -167,6 +167,9 @@ const Home = () => {
               </motion.article>
             ))}
           </div>
+          <p className="scroll-indicator">
+            {language === 'en' ? '← Swipe to see more →' : '→ اسحب لرؤية المزيد ←'}
+          </p>
         </div>
       </section>
 
@@ -212,6 +215,9 @@ const Home = () => {
               </motion.article>
             ))}
           </div>
+          <p className="scroll-indicator">
+            {language === 'en' ? '← Swipe to see more →' : '→ اسحب لرؤية المزيد ←'}
+          </p>
         </div>
       </section>
 

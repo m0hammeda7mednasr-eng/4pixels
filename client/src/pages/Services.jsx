@@ -165,6 +165,12 @@ const Services = () => {
               })}
             </div>
 
+            {filteredServices.length > 0 && (
+              <p className="scroll-indicator" style={{ textAlign: 'center', marginTop: '12px', color: 'var(--text-light-secondary)', fontSize: '0.8rem', fontWeight: 600 }}>
+                {language === 'en' ? '← Swipe to see more →' : '→ اسحب لرؤية المزيد ←'}
+              </p>
+            )}
+
             {!filteredServices.length && (
               <div className="services-empty-state">
                 <p>

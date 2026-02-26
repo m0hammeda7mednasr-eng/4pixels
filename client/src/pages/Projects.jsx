@@ -89,30 +89,38 @@ const Projects = () => {
             <div className="spinner" />
           </div>
         ) : (
-          <div className="portfolio-grid">
-            {filteredProjects.map((project, index) => (
-              <motion.article
-                key={project.id}
-                className="portfolio-card"
-                initial={{ opacity: 0, y: 24 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.05 }}
-              >
-                <Link to={`/projects/${project.id}`} className="portfolio-card-media">
-                  <img src={project.images?.[0]} alt={project.title?.[language]} loading="lazy" />
-                </Link>
-                <div className="portfolio-card-body">
-                  <span>{getCategoryLabel(project.category, language)}</span>
-                  <h3>{project.title?.[language]}</h3>
-                  <p>{project.description?.[language]}</p>
-                  <Link to={`/projects/${project.id}`} className="portfolio-card-link">
-                    {language === 'en' ? 'View details' : 'عرض التفاصيل'}
-                    <FiArrowRight />
+          <>
+            <div className="portfolio-grid">
+              {filteredProjects.map((project, index) => (
+                <motion.article
+                  key={project.id}
+                  className="portfolio-card"
+                  initial={{ opacity: 0, y: 24 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.05 }}
+                >
+                  <Link to={`/projects/${project.id}`} className="portfolio-card-media">
+                    <img src={project.images?.[0]} alt={project.title?.[language]} loading="lazy" />
                   </Link>
-                </div>
-              </motion.article>
-            ))}
-          </div>
+                  <div className="portfolio-card-body">
+                    <span>{getCategoryLabel(project.category, language)}</span>
+                    <h3>{project.title?.[language]}</h3>
+                    <p>{project.description?.[language]}</p>
+                    <Link to={`/projects/${project.id}`} className="portfolio-card-link">
+                      {language === 'en' ? 'View details' : 'عرض التفاصيل'}
+                      <FiArrowRight />
+                    </Link>
+                  </div>
+                </motion.article>
+              ))}
+            </div>
+
+            {filteredProjects.length > 0 && (
+              <p className="scroll-indicator" style={{ textAlign: 'center', marginTop: '12px', color: 'var(--text-light-secondary)', fontSize: '0.8rem', fontWeight: 600 }}>
+                {language === 'en' ? '← Swipe to see more →' : '→ اسحب لرؤية المزيد ←'}
+              </p>
+            )}
+          </>
         )}
 
         {!loading && filteredProjects.length === 0 && (
