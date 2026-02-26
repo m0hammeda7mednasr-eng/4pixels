@@ -479,7 +479,7 @@ body.dark .project-body p {
 
 .reviews-grid-home {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: clamp(14px, 2.2vw, 20px);
 }
 
@@ -575,7 +575,10 @@ body[dir='rtl'] .review-top {
 
 @media (max-width: 1080px) {
   .services-grid-home,
-  .projects-grid-home,
+  .projects-grid-home {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .reviews-grid-home {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -607,6 +610,17 @@ body[dir='rtl'] .review-top {
   .hero-actions .btn {
     width: 100%;
     min-width: 0;
+    min-height: 52px;
+    font-size: 1rem;
+    font-weight: 700;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(47, 91, 231, 0.25);
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+
+  .hero-actions .btn:active {
+    transform: scale(0.97);
   }
 
   /* Mobile: Horizontal Scroll for Services & Projects */
@@ -638,11 +652,36 @@ body[dir='rtl'] .review-top {
     flex: 0 0 85%;
     scroll-snap-align: start;
     min-width: 280px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  }
+
+  body.dark .service-card-home,
+  body.dark .project-card-home {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+
+  .service-card-home:active,
+  .project-card-home:active {
+    transform: scale(0.98);
   }
 
   .reviews-grid-home {
     grid-template-columns: 1fr;
     gap: 14px;
+  }
+
+  .review-card-home {
+    border-radius: 16px;
+    padding: 18px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  }
+
+  body.dark .review-card-home {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+
+  .review-card-home:active {
+    transform: scale(0.98);
   }
 
   /* Simplify Hero on Mobile */
@@ -668,6 +707,28 @@ body[dir='rtl'] .review-top {
 
   .hero-metric {
     padding: 10px 8px;
+  }
+
+  /* Mobile Touch Improvements */
+  .service-meta a,
+  .project-link {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 12px;
+    border-radius: 8px;
+    transition: background 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .service-meta a:active,
+  .project-link:active {
+    background: rgba(47, 91, 231, 0.1);
+  }
+
+  body.dark .service-meta a:active,
+  body.dark .project-link:active {
+    background: rgba(127, 163, 255, 0.15);
   }
 }
 

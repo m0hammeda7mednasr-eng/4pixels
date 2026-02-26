@@ -22,6 +22,11 @@ import './Footer.css';
 const Footer = () => {
   const { language } = useLanguage();
   const [content, setContent] = useState(null);
+  const [openSections, setOpenSections] = useState({
+    solutions: false,
+    company: false,
+    contact: false
+  });
 
   useEffect(() => {
     const fetchContent = async () => {
@@ -35,6 +40,16 @@ const Footer = () => {
 
     fetchContent();
   }, []);
+
+  const toggleSection = (section) => {
+    // Only toggle on mobile
+    if (window.innerWidth <= 768) {
+      setOpenSections(prev => ({
+        ...prev,
+        [section]: !prev[section]
+      }));
+    }
+  };
 
   const solutionLinks = useMemo(() => {
     return PRIMARY_CATEGORIES.map((category) => ({
@@ -135,8 +150,10 @@ const Footer = () => {
             </div>
           </section>
 
-          <section className="footer-column">
-            <h4>{language === 'en' ? 'Solutions' : 'الحلول'}</h4>
+          <section className={`footer-column ${openSections.solutions ? 'open' : ''}`}>
+            <h4 onClick={() => toggleSection('solutions')}>
+              {language === 'en' ? 'Solutions' : 'الحلول'}
+            </h4>
             <ul>
               {solutionLinks.map((item) => (
                 <li key={item.label}>
@@ -146,8 +163,10 @@ const Footer = () => {
             </ul>
           </section>
 
-          <section className="footer-column">
-            <h4>{language === 'en' ? 'Company' : 'الشركة'}</h4>
+          <section className={`footer-column ${openSections.company ? 'open' : ''}`}>
+            <h4 onClick={() => toggleSection('company')}>
+              {language === 'en' ? 'Company' : 'الشركة'}
+            </h4>
             <ul>
               {companyLinks.map((item) => (
                 <li key={item.to}>
@@ -157,8 +176,10 @@ const Footer = () => {
             </ul>
           </section>
 
-          <section className="footer-column">
-            <h4>{language === 'en' ? 'Contact' : 'التواصل'}</h4>
+          <section className={`footer-column ${openSections.contact ? 'open' : ''}`}>
+            <h4 onClick={() => toggleSection('contact')}>
+              {language === 'en' ? 'Contact' : 'التواصل'}
+            </h4>
             <ul className="footer-contact-list">
               {contactItems.map((item) => (
                 <li key={item.label}>
