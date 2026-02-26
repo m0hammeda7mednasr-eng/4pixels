@@ -72,6 +72,8 @@ export const LanguageProvider = ({ children }) => {
   useEffect(() => {
     document.documentElement.dir = language === 'ar' ? 'rtl' : 'ltr';
     document.documentElement.lang = language;
+    document.body.setAttribute('dir', language === 'ar' ? 'rtl' : 'ltr');
+    document.body.setAttribute('lang', language);
     document.body.setAttribute('data-language', language);
     localStorage.setItem('language', language);
   }, [language]);

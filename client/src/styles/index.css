@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Cairo:wght@400;500;700;800&display=swap&v=20260226');
 
 *,
 *::before,
@@ -9,30 +9,34 @@
 }
 
 :root {
-  --primary: #0f766e;
-  --primary-dark: #115e59;
-  --secondary: #0284c7;
-  --accent: #f97316;
+  --primary: #2f5be7;
+  --primary-dark: #1f47cb;
+  --secondary: #0ea5e9;
+  --accent: #3b82f6;
   --success: #16a34a;
   --danger: #dc2626;
 
-  --bg-light: #f4f7f6;
-  --bg-dark: #0b1412;
+  --bg-light: #f5f7ff;
+  --bg-dark: #071020;
   --surface-light: #ffffff;
-  --surface-dark: #101a18;
+  --surface-dark: #0d172a;
 
   --text-light: #0f172a;
-  --text-light-secondary: #475569;
-  --text-dark: #ecfeff;
-  --text-dark-secondary: #94a3b8;
+  --text-light-secondary: #5b6b82;
+  --text-dark: #e2ebff;
+  --text-dark-secondary: #97a7c2;
 
-  --border-light: #dce6e4;
-  --border-dark: #1f2f2b;
+  --border-light: #d9e3f2;
+  --border-dark: #1a2a43;
 
-  --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.08);
-  --shadow: 0 8px 22px rgba(15, 23, 42, 0.08);
-  --shadow-lg: 0 16px 40px rgba(15, 23, 42, 0.12);
-  --shadow-xl: 0 28px 80px rgba(15, 23, 42, 0.2);
+  --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.05);
+  --shadow: 0 10px 30px rgba(41, 66, 132, 0.08);
+  --shadow-lg: 0 20px 50px rgba(41, 66, 132, 0.14);
+  --shadow-xl: 0 32px 90px rgba(15, 23, 42, 0.22);
+
+  --font-en: 'Plus Jakarta Sans', sans-serif;
+  --font-ar: 'Cairo', sans-serif;
+  --header-height: 76px;
 
   --text-xs: clamp(0.72rem, 1.5vw, 0.8rem);
   --text-sm: clamp(0.82rem, 2vw, 0.92rem);
@@ -54,16 +58,17 @@
 html {
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
+  overflow-x: clip;
 }
 
 body {
-  font-family: 'Sora', sans-serif;
+  font-family: var(--font-en);
   font-size: var(--text-base);
-  line-height: 1.65;
+  line-height: 1.7;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   transition: background-color 0.25s ease, color 0.25s ease;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 body.light {
@@ -77,8 +82,13 @@ body.dark {
 }
 
 body[dir='rtl'] {
-  font-family: 'Tajawal', sans-serif;
+  font-family: var(--font-ar);
   line-height: 1.8;
+}
+
+#root {
+  isolation: isolate;
+  overflow-x: clip;
 }
 
 body[dir='rtl'] h1,
@@ -121,7 +131,7 @@ h5,
 h6 {
   font-weight: 700;
   line-height: 1.2;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.018em;
 }
 
 a {
@@ -142,7 +152,7 @@ button {
 }
 
 .container {
-  width: min(1200px, 100%);
+  width: min(1180px, 100%);
   margin-inline: auto;
   padding-inline: clamp(16px, 4vw, 28px);
 }
@@ -170,10 +180,10 @@ body.dark .section-title {
   left: 50%;
   bottom: 0;
   width: clamp(74px, 12vw, 110px);
-  height: 4px;
+  height: 3px;
   transform: translateX(-50%);
   border-radius: 999px;
-  background: linear-gradient(90deg, var(--primary), var(--accent));
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
 }
 
 .btn {
@@ -193,23 +203,24 @@ body.dark .section-title {
 .btn-primary {
   background: linear-gradient(135deg, var(--primary), var(--secondary));
   color: #fff;
-  box-shadow: 0 10px 24px rgba(15, 118, 110, 0.32);
+  box-shadow: 0 14px 30px rgba(47, 91, 231, 0.28);
 }
 
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 16px 30px rgba(15, 118, 110, 0.4);
+  box-shadow: 0 18px 34px rgba(47, 91, 231, 0.34);
 }
 
 .btn-outline {
   border: 2px solid var(--primary);
   color: var(--primary);
-  background: transparent;
+  background: rgba(255, 255, 255, 0.85);
 }
 
 body.dark .btn-outline {
-  border-color: #2dd4bf;
-  color: #5eead4;
+  border-color: #4f7dff;
+  color: #8db0ff;
+  background: rgba(13, 23, 42, 0.7);
 }
 
 .btn-outline:hover {
@@ -257,7 +268,7 @@ body.dark .spinner {
 }
 
 main {
-  min-height: calc(100vh - 72px);
+  min-height: calc(100vh - var(--header-height));
 }
 
 main:focus {
@@ -265,7 +276,7 @@ main:focus {
 }
 
 .route-loading {
-  min-height: calc(100vh - 72px);
+  min-height: calc(100vh - var(--header-height));
   display: grid;
   place-items: center;
 }
@@ -277,6 +288,16 @@ main:focus {
 :focus-visible {
   outline: 2px solid var(--secondary);
   outline-offset: 2px;
+}
+
+img {
+  max-width: 100%;
+}
+
+@media (max-width: 520px) {
+  :root {
+    --header-height: 68px;
+  }
 }
 
 @media (max-width: 768px) {

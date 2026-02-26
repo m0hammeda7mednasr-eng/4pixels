@@ -19,7 +19,7 @@ const Header = () => {
     { to: '/services', label: t('services') },
     { to: '/projects', label: t('projects') },
     { to: '/about', label: t('about') },
-    { to: '/contact', label: t('contact') }
+    { to: '/contact', label: language === 'en' ? 'Connections' : t('contact') }
   ];
 
   if (user && isAdmin()) {
@@ -59,7 +59,7 @@ const Header = () => {
 
         <Link to="/" className="logo">
           <div className="logo-text">4Pixels</div>
-          <div className="logo-tagline">Digital Studio</div>
+          <div className="logo-tagline">Digital Agency</div>
         </Link>
 
         <nav id="main-nav" className={`nav ${menuOpen ? 'open' : ''}`}>

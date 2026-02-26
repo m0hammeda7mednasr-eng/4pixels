@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { FiArrowRight, FiStar, FiTrendingUp, FiLayers, FiCheckCircle } from 'react-icons/fi';
+import { FiArrowRight, FiEye } from 'react-icons/fi';
 import { FaDatabase, FaHubspot, FaNodeJs, FaPython, FaReact, FaRobot, FaShopify } from 'react-icons/fa';
 import { useLanguage } from '../context/LanguageContext';
 import api from '../services/api';
@@ -31,7 +31,7 @@ const Home = () => {
         setReviews((reviewsRes.data || []).slice(0, 6));
         setContent(contentRes.data || null);
       } catch (err) {
-        console.error('Error fetching home data:', err);
+        console.error('Error fetching home data:', err.userMessage || err.message);
       } finally {
         setLoading(false);
       }
@@ -42,53 +42,28 @@ const Home = () => {
 
   const heroTitle =
     content?.hero?.title?.[language] ||
-    (language === 'en' ? 'Build a Brand People Remember' : 'ابني علامة تجارية لا تنسى');
+    (language === 'en' ? 'Transform Your Digital Vision Into Reality' : 'حوّل رؤيتك الرقمية إلى واقع فعلي');
 
   const heroSubtitle =
     content?.hero?.subtitle?.[language] ||
     (language === 'en'
-      ? 'We design and deliver high-converting digital products for ambitious businesses.'
-      : 'نصمم وننفذ منتجات رقمية عالية التحويل للشركات الطموحة.');
+      ? 'We craft exceptional digital experiences that drive growth and innovation for forward-thinking businesses.'
+      : 'نصمم تجارب رقمية استثنائية تدفع النمو والابتكار للشركات الطموحة.');
 
   const metrics = useMemo(
     () => [
-      {
-        value: '150+',
-        label: language === 'en' ? 'Projects delivered' : 'مشروع تم تسليمه',
-        icon: <FiLayers />
-      },
-      {
-        value: '98%',
-        label: language === 'en' ? 'Client satisfaction' : 'رضا العملاء',
-        icon: <FiStar />
-      },
-      {
-        value: '5+',
-        label: language === 'en' ? 'Years of execution' : 'سنوات خبرة',
-        icon: <FiTrendingUp />
-      }
-    ],
-    [language]
-  );
-
-  const techStack = useMemo(
-    () => [
-      { label: 'Shopify', icon: <FaShopify /> },
-      { label: 'React', icon: <FaReact /> },
-      { label: 'Node.js', icon: <FaNodeJs /> },
-      { label: language === 'en' ? 'AI Automation' : 'أتمتة ذكية', icon: <FaRobot /> },
-      { label: 'CRM', icon: <FaHubspot /> },
-      { label: 'ERP', icon: <FaDatabase /> },
-      { label: 'Python', icon: <FaPython /> },
-      { label: language === 'en' ? 'Data Entry' : 'إدخال بيانات', icon: <FaDatabase /> }
+      { value: '150+', label: language === 'en' ? 'Projects completed' : 'مشروع مكتمل' },
+      { value: '50+', label: language === 'en' ? 'Happy clients' : 'عميل سعيد' },
+      { value: '5+', label: language === 'en' ? 'Years experience' : 'سنوات خبرة' },
+      { value: '24/7', label: language === 'en' ? 'Support' : 'دعم مستمر' }
     ],
     [language]
   );
 
   const floatingTech = useMemo(
     () => [
-      { label: 'Shopify', icon: <FaShopify /> },
       { label: 'React', icon: <FaReact /> },
+      { label: 'Shopify', icon: <FaShopify /> },
       { label: 'Node.js', icon: <FaNodeJs /> },
       { label: 'Python', icon: <FaPython /> },
       { label: 'AI', icon: <FaRobot /> },
@@ -101,101 +76,55 @@ const Home = () => {
   return (
     <div className="home-page">
       <section className="home-hero">
-        <div className="hero-orb orb-1" />
-        <div className="hero-orb orb-2" />
+        <div className="hero-glow hero-glow-1" />
+        <div className="hero-glow hero-glow-2" />
+
         <div className="hero-floating-cloud" aria-hidden="true">
           {floatingTech.map((item, index) => (
             <span
               key={item.label}
-              className={`hero-floating-badge badge-${(index % 6) + 1}`}
-              style={{ '--delay': `${index * 0.8}s` }}
+              className={`hero-floating-badge badge-${(index % 7) + 1}`}
+              style={{ '--delay': `${index * 0.75}s` }}
             >
               {item.icon}
-              {item.label}
+              <em>{item.label}</em>
             </span>
           ))}
         </div>
-        <div className="container hero-grid">
+
+        <div className="container hero-center">
           <motion.div
             className="hero-copy"
-            initial={{ opacity: 0, y: 26 }}
+            initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.55 }}
           >
             <span className="hero-eyebrow">
-              {language === 'en' ? 'Digital Products. Real Growth.' : 'حلول رقمية بنتائج حقيقية'}
+              {language === 'en' ? '4Pixels Digital Agency' : '4Pixels وكالة رقمية'}
             </span>
             <h1 className="hero-title">{heroTitle}</h1>
             <p className="hero-subtitle">{heroSubtitle}</p>
+
             <div className="hero-actions">
-              <Link to="/contact" className="btn btn-primary">
-                {language === 'en' ? 'Start your project' : 'ابدأ مشروعك'}
+              <Link to="/contact" className="btn btn-primary hero-btn-primary">
+                {language === 'en' ? 'Start Your Project' : 'ابدأ مشروعك'}
                 <FiArrowRight />
               </Link>
-              <Link to="/projects" className="btn btn-outline">
-                {language === 'en' ? 'See portfolio' : 'شاهد الأعمال'}
+              <Link to="/projects" className="btn btn-outline hero-btn-outline">
+                <FiEye />
+                {language === 'en' ? 'View Our Work' : 'شاهد أعمالنا'}
               </Link>
             </div>
 
-            <div className="hero-tech-wrap" aria-label="Technology stack">
-              <div className="hero-tech-track">
-                {[...techStack, ...techStack].map((item, index) => (
-                  <span key={`${item.label}-${index}`} className="hero-tech-chip">
-                    {item.icon}
-                    {item.label}
-                  </span>
-                ))}
-              </div>
+            <div className="hero-metrics">
+              {metrics.map((metric) => (
+                <article key={metric.label} className="hero-metric">
+                  <h3>{metric.value}</h3>
+                  <p>{metric.label}</p>
+                </article>
+              ))}
             </div>
           </motion.div>
-
-          <motion.div
-            className="hero-panel"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.55, delay: 0.1 }}
-          >
-            <h3>{language === 'en' ? 'What you get with 4Pixels' : 'ماذا تحصل مع 4Pixels'}</h3>
-            <ul>
-              <li>
-                <FiCheckCircle />
-                {language === 'en' ? 'Strategic product thinking from day one' : 'تفكير استراتيجي من أول يوم'}
-              </li>
-              <li>
-                <FiCheckCircle />
-                {language === 'en' ? 'Clean UX built for conversion and retention' : 'تجربة مستخدم نظيفة لرفع التحويل'}
-              </li>
-              <li>
-                <FiCheckCircle />
-                {language === 'en' ? 'Fast execution with transparent communication' : 'تنفيذ سريع وتواصل واضح'}
-              </li>
-              <li>
-                <FiCheckCircle />
-                {language === 'en' ? 'Reliable support after launch' : 'دعم فعلي بعد الإطلاق'}
-              </li>
-            </ul>
-          </motion.div>
-        </div>
-      </section>
-
-      <section className="home-metrics section">
-        <div className="container">
-          <div className="metrics-grid">
-            {metrics.map((metric, index) => (
-              <motion.article
-                key={metric.label}
-                className="metric-card"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.3 }}
-                transition={{ delay: index * 0.08 }}
-              >
-                <span className="metric-icon">{metric.icon}</span>
-                <h3>{metric.value}</h3>
-                <p>{metric.label}</p>
-              </motion.article>
-            ))}
-          </div>
         </div>
       </section>
 
@@ -206,7 +135,7 @@ const Home = () => {
             <p>
               {language === 'en'
                 ? 'Practical, high-impact services to launch and scale your digital business.'
-                : 'خدمات عملية وعالية التأثير لإطلاق وتوسيع مشروعك الرقمي.'}
+                : 'خدمات عملية عالية التأثير لإطلاق وتوسيع مشروعك الرقمي.'}
             </p>
           </div>
 
@@ -221,13 +150,13 @@ const Home = () => {
                 transition={{ delay: index * 0.08 }}
               >
                 <div className="service-card-head">
-                  <h3>{service.title?.[language]}</h3>
+                  <h3>{service.title?.[language] || service.title?.en}</h3>
                   <span className="service-price">${service.price}</span>
                 </div>
                 <span className="service-category-home">
                   {getCategoryLabel(service.category, language)}
                 </span>
-                <p>{service.description?.[language]}</p>
+                <p>{service.description?.[language] || service.description?.en}</p>
                 <div className="service-meta">
                   <span>{service.deliveryTime}</span>
                   <Link to={`/services/${service.id}`}>
@@ -263,14 +192,18 @@ const Home = () => {
                 transition={{ delay: index * 0.06 }}
               >
                 <Link to={`/projects/${project.id}`} className="project-media">
-                  <img src={project.images?.[0]} alt={project.title?.[language]} loading="lazy" />
+                  <img
+                    src={project.images?.[0]}
+                    alt={project.title?.[language] || project.title?.en}
+                    loading="lazy"
+                  />
                 </Link>
                 <div className="project-body">
                   <span className="project-category-home">
                     {getCategoryLabel(project.category, language)}
                   </span>
-                  <h3>{project.title?.[language]}</h3>
-                  <p>{project.description?.[language]}</p>
+                  <h3>{project.title?.[language] || project.title?.en}</h3>
+                  <p>{project.description?.[language] || project.description?.en}</p>
                   <Link to={`/projects/${project.id}`} className="project-link">
                     {language === 'en' ? 'View case study' : 'عرض دراسة الحالة'}
                     <FiArrowRight />
@@ -304,13 +237,13 @@ const Home = () => {
                 transition={{ delay: index * 0.06 }}
               >
                 <div className="review-top">
-                  <img src={review.image} alt={review.name?.[language]} loading="lazy" />
+                  <img src={review.image} alt={review.name?.[language] || review.name?.en} loading="lazy" />
                   <div>
-                    <h3>{review.name?.[language]}</h3>
+                    <h3>{review.name?.[language] || review.name?.en}</h3>
                     <span>{'★'.repeat(review.rating || 5)}</span>
                   </div>
                 </div>
-                <p>{review.text?.[language]}</p>
+                <p>{review.text?.[language] || review.text?.en}</p>
               </motion.article>
             ))}
           </div>

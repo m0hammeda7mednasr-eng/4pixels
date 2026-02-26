@@ -103,7 +103,7 @@ const Footer = () => {
           <section className="footer-brand">
             <h3>{siteInfo.siteName || '4Pixels'}</h3>
             <p className="footer-tagline">
-              {siteInfo.tagline || (language === 'en' ? 'Digital Delivery Studio' : 'استوديو تنفيذ رقمي')}
+              {siteInfo.tagline || (language === 'en' ? 'Digital Agency' : 'الوكالة الرقمية')}
             </p>
             <p className="footer-description">
               {siteInfo.description ||
@@ -162,7 +162,7 @@ const Footer = () => {
             <ul className="footer-contact-list">
               {contactItems.map((item) => (
                 <li key={item.label}>
-                  <span className="contact-icon">{item.icon}</span>
+                  <span className="footer-contact-icon">{item.icon}</span>
                   <div>
                     <small>{item.label}</small>
                     {item.href ? <a href={item.href}>{item.value}</a> : <span>{item.value}</span>}
