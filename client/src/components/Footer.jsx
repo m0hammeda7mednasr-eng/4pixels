@@ -116,7 +116,7 @@ const Footer = () => {
           transition={{ duration: 0.4 }}
         >
           <section className="footer-brand">
-            <h3>{siteInfo.siteName || '4Pixels'}</h3>
+            <h3>{siteInfo.siteName || '4 Pixels'}</h3>
             <p className="footer-tagline">
               {siteInfo.tagline || (language === 'en' ? 'Digital Agency' : 'الوكالة الرقمية')}
             </p>
@@ -196,7 +196,7 @@ const Footer = () => {
 
         <div className="footer-bottom">
           <span>
-            &copy; {new Date().getFullYear()} {siteInfo.siteName || '4Pixels'}
+            &copy; {new Date().getFullYear()} {siteInfo.siteName || '4 Pixels'}
           </span>
           <span>{language === 'en' ? 'All rights reserved.' : 'جميع الحقوق محفوظة.'}</span>
         </div>
