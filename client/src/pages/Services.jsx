@@ -51,13 +51,41 @@ const Services = () => {
   }, [services, activeCategory]);
 
   const summary = useMemo(() => {
-    const prices = services.map((service) => Number(service.price)).filter((price) => Number.isFinite(price));
+    const prices = services
+      .map((service) => Number(service.price))
+      .filter((price) => Number.isFinite(price));
+
     return {
       count: services.length,
       categories: Math.max(categories.length - 1, 0),
       startingPrice: prices.length > 0 ? Math.min(...prices) : null
     };
   }, [services, categories]);
+
+  const copy = language === 'en'
+    ? {
+      intro:
+        'From strategy to execution, our service stack is designed for measurable growth.',
+      services: 'Services',
+      categories: 'Categories',
+      startingFrom: 'Starting from',
+      filterByCategory: 'Filter by category',
+      allServices: 'All services',
+      discoverService: 'Discover service',
+      swipeHint: 'Swipe to see more',
+      emptyState: 'No services found for this category.'
+    }
+    : {
+      intro: 'من الاستراتيجية إلى التنفيذ، باقاتنا مصممة لتحقيق نمو قابل للقياس.',
+      services: 'الخدمات',
+      categories: 'التصنيفات',
+      startingFrom: 'تبدأ من',
+      filterByCategory: 'تصفية حسب التصنيف',
+      allServices: 'كل الخدمات',
+      discoverService: 'استكشف الخدمة',
+      swipeHint: 'اسحب لرؤية المزيد',
+      emptyState: 'لا توجد خدمات ضمن هذا التصنيف حاليًا.'
+    };
 
   return (
     <div className="services-showcase section">
@@ -67,24 +95,20 @@ const Services = () => {
       <div className="container">
         <div className="services-showcase-header">
           <h1 className="section-title">{t('services')}</h1>
-          <p>
-            {language === 'en'
-              ? 'From strategy to execution, our service stack is designed for measurable growth.'
-              : 'من الاستراتيجية إلى التنفيذ، باقاتنا مصممة لتحقيق نمو قابل للقياس.'}
-          </p>
+          <p>{copy.intro}</p>
         </div>
 
         <div className="services-summary-grid">
           <article className="services-summary-card">
-            <span>{language === 'en' ? 'Services' : 'الخدمات'}</span>
+            <span>{copy.services}</span>
             <strong>{summary.count}</strong>
           </article>
           <article className="services-summary-card">
-            <span>{language === 'en' ? 'Categories' : 'التصنيفات'}</span>
+            <span>{copy.categories}</span>
             <strong>{summary.categories}</strong>
           </article>
           <article className="services-summary-card">
-            <span>{language === 'en' ? 'Starting from' : 'تبدأ من'}</span>
+            <span>{copy.startingFrom}</span>
             <strong>{summary.startingPrice ? `$${summary.startingPrice}` : '--'}</strong>
           </article>
         </div>
@@ -92,8 +116,9 @@ const Services = () => {
         <div className="services-toolbar">
           <div className="services-toolbar-label">
             <FiFilter />
-            {language === 'en' ? 'Filter by category' : 'تصفية حسب التصنيف'}
+            {copy.filterByCategory}
           </div>
+
           <div className="services-category-list">
             {categories.map((category) => (
               <button
@@ -102,11 +127,7 @@ const Services = () => {
                 className={activeCategory === category ? 'active' : ''}
                 onClick={() => setActiveCategory(category)}
               >
-                {category === 'all'
-                  ? language === 'en'
-                    ? 'All services'
-                    : 'كل الخدمات'
-                  : getCategoryLabel(category, language)}
+                {category === 'all' ? copy.allServices : getCategoryLabel(category, language)}
               </button>
             ))}
           </div>
@@ -121,6 +142,8 @@ const Services = () => {
             <div className="services-showcase-grid">
               {filteredServices.map((service, index) => {
                 const features = service.features?.[language] || service.features?.en || [];
+                const title = service.title?.[language] || service.title?.en || '';
+                const description = service.description?.[language] || service.description?.en || '';
 
                 return (
                   <motion.article
@@ -134,8 +157,8 @@ const Services = () => {
                       <span className="service-category">
                         {getCategoryLabel(service.category, language) || 'General'}
                       </span>
-                      <h3>{service.title?.[language] || service.title?.en}</h3>
-                      <p>{service.description?.[language] || service.description?.en}</p>
+                      <h3>{title}</h3>
+                      <p>{description}</p>
                     </div>
 
                     <ul className="service-features">
@@ -155,8 +178,9 @@ const Services = () => {
                           {service.deliveryTime}
                         </span>
                       </div>
+
                       <Link to={`/services/${service.id}`}>
-                        {language === 'en' ? 'Discover service' : 'استكشف الخدمة'}
+                        {copy.discoverService}
                         <FiArrowRight />
                       </Link>
                     </div>
@@ -166,18 +190,14 @@ const Services = () => {
             </div>
 
             {filteredServices.length > 0 && (
-              <p className="scroll-indicator" style={{ textAlign: 'center', marginTop: '12px', color: 'var(--text-light-secondary)', fontSize: '0.8rem', fontWeight: 600 }}>
-                {language === 'en' ? '← Swipe to see more →' : '→ اسحب لرؤية المزيد ←'}
+              <p className="scroll-indicator">
+                {language === 'en' ? `← ${copy.swipeHint} →` : `→ ${copy.swipeHint} ←`}
               </p>
             )}
 
             {!filteredServices.length && (
               <div className="services-empty-state">
-                <p>
-                  {language === 'en'
-                    ? 'No services found for this category.'
-                    : 'لا توجد خدمات ضمن هذا التصنيف حاليًا.'}
-                </p>
+                <p>{copy.emptyState}</p>
               </div>
             )}
           </>

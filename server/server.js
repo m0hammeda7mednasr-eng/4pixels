@@ -7,6 +7,7 @@ dotenv.config();
 
 const app = express();
 const isProduction = process.env.NODE_ENV === 'production';
+const requestBodyLimit = process.env.REQUEST_BODY_LIMIT || '10mb';
 
 if (isProduction) {
   try {
@@ -86,8 +87,8 @@ if (!isProduction) {
 }
 
 app.use(cors(corsOptions));
-app.use(express.json({ limit: '2mb' }));
-app.use(express.urlencoded({ extended: true, limit: '2mb' }));
+app.use(express.json({ limit: requestBodyLimit }));
+app.use(express.urlencoded({ extended: true, limit: requestBodyLimit }));
 app.use('/uploads', express.static('uploads'));
 
 // Routes
@@ -121,13 +122,27 @@ app.use((err, _req, res, _next) => {
     return res.status(403).json({ message: 'CORS blocked this origin' });
   }
 
-  console.error('Unhandled server error:', err.message);
-  return res.status(500).json({ message: 'Internal server error' });
+  if (err.type === 'entity.too.large') {
+    return res.status(413).json({
+      message: `Payload too large. Reduce image/file size and keep request body under ${requestBodyLimit}.`
+    });
+  }
+
+  if (err instanceof SyntaxError && err.status === 400 && 'body' in err) {
+    return res.status(400).json({ message: 'Invalid JSON payload' });
+  }
+
+  const statusCode = Number.isInteger(err.status) ? err.status : 500;
+  const message = statusCode === 500 ? 'Internal server error' : (err.message || 'Request failed');
+
+  console.error('Unhandled server error:', err.stack || err.message);
+  return res.status(statusCode).json({ message });
 });
 
 const PORT = process.env.PORT || 5001;
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`Server running on port ${PORT}`);
   console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
+  console.log(`Request body limit: ${requestBodyLimit}`);
   console.log(`CORS origins: ${Array.from(allowedOrigins).join(', ') || 'None configured'}`);
 });

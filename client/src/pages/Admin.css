@@ -2,9 +2,6 @@
    ADMIN DASHBOARD - PROFESSIONAL & MODERN
    ============================================ */
 
-/* Import Google Font */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
-
 /* ============================================
    CSS VARIABLES - PROPERLY DEFINED
    ============================================ */
@@ -53,8 +50,12 @@ body.dark {
   display: flex;
   min-height: 100vh;
   background: var(--admin-bg);
-  padding-top: 70px;
-  font-family: 'Inter', sans-serif;
+  padding-top: var(--header-height);
+  font-family: var(--font-en);
+}
+
+body[dir='rtl'] .admin-dashboard {
+  font-family: var(--font-ar);
 }
 
 /* ============================================
@@ -68,7 +69,7 @@ body.dark {
   padding: 28px 16px;
   position: fixed;
   left: 0;
-  top: 70px;
+  top: var(--header-height);
   bottom: 0;
   overflow-y: auto;
   z-index: 100;
@@ -122,7 +123,7 @@ body.dark {
   color: var(--admin-text-secondary);
   font-size: 0.9rem;
   font-weight: 600;
-  font-family: 'Inter', sans-serif;
+  font-family: inherit;
   cursor: pointer;
   transition: all 0.2s ease;
   text-align: left;
@@ -511,7 +512,7 @@ body.dark {
   color: var(--admin-text);
   font-size: 0.92rem;
   outline: none;
-  font-family: 'Inter', sans-serif;
+  font-family: inherit;
 }
 
 .search-bar input::placeholder {
@@ -543,7 +544,7 @@ body.dark {
   font-size: 0.82rem;
   cursor: pointer;
   transition: all 0.2s ease;
-  font-family: 'Inter', sans-serif;
+  font-family: inherit;
   box-shadow: var(--admin-shadow);
 }
 
@@ -982,7 +983,7 @@ body.dark {
   align-items: center;
   gap: 8px;
   transition: all 0.2s ease;
-  font-family: 'Inter', sans-serif;
+  font-family: inherit;
   box-shadow: 0 4px 15px rgba(99, 102, 241, 0.35);
 }
 
@@ -1005,7 +1006,7 @@ body.dark {
   align-items: center;
   gap: 8px;
   transition: all 0.2s ease;
-  font-family: 'Inter', sans-serif;
+  font-family: inherit;
 }
 
 .btn-outline:hover {
@@ -1057,7 +1058,7 @@ body.dark {
   align-items: center;
   gap: 6px;
   transition: all 0.2s ease;
-  font-family: 'Inter', sans-serif;
+  font-family: inherit;
 }
 
 .btn-sm:hover {
@@ -1164,7 +1165,7 @@ body.dark {
   border: 2px solid var(--admin-border);
   background: var(--admin-surface-2);
   color: var(--admin-text);
-  font-family: 'Inter', sans-serif;
+  font-family: inherit;
   font-size: 0.9rem;
   transition: all 0.2s ease;
   outline: none;
@@ -1234,7 +1235,7 @@ body.dark {
   background: var(--admin-surface-2);
   color: var(--admin-text);
   font-size: 0.88rem;
-  font-family: 'Inter', sans-serif;
+  font-family: inherit;
   outline: none;
   transition: all 0.2s ease;
 }
@@ -1305,7 +1306,7 @@ body.dark {
   text-align: left;
   font-size: 0.88rem;
   font-weight: 600;
-  font-family: 'Inter', sans-serif;
+  font-family: inherit;
 }
 
 .section-tabs button:hover {
@@ -1379,7 +1380,7 @@ body.dark {
   .admin-sidebar {
     width: 100%;
     position: sticky;
-    top: 70px;
+    top: var(--header-height);
     left: 0;
     right: 0;
     bottom: auto;

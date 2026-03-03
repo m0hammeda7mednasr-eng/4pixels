@@ -19,7 +19,7 @@ const Header = () => {
     { to: '/services', label: t('services') },
     { to: '/projects', label: t('projects') },
     { to: '/about', label: t('about') },
-    { to: '/contact', label: language === 'en' ? 'Connections' : t('contact') }
+    { to: '/contact', label: t('contact') }
   ];
 
   if (user && isAdmin()) {
@@ -73,7 +73,7 @@ const Header = () => {
         <div className="header-actions">
           <button
             onClick={toggleLanguage}
-            className="icon-btn"
+            className="icon-btn lang-toggle"
             title={language === 'en' ? 'English active - switch to Arabic' : 'Arabic active - switch to English'}
             aria-label="Toggle language"
           >
@@ -81,18 +81,18 @@ const Header = () => {
           </button>
           <button
             onClick={toggleTheme}
-            className="icon-btn"
+            className="icon-btn theme-toggle"
             title={theme === 'light' ? 'Dark mode' : 'Light mode'}
             aria-label="Toggle theme"
           >
             {theme === 'light' ? <FiMoon /> : <FiSun />}
           </button>
           {user ? (
-            <button onClick={logout} className="icon-btn" title={t('logout')} aria-label={t('logout')}>
+            <button onClick={logout} className="icon-btn auth-toggle" title={t('logout')} aria-label={t('logout')}>
               <FiLogOut />
             </button>
           ) : (
-            <Link to="/login" className="icon-btn" title={t('login')} aria-label={t('login')}>
+            <Link to="/login" className="icon-btn auth-toggle" title={t('login')} aria-label={t('login')}>
               <FiUser />
             </Link>
           )}

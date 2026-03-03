@@ -42,14 +42,49 @@ const Footer = () => {
   }, []);
 
   const toggleSection = (section) => {
-    // Only toggle on mobile
     if (window.innerWidth <= 768) {
-      setOpenSections(prev => ({
+      setOpenSections((prev) => ({
         ...prev,
         [section]: !prev[section]
       }));
     }
   };
+
+  const copy = language === 'en'
+    ? {
+      about: 'About Us',
+      projects: 'Projects',
+      contact: 'Contact',
+      admin: 'Admin Login',
+      email: 'Email',
+      phone: 'Phone',
+      whatsapp: 'WhatsApp',
+      location: 'Location',
+      cairo: 'Cairo, Egypt',
+      digitalAgency: 'Digital Agency',
+      defaultDescription: 'Shopify stores, automation, and systems built for measurable growth.',
+      noSocial: 'Add social links from admin dashboard.',
+      solutions: 'Solutions',
+      company: 'Company',
+      allRights: 'All rights reserved.'
+    }
+    : {
+      about: 'من نحن',
+      projects: 'المشاريع',
+      contact: 'التواصل',
+      admin: 'دخول الأدمن',
+      email: 'البريد',
+      phone: 'الهاتف',
+      whatsapp: 'واتساب',
+      location: 'العنوان',
+      cairo: 'القاهرة، مصر',
+      digitalAgency: 'الوكالة الرقمية',
+      defaultDescription: 'متاجر شوبيفاي وأتمتة وأنظمة رقمية بنتائج قابلة للقياس.',
+      noSocial: 'أضف روابط السوشيال من لوحة الأدمن.',
+      solutions: 'الحلول',
+      company: 'الشركة',
+      allRights: 'جميع الحقوق محفوظة.'
+    };
 
   const solutionLinks = useMemo(() => {
     return PRIMARY_CATEGORIES.map((category) => ({
@@ -59,10 +94,10 @@ const Footer = () => {
   }, [language]);
 
   const companyLinks = [
-    { label: { en: 'About Us', ar: 'من نحن' }, to: '/about' },
-    { label: { en: 'Projects', ar: 'المشاريع' }, to: '/projects' },
-    { label: { en: 'Contact', ar: 'التواصل' }, to: '/contact' },
-    { label: { en: 'Admin Login', ar: 'دخول الأدمن' }, to: '/login' }
+    { label: copy.about, to: '/about' },
+    { label: copy.projects, to: '/projects' },
+    { label: copy.contact, to: '/contact' },
+    { label: copy.admin, to: '/login' }
   ];
 
   const socialLinks = [
@@ -81,26 +116,26 @@ const Footer = () => {
   const contactItems = [
     {
       icon: <FiMail />,
-      label: language === 'en' ? 'Email' : 'البريد',
+      label: copy.email,
       value: siteInfo.email || 'info@4pixels.com',
       href: siteInfo.email ? `mailto:${siteInfo.email}` : null
     },
     {
       icon: <FiPhone />,
-      label: language === 'en' ? 'Phone' : 'الهاتف',
+      label: copy.phone,
       value: siteInfo.phone || '+20 106 618 4859',
       href: siteInfo.phone ? `tel:${siteInfo.phone.replace(/\s+/g, '')}` : null
     },
     {
       icon: <FaWhatsapp />,
-      label: language === 'en' ? 'WhatsApp' : 'واتساب',
+      label: copy.whatsapp,
       value: siteInfo.whatsapp || '+201066184859',
       href: siteInfo.whatsapp ? `https://wa.me/${siteInfo.whatsapp.replace(/[^\d]/g, '')}` : null
     },
     {
       icon: <FiMapPin />,
-      label: language === 'en' ? 'Location' : 'العنوان',
-      value: siteInfo.address || (language === 'en' ? 'Cairo, Egypt' : 'القاهرة، مصر'),
+      label: copy.location,
+      value: siteInfo.address || copy.cairo,
       href: null
     }
   ];
@@ -117,15 +152,8 @@ const Footer = () => {
         >
           <section className="footer-brand">
             <h3>{siteInfo.siteName || '4 Pixels'}</h3>
-            <p className="footer-tagline">
-              {siteInfo.tagline || (language === 'en' ? 'Digital Agency' : 'الوكالة الرقمية')}
-            </p>
-            <p className="footer-description">
-              {siteInfo.description ||
-                (language === 'en'
-                  ? 'Shopify stores, automation, and systems built for measurable growth.'
-                  : 'متاجر شوبيفاي وأتمتة وأنظمة رقمية بنتائج قابلة للقياس.')}
-            </p>
+            <p className="footer-tagline">{siteInfo.tagline || copy.digitalAgency}</p>
+            <p className="footer-description">{siteInfo.description || copy.defaultDescription}</p>
 
             <div className="footer-socials">
               {socialLinks.length > 0 ? (
@@ -141,19 +169,13 @@ const Footer = () => {
                   </a>
                 ))
               ) : (
-                <span className="footer-social-note">
-                  {language === 'en'
-                    ? 'Add social links from admin dashboard.'
-                    : 'أضف روابط السوشيال من لوحة الأدمن.'}
-                </span>
+                <span className="footer-social-note">{copy.noSocial}</span>
               )}
             </div>
           </section>
 
           <section className={`footer-column ${openSections.solutions ? 'open' : ''}`}>
-            <h4 onClick={() => toggleSection('solutions')}>
-              {language === 'en' ? 'Solutions' : 'الحلول'}
-            </h4>
+            <h4 onClick={() => toggleSection('solutions')}>{copy.solutions}</h4>
             <ul>
               {solutionLinks.map((item) => (
                 <li key={item.label}>
@@ -164,22 +186,18 @@ const Footer = () => {
           </section>
 
           <section className={`footer-column ${openSections.company ? 'open' : ''}`}>
-            <h4 onClick={() => toggleSection('company')}>
-              {language === 'en' ? 'Company' : 'الشركة'}
-            </h4>
+            <h4 onClick={() => toggleSection('company')}>{copy.company}</h4>
             <ul>
               {companyLinks.map((item) => (
                 <li key={item.to}>
-                  <Link to={item.to}>{item.label[language]}</Link>
+                  <Link to={item.to}>{item.label}</Link>
                 </li>
               ))}
             </ul>
           </section>
 
           <section className={`footer-column ${openSections.contact ? 'open' : ''}`}>
-            <h4 onClick={() => toggleSection('contact')}>
-              {language === 'en' ? 'Contact' : 'التواصل'}
-            </h4>
+            <h4 onClick={() => toggleSection('contact')}>{copy.contact}</h4>
             <ul className="footer-contact-list">
               {contactItems.map((item) => (
                 <li key={item.label}>
@@ -198,7 +216,7 @@ const Footer = () => {
           <span>
             &copy; {new Date().getFullYear()} {siteInfo.siteName || '4 Pixels'}
           </span>
-          <span>{language === 'en' ? 'All rights reserved.' : 'جميع الحقوق محفوظة.'}</span>
+          <span>{copy.allRights}</span>
         </div>
       </div>
     </footer>

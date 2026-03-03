@@ -18,7 +18,7 @@ body.dark .header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 14px;
+  gap: 10px;
 }
 
 .logo {
@@ -108,7 +108,7 @@ body.dark .nav a::after {
 .header-actions {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
 }
 
 body[dir='rtl'] .header-actions {
@@ -260,6 +260,12 @@ body.dark .icon-btn {
   }
 }
 
+@media (max-width: 680px) {
+  .logo-tagline {
+    display: none;
+  }
+}
+
 @media (max-width: 520px) {
   .header {
     height: 68px;
@@ -282,12 +288,12 @@ body.dark .icon-btn {
     gap: 4px;
   }
 
-  .logo-text {
-    font-size: 1.14rem;
+  .theme-toggle {
+    display: none;
   }
 
-  .logo-tagline {
-    font-size: 0.52rem;
+  .logo-text {
+    font-size: 1.14rem;
   }
 
   .nav {

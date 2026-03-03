@@ -747,14 +747,49 @@ const Modal = ({ type, item, onClose, onSave }) => {
     setImageFiles(prev => prev.filter((_, i) => i !== index));
   };
 
+  const normalizeNumber = (value) => {
+    const parsed = Number(value);
+    return Number.isFinite(parsed) ? parsed : null;
+  };
+
+  const buildPayload = () => {
+    const payload = { ...formData };
+
+    if (type === 'service') {
+      payload.price = normalizeNumber(payload.price);
+      payload.deliveryTime = (payload.deliveryTime || '').trim();
+      payload.features = {
+        en: Array.isArray(payload.features?.en) ? payload.features.en.filter(Boolean) : [],
+        ar: Array.isArray(payload.features?.ar) ? payload.features.ar.filter(Boolean) : []
+      };
+      delete payload.images;
+    }
+
+    if (type === 'project') {
+      payload.images = imagePreviews.filter(Boolean);
+    } else {
+      delete payload.images;
+    }
+
+    return payload;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Prepare data with images
-      const dataToSend = {
-        ...formData,
-        images: imagePreviews // Use base64 images for now
-      };
+      const dataToSend = buildPayload();
+
+      if (type === 'service') {
+        if (dataToSend.price === null || dataToSend.price < 0) {
+          toast.error('Please enter a valid price');
+          return;
+        }
+
+        if (!dataToSend.deliveryTime) {
+          toast.error('Delivery time is required');
+          return;
+        }
+      }
 
       if (item) {
         await api.put(`/${type}s/${item.id}`, dataToSend);
@@ -765,7 +800,7 @@ const Modal = ({ type, item, onClose, onSave }) => {
       }
       onSave();
     } catch (err) {
-      toast.error(err.response?.data?.message || 'Failed to save');
+      toast.error(err.userMessage || err.response?.data?.message || 'Failed to save');
     }
   };
 
@@ -982,8 +1017,14 @@ const Modal = ({ type, item, onClose, onSave }) => {
                       <label>Price ($)</label>
                       <input
                         type="number"
-                        value={formData.price || 0}
-                        onChange={(e) => setFormData({ ...formData, price: parseInt(e.target.value) })}
+                        value={formData.price ?? 0}
+                        onChange={(e) => {
+                          const nextValue = e.target.value;
+                          setFormData({
+                            ...formData,
+                            price: nextValue === '' ? '' : Number(nextValue)
+                          });
+                        }}
                         required
                       />
                     </div>

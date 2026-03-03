@@ -145,6 +145,13 @@ body[dir='rtl'] .footer-column {
   text-align: right;
 }
 
+body[dir='rtl'] .footer-description,
+body[dir='rtl'] .footer-column a,
+body[dir='rtl'] .footer-column span {
+  letter-spacing: 0;
+  line-height: 1.8;
+}
+
 @media (max-width: 980px) {
   .footer-top {
     grid-template-columns: 1fr 1fr;
@@ -204,7 +211,7 @@ body[dir='rtl'] .footer-column {
   }
 
   .footer-column.open h4::after {
-    content: '−';
+    content: '-';
     transform: rotate(180deg);
   }
 
@@ -269,12 +276,23 @@ body[dir='rtl'] .footer-column {
   }
 
   .footer-column h4 {
-    font-size: 1rem;
+    font-size: 0.92rem;
+    padding: 14px 0;
   }
 
   .footer-column a,
   .footer-column span {
-    font-size: 0.9rem;
+    font-size: 0.84rem;
+    line-height: 1.6;
+  }
+
+  .footer-description {
+    font-size: 0.86rem;
+    line-height: 1.7;
+  }
+
+  .footer-contact-list small {
+    font-size: 0.68rem;
   }
 
   .footer-contact-list li {
@@ -285,3 +303,4 @@ body[dir='rtl'] .footer-column {
     align-items: flex-end;
   }
 }
+
