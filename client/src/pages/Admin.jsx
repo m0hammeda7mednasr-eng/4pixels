@@ -7,10 +7,28 @@ import {
   FiGrid, FiFolder, FiMessageSquare,
   FiEdit2, FiTrash2,
   FiPlus, FiX, FiSave, FiEye, FiDollarSign,
-  FiClock, FiCheck, FiSearch, FiChevronDown
+  FiClock, FiCheck, FiSearch, FiChevronDown,
+  FiArrowUp, FiArrowDown
 } from 'react-icons/fi';
 import api from '../services/api';
 import './Admin.css';
+
+const normalizeBilingualField = (value) => {
+  if (typeof value === 'string') {
+    const trimmed = value.trim();
+    return { en: trimmed, ar: trimmed };
+  }
+
+  return {
+    en: typeof value?.en === 'string' ? value.en : '',
+    ar: typeof value?.ar === 'string' ? value.ar : ''
+  };
+};
+
+const normalizeStringArray = (value) =>
+  (Array.isArray(value) ? value : [])
+    .map((item) => (typeof item === 'string' ? item.trim() : ''))
+    .filter(Boolean);
 
 const Admin = () => {
   const { isAdmin } = useAuth();
@@ -36,13 +54,18 @@ const Admin = () => {
     setMobileNavOpen(false);
   }, [activeTab]);
 
-  const fetchData = async () => {
-    setLoading(true);
+  const fetchData = async (showLoader = true) => {
+    if (showLoader) {
+      setLoading(true);
+    }
+
     try {
       const token = localStorage.getItem('token');
       if (!token) {
         toast.error('No authentication token found');
-        setLoading(false);
+        if (showLoader) {
+          setLoading(false);
+        }
         return;
       }
 
@@ -63,7 +86,9 @@ const Admin = () => {
       console.error('Fetch error:', err);
       toast.error(err.response?.data?.message || 'Failed to fetch data');
     } finally {
-      setLoading(false);
+      if (showLoader) {
+        setLoading(false);
+      }
     }
   };
 
@@ -84,7 +109,7 @@ const Admin = () => {
     try {
       await api.delete(`/${type}/${id}`);
       toast.success(`${type} deleted successfully`);
-      fetchData();
+      fetchData(false);
     } catch (err) {
       toast.error(err.response?.data?.message || 'Failed to delete');
     }
@@ -196,7 +221,7 @@ const Admin = () => {
                 try {
                   await api.patch(`/reviews/${id}/toggle`);
                   toast.success('Review status updated');
-                  fetchData();
+                  fetchData(false);
                 } catch (err) {
                   toast.error('Failed to update review');
                 }
@@ -211,9 +236,9 @@ const Admin = () => {
           {activeTab === 'content' && content && (
             <ContentTab content={content} onSave={async (updatedContent) => {
               try {
-                await api.put('/content', updatedContent);
+                const response = await api.put('/content', updatedContent);
+                setContent(response.data || updatedContent);
                 toast.success('Content updated successfully');
-                fetchData();
               } catch (err) {
                 toast.error('Failed to update content');
               }
@@ -227,7 +252,7 @@ const Admin = () => {
           type={modalType}
           item={editingItem}
           onClose={closeModal}
-          onSave={() => { closeModal(); fetchData(); }}
+          onSave={() => { closeModal(); fetchData(false); }}
         />
       )}
     </div>
@@ -350,10 +375,13 @@ const OverviewTab = ({ stats, services, messages, reviews }) => {
 const ServicesTab = ({ services, onEdit, onDelete, onAdd }) => {
   const [searchTerm, setSearchTerm] = useState('');
 
-  const filteredServices = services.filter(s =>
-    s.title.en.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    s.title.ar.includes(searchTerm)
-  );
+  const filteredServices = services.filter((service) => {
+    const titleEn = service.title?.en || '';
+    const titleAr = service.title?.ar || '';
+    const query = searchTerm.toLowerCase();
+
+    return titleEn.toLowerCase().includes(query) || titleAr.includes(searchTerm);
+  });
 
   return (
     <motion.div
@@ -386,7 +414,7 @@ const ServicesTab = ({ services, onEdit, onDelete, onAdd }) => {
         {filteredServices.map(service => (
           <div key={service.id} className="service-card">
             <div className="service-card-header">
-              <h3>{service.title.en}</h3>
+              <h3>{service.title?.en || 'Untitled Service'}</h3>
               <div className="card-actions">
                 <button className="btn-icon" onClick={() => onEdit(service)}>
                   <FiEdit2 />
@@ -396,7 +424,7 @@ const ServicesTab = ({ services, onEdit, onDelete, onAdd }) => {
                 </button>
               </div>
             </div>
-            <p className="service-description">{service.description.en}</p>
+            <p className="service-description">{service.description?.en || 'No description provided'}</p>
             {service.category && (
               <div className="service-category">
                 <span className="category-badge">{service.category}</span>
@@ -429,10 +457,14 @@ const ProjectsTab = ({ projects, onEdit, onDelete, onAdd }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [filterCategory, setFilterCategory] = useState('all');
 
-  const categories = ['all', ...new Set(projects.map(p => p.category))];
+  const categories = ['all', ...new Set(projects.map(p => p.category).filter(Boolean))];
 
   const filteredProjects = projects.filter(p => {
-    const matchesSearch = p.title.en.toLowerCase().includes(searchTerm.toLowerCase());
+    const titleEn = p.title?.en || '';
+    const titleAr = p.title?.ar || '';
+    const matchesSearch =
+      titleEn.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      titleAr.includes(searchTerm);
     const matchesCategory = filterCategory === 'all' || p.category === filterCategory;
     return matchesSearch && matchesCategory;
   });
@@ -481,7 +513,10 @@ const ProjectsTab = ({ projects, onEdit, onDelete, onAdd }) => {
         {filteredProjects.map(project => (
           <div key={project.id} className="project-card">
             <div className="project-image">
-              <img src={project.images?.[0] || 'https://via.placeholder.com/400x300'} alt={project.title.en} />
+              <img
+                src={project.images?.[0] || 'https://via.placeholder.com/400x300'}
+                alt={project.title?.en || 'Project cover'}
+              />
               <div className="project-overlay">
                 <button className="btn-icon" onClick={() => onEdit(project)}>
                   <FiEdit2 />
@@ -493,8 +528,8 @@ const ProjectsTab = ({ projects, onEdit, onDelete, onAdd }) => {
             </div>
             <div className="project-info">
               <span className="project-category">{project.category}</span>
-              <h3>{project.title.en}</h3>
-              <p>{project.description?.en?.substring(0, 80)}...</p>
+              <h3>{project.title?.en || 'Untitled Project'}</h3>
+              <p>{project.description?.en ? `${project.description.en.substring(0, 80)}...` : 'No description provided'}</p>
               <div className="project-meta">
                 <span>Client: {project.client?.en || project.client}</span>
                 <span>{project.createdAt ? new Date(project.createdAt).getFullYear() : 'N/A'}</span>
@@ -692,7 +727,7 @@ const ReviewsTab = ({ reviews, onEdit, onDelete, onAdd, onToggle }) => {
 };
 
 // Modal Component
-const Modal = ({ type, item, onClose, onSave }) => {
+let Modal = ({ type, item, onClose, onSave }) => {
   const [formData, setFormData] = useState(item || {
     title: { en: '', ar: '' },
     description: { en: '', ar: '' },
@@ -1241,13 +1276,480 @@ const Modal = ({ type, item, onClose, onSave }) => {
   );
 };
 
+const LegacyModal = Modal;
+
+const ProjectModal = ({ item, onClose, onSave }) => {
+  const getInitialProjectData = () => {
+    const title = normalizeBilingualField(item?.title);
+    const description = normalizeBilingualField(item?.description);
+    const client = normalizeBilingualField(item?.client);
+    const directImages = normalizeStringArray(item?.images);
+    const fallbackImage = typeof item?.image === 'string' ? item.image.trim() : '';
+
+    return {
+      title,
+      description,
+      category: item?.category || '',
+      client: {
+        en: client.en || '',
+        ar: client.ar || ''
+      },
+      tags: normalizeStringArray(item?.tags || item?.technologies),
+      videos: normalizeStringArray(item?.videos),
+      externalLink: typeof item?.externalLink === 'string' ? item.externalLink : '',
+      featured: Boolean(item?.featured),
+      images: directImages.length ? directImages : (fallbackImage ? [fallbackImage] : [])
+    };
+  };
+
+  const [formData, setFormData] = useState(() => getInitialProjectData());
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    setFormData(getInitialProjectData());
+  }, [item]);
+
+  const projectCategories = ['Shopify', 'Automation', 'Systems'];
+
+  const parseListInput = (value) =>
+    String(value || '')
+      .split(/[\n,]/)
+      .map((part) => part.trim())
+      .filter(Boolean);
+
+  const serializeListInput = (value) => normalizeStringArray(value).join('\n');
+
+  const handleImageChange = async (e) => {
+    const files = Array.from(e.target.files || []);
+    if (!files.length) {
+      return;
+    }
+
+    const previews = await Promise.all(
+      files.map(
+        (file) =>
+          new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () => resolve(typeof reader.result === 'string' ? reader.result : '');
+            reader.onerror = () => resolve('');
+            reader.readAsDataURL(file);
+          })
+      )
+    );
+
+    setFormData((prev) => ({
+      ...prev,
+      images: [...prev.images, ...previews.filter(Boolean)]
+    }));
+    e.target.value = '';
+  };
+
+  const removeImage = (index) => {
+    setFormData((prev) => ({
+      ...prev,
+      images: prev.images.filter((_, i) => i !== index)
+    }));
+  };
+
+  const moveImage = (index, direction) => {
+    setFormData((prev) => {
+      const nextIndex = index + direction;
+      if (nextIndex < 0 || nextIndex >= prev.images.length) {
+        return prev;
+      }
+
+      const nextImages = [...prev.images];
+      [nextImages[index], nextImages[nextIndex]] = [nextImages[nextIndex], nextImages[index]];
+      return { ...prev, images: nextImages };
+    });
+  };
+
+  const setCoverImage = (index) => {
+    setFormData((prev) => {
+      if (index <= 0 || index >= prev.images.length) {
+        return prev;
+      }
+
+      const nextImages = [...prev.images];
+      const [selected] = nextImages.splice(index, 1);
+      nextImages.unshift(selected);
+      return { ...prev, images: nextImages };
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (isSubmitting) {
+      return;
+    }
+
+    const payload = {
+      title: {
+        en: formData.title.en.trim(),
+        ar: formData.title.ar.trim()
+      },
+      description: {
+        en: formData.description.en.trim(),
+        ar: formData.description.ar.trim()
+      },
+      category: (formData.category || '').trim(),
+      client: {
+        en: (formData.client.en || '').trim(),
+        ar: (formData.client.ar || '').trim()
+      },
+      images: normalizeStringArray(formData.images),
+      tags: normalizeStringArray(formData.tags),
+      videos: normalizeStringArray(formData.videos),
+      externalLink: (formData.externalLink || '').trim(),
+      featured: Boolean(formData.featured)
+    };
+
+    if (!payload.title.en || !payload.title.ar) {
+      toast.error('Title is required in English and Arabic');
+      return;
+    }
+
+    if (!payload.description.en || !payload.description.ar) {
+      toast.error('Description is required in English and Arabic');
+      return;
+    }
+
+    if (!payload.category) {
+      toast.error('Project category is required');
+      return;
+    }
+
+    if (!payload.client.en || !payload.client.ar) {
+      toast.error('Client name is required in English and Arabic');
+      return;
+    }
+
+    if (!payload.images.length) {
+      toast.error('Please add at least one project image');
+      return;
+    }
+
+    if (payload.externalLink) {
+      try {
+        new URL(payload.externalLink);
+      } catch (_err) {
+        toast.error('Please enter a valid external link URL');
+        return;
+      }
+    }
+
+    setIsSubmitting(true);
+    try {
+      if (item) {
+        await api.put(`/projects/${item.id}`, payload);
+        toast.success('project updated successfully');
+      } else {
+        await api.post('/projects', payload);
+        toast.success('project created successfully');
+      }
+
+      await onSave();
+    } catch (err) {
+      toast.error(err.userMessage || err.response?.data?.message || 'Failed to save');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <motion.div
+        className="modal-content"
+        initial={{ scale: 0.9, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="modal-header">
+          <h2>{item ? 'Edit' : 'Add'} project</h2>
+          <button className="btn-icon" onClick={onClose} disabled={isSubmitting}>
+            <FiX />
+          </button>
+        </div>
+
+        <form onSubmit={handleSubmit} className="modal-form">
+          <div className="form-row">
+            <div className="form-group">
+              <label>Title (English)</label>
+              <input
+                type="text"
+                value={formData.title.en}
+                onChange={(e) =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    title: { ...prev.title, en: e.target.value }
+                  }))
+                }
+                required
+              />
+            </div>
+            <div className="form-group">
+              <label>Title (Arabic)</label>
+              <input
+                type="text"
+                value={formData.title.ar}
+                onChange={(e) =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    title: { ...prev.title, ar: e.target.value }
+                  }))
+                }
+                required
+              />
+            </div>
+          </div>
+
+          <div className="form-row">
+            <div className="form-group">
+              <label>Description (English)</label>
+              <textarea
+                rows="3"
+                value={formData.description.en}
+                onChange={(e) =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    description: { ...prev.description, en: e.target.value }
+                  }))
+                }
+                required
+              />
+            </div>
+            <div className="form-group">
+              <label>Description (Arabic)</label>
+              <textarea
+                rows="3"
+                value={formData.description.ar}
+                onChange={(e) =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    description: { ...prev.description, ar: e.target.value }
+                  }))
+                }
+                required
+              />
+            </div>
+          </div>
+
+          <div className="form-row">
+            <div className="form-group">
+              <label>Category</label>
+              <select
+                value={formData.category}
+                onChange={(e) => setFormData((prev) => ({ ...prev, category: e.target.value }))}
+                required
+              >
+                <option value="">Select Category</option>
+                {projectCategories.map((cat) => (
+                  <option key={cat} value={cat}>{cat}</option>
+                ))}
+              </select>
+            </div>
+            <div className="form-group project-featured-toggle">
+              <label>Featured Project</label>
+              <label className="checkbox-inline">
+                <input
+                  type="checkbox"
+                  checked={Boolean(formData.featured)}
+                  onChange={(e) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      featured: e.target.checked
+                    }))
+                  }
+                />
+                Show this project as featured
+              </label>
+            </div>
+          </div>
+
+          <div className="form-row">
+            <div className="form-group">
+              <label>Client (English)</label>
+              <input
+                type="text"
+                value={formData.client.en}
+                onChange={(e) =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    client: { ...prev.client, en: e.target.value }
+                  }))
+                }
+                required
+              />
+            </div>
+            <div className="form-group">
+              <label>Client (Arabic)</label>
+              <input
+                type="text"
+                value={formData.client.ar}
+                onChange={(e) =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    client: { ...prev.client, ar: e.target.value }
+                  }))
+                }
+                required
+              />
+            </div>
+          </div>
+
+          <div className="form-group">
+            <label>External Link (Optional)</label>
+            <input
+              type="url"
+              value={formData.externalLink}
+              placeholder="https://example.com"
+              onChange={(e) => setFormData((prev) => ({ ...prev, externalLink: e.target.value }))}
+            />
+          </div>
+
+          <div className="form-row">
+            <div className="form-group">
+              <label>Tags / Technologies</label>
+              <textarea
+                rows="4"
+                value={serializeListInput(formData.tags)}
+                onChange={(e) =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    tags: parseListInput(e.target.value)
+                  }))
+                }
+                placeholder={'Shopify\nAutomation\nCRM'}
+              />
+            </div>
+            <div className="form-group">
+              <label>Video URLs (Optional)</label>
+              <textarea
+                rows="4"
+                value={serializeListInput(formData.videos)}
+                onChange={(e) =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    videos: parseListInput(e.target.value)
+                  }))
+                }
+                placeholder={'https://youtube.com/embed/...\nhttps://player.vimeo.com/video/...'}
+              />
+            </div>
+          </div>
+
+          <div className="form-group">
+            <label>Project Images (reorder and set cover)</label>
+            <input
+              type="file"
+              accept="image/*"
+              multiple
+              onChange={handleImageChange}
+              style={{
+                width: '100%',
+                padding: '12px 16px',
+                borderRadius: '10px',
+                border: '2px solid var(--admin-border)',
+                background: 'var(--admin-bg)',
+                color: 'var(--admin-text)',
+                fontSize: '0.95rem',
+                cursor: 'pointer'
+              }}
+            />
+            <p className="project-list-helper">
+              The first image is used as the cover in cards and detail pages.
+            </p>
+            {formData.images.length > 0 && (
+              <div className="project-images-grid">
+                {formData.images.map((preview, index) => (
+                  <div key={`${preview}-${index}`} className="project-image-preview">
+                    {index === 0 && <span className="cover-badge">Cover</span>}
+                    <img src={preview} alt={`Preview ${index + 1}`} />
+                    <div className="project-image-tools">
+                      <button
+                        type="button"
+                        className="btn-icon"
+                        onClick={() => moveImage(index, -1)}
+                        disabled={index === 0}
+                        title="Move up"
+                      >
+                        <FiArrowUp />
+                      </button>
+                      <button
+                        type="button"
+                        className="btn-icon"
+                        onClick={() => moveImage(index, 1)}
+                        disabled={index === formData.images.length - 1}
+                        title="Move down"
+                      >
+                        <FiArrowDown />
+                      </button>
+                      <button
+                        type="button"
+                        className="btn-sm"
+                        onClick={() => setCoverImage(index)}
+                        disabled={index === 0}
+                      >
+                        Set as cover
+                      </button>
+                      <button
+                        type="button"
+                        className="btn-icon danger"
+                        onClick={() => removeImage(index)}
+                        title="Remove image"
+                      >
+                        <FiX />
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
+          <div className="modal-actions">
+            <button type="submit" className="btn-primary" disabled={isSubmitting}>
+              <FiSave /> {isSubmitting ? 'Saving...' : 'Save project'}
+            </button>
+            <button type="button" className="btn-outline" onClick={onClose} disabled={isSubmitting}>
+              Cancel
+            </button>
+          </div>
+        </form>
+      </motion.div>
+    </div>
+  );
+};
+
+Modal = (props) => {
+  if (props.type === 'project') {
+    return <ProjectModal item={props.item} onClose={props.onClose} onSave={props.onSave} />;
+  }
+
+  return <LegacyModal {...props} />;
+};
+
 // Content Tab Component
 const ContentTab = ({ content, onSave }) => {
   const [formData, setFormData] = useState(content);
   const [activeSection, setActiveSection] = useState('siteInfo');
+  const [isSaving, setIsSaving] = useState(false);
 
-  const handleSave = () => {
-    onSave(formData);
+  useEffect(() => {
+    setFormData(content);
+  }, [content]);
+
+  const handleSave = async () => {
+    if (isSaving) {
+      return;
+    }
+
+    setIsSaving(true);
+    try {
+      await onSave(formData);
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   const updateSection = (section, field, value) => {
@@ -1269,8 +1771,8 @@ const ContentTab = ({ content, onSave }) => {
     >
       <div className="tab-header">
         <h2>Content Management</h2>
-        <button className="btn-primary" onClick={handleSave}>
-          <FiSave /> Save Changes
+        <button className="btn-primary" onClick={handleSave} disabled={isSaving}>
+          <FiSave /> {isSaving ? 'Saving...' : 'Save Changes'}
         </button>
       </div>
 
