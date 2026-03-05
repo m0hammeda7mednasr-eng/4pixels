@@ -3,8 +3,9 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { FiArrowRight, FiCheckCircle, FiClock, FiFilter } from 'react-icons/fi';
 import { useLanguage } from '../context/LanguageContext';
-import api from '../services/api';
+import { getCached } from '../services/api';
 import { getCategoryLabel, PRIMARY_CATEGORIES } from '../utils/categoryLabels';
+import { getLocalizedArray, getLocalizedText } from '../utils/localization';
 import './Services.css';
 
 const Services = () => {
@@ -12,21 +13,47 @@ const Services = () => {
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(true);
   const [activeCategory, setActiveCategory] = useState('all');
+  const [error, setError] = useState('');
 
   useEffect(() => {
+    const controller = new AbortController();
+    let mounted = true;
+
     const fetchServices = async () => {
       try {
-        const res = await api.get('/services');
-        setServices(res.data || []);
+        setError('');
+        const data = await getCached('/services', { ttl: 120000, signal: controller.signal });
+
+        if (!mounted) {
+          return;
+        }
+
+        setServices(data || []);
       } catch (err) {
+        if (controller.signal.aborted || !mounted) {
+          return;
+        }
+
         console.error('Error fetching services:', err.userMessage || err.message);
+        setError(
+          language === 'en'
+            ? 'Could not load services at the moment.'
+            : 'تعذر تحميل الخدمات في الوقت الحالي.'
+        );
       } finally {
-        setLoading(false);
+        if (mounted) {
+          setLoading(false);
+        }
       }
     };
 
     fetchServices();
-  }, []);
+
+    return () => {
+      mounted = false;
+      controller.abort();
+    };
+  }, [language]);
 
   const categories = useMemo(() => {
     const availableCategories = Array.from(
@@ -64,28 +91,29 @@ const Services = () => {
 
   const copy = language === 'en'
     ? {
-      intro:
-        'From strategy to execution, our service stack is designed for measurable growth.',
-      services: 'Services',
-      categories: 'Categories',
-      startingFrom: 'Starting from',
-      filterByCategory: 'Filter by category',
-      allServices: 'All services',
-      discoverService: 'Discover service',
-      swipeHint: 'Swipe to see more',
-      emptyState: 'No services found for this category.'
-    }
+        intro:
+          'From strategy to execution, our service stack is designed for measurable growth.',
+        services: 'Services',
+        categories: 'Categories',
+        startingFrom: 'Starting from',
+        filterByCategory: 'Filter by category',
+        allServices: 'All services',
+        discoverService: 'Discover service',
+        swipeHint: 'Swipe to see more',
+        emptyState: 'No services found for this category.'
+      }
     : {
-      intro: 'من الاستراتيجية إلى التنفيذ، باقاتنا مصممة لتحقيق نمو قابل للقياس.',
-      services: 'الخدمات',
-      categories: 'التصنيفات',
-      startingFrom: 'تبدأ من',
-      filterByCategory: 'تصفية حسب التصنيف',
-      allServices: 'كل الخدمات',
-      discoverService: 'استكشف الخدمة',
-      swipeHint: 'اسحب لرؤية المزيد',
-      emptyState: 'لا توجد خدمات ضمن هذا التصنيف حاليًا.'
-    };
+        intro:
+          'من الاستراتيجية إلى التنفيذ، باقاتنا مصممة لتحقيق نمو قابل للقياس.',
+        services: 'الخدمات',
+        categories: 'التصنيفات',
+        startingFrom: 'تبدأ من',
+        filterByCategory: 'تصفية حسب التصنيف',
+        allServices: 'كل الخدمات',
+        discoverService: 'استكشف الخدمة',
+        swipeHint: 'اسحب لرؤية المزيد',
+        emptyState: 'لا توجد خدمات ضمن هذا التصنيف حاليًا.'
+      };
 
   return (
     <div className="services-showcase section">
@@ -97,6 +125,8 @@ const Services = () => {
           <h1 className="section-title">{t('services')}</h1>
           <p>{copy.intro}</p>
         </div>
+
+        {error && <p className="scroll-indicator">{error}</p>}
 
         <div className="services-summary-grid">
           <article className="services-summary-card">
@@ -141,9 +171,9 @@ const Services = () => {
           <>
             <div className="services-showcase-grid">
               {filteredServices.map((service, index) => {
-                const features = service.features?.[language] || service.features?.en || [];
-                const title = service.title?.[language] || service.title?.en || '';
-                const description = service.description?.[language] || service.description?.en || '';
+                const features = getLocalizedArray(service.features, language);
+                const title = getLocalizedText(service.title, language, 'Service');
+                const description = getLocalizedText(service.description, language);
 
                 return (
                   <motion.article

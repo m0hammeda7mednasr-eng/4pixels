@@ -74,11 +74,13 @@ body {
 body.light {
   background-color: var(--bg-light);
   color: var(--text-light);
+  color-scheme: light;
 }
 
 body.dark {
   background-color: var(--bg-dark);
   color: var(--text-dark);
+  color-scheme: dark;
 }
 
 body[dir='rtl'] {
@@ -305,6 +307,21 @@ img {
   textarea,
   select {
     font-size: 16px !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
 

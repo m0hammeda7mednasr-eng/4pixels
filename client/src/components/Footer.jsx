@@ -15,7 +15,7 @@ import {
 import { FaXTwitter } from 'react-icons/fa6';
 import { FiMail, FiPhone, FiMapPin } from 'react-icons/fi';
 import { useLanguage } from '../context/LanguageContext';
-import api from '../services/api';
+import { getCached } from '../services/api';
 import { PRIMARY_CATEGORIES, getCategoryLabel } from '../utils/categoryLabels';
 import './Footer.css';
 
@@ -29,16 +29,28 @@ const Footer = () => {
   });
 
   useEffect(() => {
+    const controller = new AbortController();
+    let mounted = true;
+
     const fetchContent = async () => {
       try {
-        const response = await api.get('/content');
-        setContent(response.data);
+        const data = await getCached('/content', { ttl: 60000, signal: controller.signal });
+        if (mounted) {
+          setContent(data);
+        }
       } catch (err) {
-        console.error('Failed to fetch content:', err.userMessage || err.message);
+        if (!controller.signal.aborted) {
+          console.error('Failed to fetch content:', err.userMessage || err.message);
+        }
       }
     };
 
     fetchContent();
+
+    return () => {
+      mounted = false;
+      controller.abort();
+    };
   }, []);
 
   const toggleSection = (section) => {

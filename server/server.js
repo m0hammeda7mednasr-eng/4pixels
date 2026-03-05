@@ -99,6 +99,7 @@ app.use('/api/content', require('./routes/content'));
 app.use('/api/messages', require('./routes/messages'));
 app.use('/api/reviews', require('./routes/reviews'));
 app.use('/api/shopify', require('./routes/shopify'));
+app.use('/api/upload', require('./routes/upload'));
 
 // Health checks
 app.get('/', (_req, res) => {

@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { FiArrowLeft, FiCheck, FiClock, FiDollarSign, FiPackage } from 'react-icons/fi';
 import { useLanguage } from '../context/LanguageContext';
 import api from '../services/api';
+import { getLocalizedArray, getLocalizedText } from '../utils/localization';
 import './ServiceDetail.css';
 
 const ServiceDetail = () => {
@@ -16,46 +17,47 @@ const ServiceDetail = () => {
 
   const copy = language === 'en'
     ? {
-      loading: 'Loading service details...',
-      notFoundTitle: 'Service Not Found',
-      notFoundDescription: 'The service you are looking for does not exist.',
-      backToServices: 'Back to Services',
-      back: 'Back',
-      whatsIncluded: "What's Included",
-      faq: 'Frequently Asked Questions',
-      startingAt: 'Starting at',
-      deliveryTime: 'Delivery Time',
-      getStarted: 'Get Started',
-      customQuote: 'Contact us for a custom quote tailored to your needs',
-      whyChooseUs: 'Why Choose Us?',
-      quality: 'Professional Quality',
-      onTime: 'On-Time Delivery',
-      support: '24/7 Support',
-      guarantee: 'Money-Back Guarantee'
-    }
+        loading: 'Loading service details...',
+        notFoundTitle: 'Service Not Found',
+        notFoundDescription: 'The service you are looking for does not exist.',
+        backToServices: 'Back to Services',
+        back: 'Back',
+        whatsIncluded: "What's Included",
+        faq: 'Frequently Asked Questions',
+        startingAt: 'Starting at',
+        deliveryTime: 'Delivery Time',
+        getStarted: 'Get Started',
+        customQuote: 'Contact us for a custom quote tailored to your needs',
+        whyChooseUs: 'Why Choose Us?',
+        quality: 'Professional Quality',
+        onTime: 'On-Time Delivery',
+        support: '24/7 Support',
+        guarantee: 'Money-Back Guarantee'
+      }
     : {
-      loading: 'جارٍ تحميل تفاصيل الخدمة...',
-      notFoundTitle: 'الخدمة غير موجودة',
-      notFoundDescription: 'الخدمة التي تبحث عنها غير متاحة.',
-      backToServices: 'العودة للخدمات',
-      back: 'رجوع',
-      whatsIncluded: 'ما تتضمنه الخدمة',
-      faq: 'الأسئلة الشائعة',
-      startingAt: 'تبدأ من',
-      deliveryTime: 'وقت التسليم',
-      getStarted: 'ابدأ الآن',
-      customQuote: 'تواصل معنا للحصول على عرض سعر مخصص يناسب احتياجاتك',
-      whyChooseUs: 'لماذا تختارنا؟',
-      quality: 'جودة احترافية',
-      onTime: 'تسليم في الوقت المحدد',
-      support: 'دعم على مدار الساعة',
-      guarantee: 'ضمان استرداد الأموال'
-    };
+        loading: 'جارٍ تحميل تفاصيل الخدمة...',
+        notFoundTitle: 'الخدمة غير موجودة',
+        notFoundDescription: 'الخدمة التي تبحث عنها غير متاحة.',
+        backToServices: 'العودة للخدمات',
+        back: 'رجوع',
+        whatsIncluded: 'ما تتضمنه الخدمة',
+        faq: 'الأسئلة الشائعة',
+        startingAt: 'تبدأ من',
+        deliveryTime: 'وقت التسليم',
+        getStarted: 'ابدأ الآن',
+        customQuote: 'تواصل معنا للحصول على عرض سعر مخصص يناسب احتياجاتك',
+        whyChooseUs: 'لماذا تختارنا؟',
+        quality: 'جودة احترافية',
+        onTime: 'تسليم في الوقت المحدد',
+        support: 'دعم على مدار الساعة',
+        guarantee: 'ضمان استرداد الأموال'
+      };
 
   useEffect(() => {
     const fetchService = async () => {
       try {
         setLoading(true);
+        setError(null);
         const response = await api.get(`/services/${id}`);
         setService(response.data);
       } catch (err) {
@@ -90,9 +92,9 @@ const ServiceDetail = () => {
     );
   }
 
-  const title = service.title?.[language] || service.title?.en || '';
-  const description = service.description?.[language] || service.description?.en || '';
-  const features = service.features?.[language] || service.features?.en || [];
+  const title = getLocalizedText(service.title, language, 'Service');
+  const description = getLocalizedText(service.description, language);
+  const features = getLocalizedArray(service.features, language);
   const faq = Array.isArray(service.faq) ? service.faq : [];
 
   return (
@@ -184,8 +186,8 @@ const ServiceDetail = () => {
                 <div className="faq-list">
                   {faq.map((item, index) => (
                     <div key={index} className="faq-item">
-                      <h3>{item.question?.[language] || item.question?.en}</h3>
-                      <p>{item.answer?.[language] || item.answer?.en}</p>
+                      <h3>{getLocalizedText(item.question, language)}</h3>
+                      <p>{getLocalizedText(item.answer, language)}</p>
                     </div>
                   ))}
                 </div>

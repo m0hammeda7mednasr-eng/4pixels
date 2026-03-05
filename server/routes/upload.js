@@ -43,6 +43,8 @@ const upload = multer({
   fileFilter: fileFilter
 });
 
+const normalizeFilename = (value) => path.basename(String(value || '').trim());
+
 // Upload single image
 router.post('/single', auth, adminAuth, upload.single('image'), (req, res) => {
   try {
@@ -84,7 +86,11 @@ router.post('/multiple', auth, adminAuth, upload.array('images', 10), (req, res)
 // Delete image
 router.delete('/:filename', auth, adminAuth, (req, res) => {
   try {
-    const filename = req.params.filename;
+    const filename = normalizeFilename(req.params.filename);
+    if (!filename || filename !== req.params.filename) {
+      return res.status(400).json({ message: 'Invalid filename' });
+    }
+
     const filePath = path.join(uploadsDir, filename);
 
     if (fs.existsSync(filePath)) {
@@ -97,6 +103,23 @@ router.delete('/:filename', auth, adminAuth, (req, res) => {
     console.error('Delete error:', err);
     res.status(500).json({ message: 'Failed to delete image', error: err.message });
   }
+});
+
+router.use((err, _req, res, _next) => {
+  if (err instanceof multer.MulterError) {
+    if (err.code === 'LIMIT_FILE_SIZE') {
+      return res.status(413).json({ message: 'Image is too large. Maximum size is 5MB.' });
+    }
+
+    return res.status(400).json({ message: err.message || 'Upload failed' });
+  }
+
+  if (err.message === 'Only image files are allowed!') {
+    return res.status(400).json({ message: err.message });
+  }
+
+  console.error('Upload route error:', err.message);
+  return res.status(500).json({ message: 'Upload failed' });
 });
 
 module.exports = router;

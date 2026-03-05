@@ -10,7 +10,7 @@ import {
   FiClock, FiCheck, FiSearch, FiChevronDown,
   FiArrowUp, FiArrowDown
 } from 'react-icons/fi';
-import api from '../services/api';
+import api, { clearApiCache } from '../services/api';
 import './Admin.css';
 
 const normalizeBilingualField = (value) => {
@@ -108,6 +108,7 @@ const Admin = () => {
 
     try {
       await api.delete(`/${type}/${id}`);
+      clearApiCache();
       toast.success(`${type} deleted successfully`);
       fetchData(false);
     } catch (err) {
@@ -220,6 +221,7 @@ const Admin = () => {
               onToggle={async (id) => {
                 try {
                   await api.patch(`/reviews/${id}/toggle`);
+                  clearApiCache('/reviews');
                   toast.success('Review status updated');
                   fetchData(false);
                 } catch (err) {
@@ -237,6 +239,7 @@ const Admin = () => {
             <ContentTab content={content} onSave={async (updatedContent) => {
               try {
                 const response = await api.put('/content', updatedContent);
+                clearApiCache('/content');
                 setContent(response.data || updatedContent);
                 toast.success('Content updated successfully');
               } catch (err) {
@@ -252,7 +255,7 @@ const Admin = () => {
           type={modalType}
           item={editingItem}
           onClose={closeModal}
-          onSave={() => { closeModal(); fetchData(false); }}
+          onSave={() => { clearApiCache(); closeModal(); fetchData(false); }}
         />
       )}
     </div>
@@ -555,6 +558,7 @@ const MessagesTab = ({ messages, fetchData, onDelete }) => {
   const markAsRead = async (id) => {
     try {
       await api.patch(`/messages/${id}/read`);
+      clearApiCache('/messages');
       toast.success('Message marked as read');
       fetchData();
     } catch (err) {

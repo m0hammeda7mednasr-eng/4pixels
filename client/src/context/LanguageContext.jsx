@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect, useContext } from 'react';
+import React, { createContext, useState, useEffect, useContext, useMemo } from 'react';
 
 const LanguageContext = createContext();
 
@@ -31,7 +31,15 @@ export const translations = {
     phone: 'Phone',
     company: 'Company',
     message: 'Message',
-    selectService: 'Select Service'
+    selectService: 'Select Service',
+    skipToContent: 'Skip to content',
+    toggleMenu: 'Toggle menu',
+    switchToArabic: 'Switch to Arabic',
+    switchToEnglish: 'Switch to English',
+    darkMode: 'Dark mode',
+    lightMode: 'Light mode',
+    digitalAgency: 'Digital Agency',
+    loading: 'Loading...'
   },
   ar: {
     home: 'الرئيسية',
@@ -59,23 +67,42 @@ export const translations = {
     phone: 'الهاتف',
     company: 'الشركة',
     message: 'الرسالة',
-    selectService: 'اختر الخدمة'
+    selectService: 'اختر الخدمة',
+    skipToContent: 'تخطي إلى المحتوى',
+    toggleMenu: 'تبديل القائمة',
+    switchToArabic: 'التحويل إلى العربية',
+    switchToEnglish: 'التحويل إلى الإنجليزية',
+    darkMode: 'الوضع الداكن',
+    lightMode: 'الوضع الفاتح',
+    digitalAgency: 'وكالة رقمية',
+    loading: 'جارٍ التحميل...'
   }
 };
 
 export const LanguageProvider = ({ children }) => {
   const [language, setLanguage] = useState(() => {
-    const storedLanguage = localStorage.getItem('language');
-    return storedLanguage === 'ar' || storedLanguage === 'en' ? storedLanguage : 'en';
+    try {
+      const storedLanguage = localStorage.getItem('language');
+      return storedLanguage === 'ar' || storedLanguage === 'en' ? storedLanguage : 'en';
+    } catch (_err) {
+      return 'en';
+    }
   });
 
   useEffect(() => {
     document.documentElement.dir = language === 'ar' ? 'rtl' : 'ltr';
     document.documentElement.lang = language;
+    document.documentElement.setAttribute('data-language', language);
+
     document.body.setAttribute('dir', language === 'ar' ? 'rtl' : 'ltr');
     document.body.setAttribute('lang', language);
     document.body.setAttribute('data-language', language);
-    localStorage.setItem('language', language);
+
+    try {
+      localStorage.setItem('language', language);
+    } catch (_err) {
+      // Ignore storage failures in private mode or restricted environments.
+    }
   }, [language]);
 
   const toggleLanguage = () => {
@@ -85,15 +112,24 @@ export const LanguageProvider = ({ children }) => {
   const t = (key) => {
     const keys = key.split('.');
     let value = translations[language];
+    let fallbackValue = translations.en;
+
     for (const k of keys) {
       value = value?.[k];
+      fallbackValue = fallbackValue?.[k];
     }
-    return value || key;
+
+    return value ?? fallbackValue ?? key;
   };
 
-  return (
-    <LanguageContext.Provider value={{ language, toggleLanguage, t }}>
-      {children}
-    </LanguageContext.Provider>
+  const contextValue = useMemo(
+    () => ({
+      language,
+      toggleLanguage,
+      t
+    }),
+    [language]
   );
+
+  return <LanguageContext.Provider value={contextValue}>{children}</LanguageContext.Provider>;
 };
