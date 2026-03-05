@@ -12,12 +12,18 @@ const readJSON = (filename) => {
   const filePath = path.join(dataDir, filename);
   try {
     if (!fs.existsSync(filePath)) {
-      fs.writeFileSync(filePath, '[]');
+      fs.writeFileSync(filePath, '[]', 'utf8');
+      return [];
     }
     const data = fs.readFileSync(filePath, 'utf8');
+    if (!data || data.trim() === '') {
+      return [];
+    }
     return JSON.parse(data);
   } catch (err) {
-    console.error(`Error reading ${filename}:`, err);
+    if (process.env.NODE_ENV !== 'production') {
+      console.error(`Error reading ${filename}:`, err.message);
+    }
     return [];
   }
 };
@@ -25,16 +31,21 @@ const readJSON = (filename) => {
 const writeJSON = (filename, data) => {
   const filePath = path.join(dataDir, filename);
   try {
-    fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
+    const jsonData = JSON.stringify(data, null, 2);
+    fs.writeFileSync(filePath, jsonData, 'utf8');
     return true;
   } catch (err) {
-    console.error(`Error writing ${filename}:`, err);
+    if (process.env.NODE_ENV !== 'production') {
+      console.error(`Error writing ${filename}:`, err.message);
+    }
     return false;
   }
 };
 
 const generateId = () => {
-  return Date.now().toString() + Math.random().toString(36).slice(2, 11);
+  const timestamp = Date.now().toString(36);
+  const randomStr = Math.random().toString(36).slice(2, 11);
+  return `${timestamp}-${randomStr}`;
 };
 
 module.exports = {

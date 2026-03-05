@@ -1,26 +1,30 @@
-/* ============================================
-   CONTACT PAGE - IMPROVED MOBILE UI/UX
-   ============================================ */
-
 .contact-page {
-  padding: clamp(90px, 15vw, 120px) 0 clamp(50px, 8vw, 80px);
-  background: var(--bg-light);
+  position: relative;
+  padding: clamp(92px, 14vw, 126px) 0 clamp(54px, 8vw, 82px);
   min-height: 100vh;
 }
 
-body.dark .contact-page {
-  background: var(--bg-dark);
+.contact-page::before {
+  content: '';
+  position: absolute;
+  inset: 110px -120px auto auto;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  filter: blur(84px);
+  background: rgba(11, 95, 255, 0.18);
+  pointer-events: none;
+}
+
+body.dark .contact-page::before {
+  background: rgba(0, 166, 200, 0.22);
 }
 
 .contact-container {
-  max-width: 1200px;
+  max-width: 1220px;
   margin: 0 auto;
-  padding: 0 clamp(16px, 4vw, 24px);
+  padding: 0 clamp(16px, 4vw, 28px);
 }
-
-/* ============================================
-   HEADER
-   ============================================ */
 
 .contact-header {
   text-align: center;
@@ -28,43 +32,35 @@ body.dark .contact-page {
 }
 
 .contact-header h1 {
-  font-size: clamp(2rem, 6vw, 3.5rem);
-  font-weight: 900;
+  font-size: clamp(2.05rem, 6vw, 3.6rem);
+  font-weight: 700;
+  font-family: var(--font-heading-en);
   margin-bottom: clamp(14px, 2.5vw, 20px);
-  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  letter-spacing: -0.03em;
+  background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  letter-spacing: -0.03em;
-  line-height: 1.15;
 }
 
 .contact-header p {
-  font-size: clamp(0.95rem, 2.5vw, 1.15rem);
+  font-size: clamp(0.94rem, 2.5vw, 1.12rem);
   color: var(--text-light-secondary);
-  max-width: 620px;
+  max-width: 640px;
   margin: 0 auto;
-  line-height: 1.65;
+  line-height: 1.7;
 }
 
 body.dark .contact-header p {
   color: var(--text-dark-secondary);
 }
 
-/* ============================================
-   GRID LAYOUT
-   ============================================ */
-
 .contact-grid {
   display: grid;
   grid-template-columns: 1fr 1.1fr;
   gap: clamp(24px, 5vw, 56px);
-  margin-bottom: clamp(50px, 8vw, 80px);
+  margin-bottom: clamp(50px, 8vw, 82px);
 }
-
-/* ============================================
-   CONTACT INFO CARDS
-   ============================================ */
 
 .contact-info {
   display: flex;
@@ -76,8 +72,9 @@ body.dark .contact-header p {
   background: var(--surface-light);
   padding: clamp(18px, 3.5vw, 28px);
   border-radius: clamp(14px, 3vw, 20px);
-  border: 1.5px solid var(--border-light);
-  transition: all 0.3s ease;
+  border: 1px solid var(--border-light);
+  transition: transform 0.24s ease, box-shadow 0.24s ease, border-color 0.24s ease;
+  box-shadow: var(--shadow-sm);
 }
 
 body.dark .contact-method {
@@ -86,38 +83,34 @@ body.dark .contact-method {
 }
 
 .contact-method:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-lg);
-  border-color: var(--primary);
-}
-
-body.dark .contact-method:hover {
-  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.3);
+  transform: translateY(-5px);
+  box-shadow: var(--shadow);
+  border-color: rgba(11, 95, 255, 0.3);
 }
 
 .contact-method-header {
   display: flex;
   align-items: center;
   gap: 14px;
-  margin-bottom: 16px;
+  margin-bottom: 14px;
 }
 
 .contact-icon {
-  width: clamp(48px, 8vw, 58px);
-  height: clamp(48px, 8vw, 58px);
+  width: clamp(46px, 8vw, 58px);
+  height: clamp(46px, 8vw, 58px);
   border-radius: clamp(12px, 2.5vw, 16px);
   background: linear-gradient(135deg, var(--primary), var(--secondary));
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
-  font-size: clamp(1.2rem, 3vw, 1.5rem);
+  color: #fff;
+  font-size: clamp(1.18rem, 3vw, 1.5rem);
   flex-shrink: 0;
-  box-shadow: 0 6px 20px rgba(79, 70, 229, 0.3);
+  box-shadow: 0 8px 22px rgba(11, 95, 255, 0.3);
 }
 
 .contact-method h3 {
-  font-size: clamp(1.1rem, 3vw, 1.4rem);
+  font-size: clamp(1.04rem, 2.6vw, 1.3rem);
   font-weight: 700;
   color: var(--text-light);
 }
@@ -128,9 +121,9 @@ body.dark .contact-method h3 {
 
 .contact-method p {
   color: var(--text-light-secondary);
-  line-height: 1.65;
+  line-height: 1.66;
   margin-bottom: 12px;
-  font-size: clamp(0.85rem, 2vw, 0.95rem);
+  font-size: clamp(0.84rem, 2vw, 0.93rem);
 }
 
 body.dark .contact-method p {
@@ -140,12 +133,12 @@ body.dark .contact-method p {
 .contact-link {
   color: var(--primary);
   text-decoration: none;
-  font-weight: 600;
-  font-size: clamp(0.85rem, 2vw, 0.95rem);
+  font-weight: 700;
+  font-size: clamp(0.84rem, 2vw, 0.93rem);
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  transition: all 0.25s ease;
+  transition: color 0.22s ease, gap 0.22s ease;
 }
 
 .contact-link:hover {
@@ -153,26 +146,21 @@ body.dark .contact-method p {
   gap: 10px;
 }
 
-/* ============================================
-   CONTACT FORM
-   ============================================ */
-
 .contact-form-container {
   background: var(--surface-light);
   padding: clamp(20px, 4.5vw, 40px);
   border-radius: clamp(16px, 3vw, 22px);
-  border: 1.5px solid var(--border-light);
+  border: 1px solid var(--border-light);
   box-shadow: var(--shadow-lg);
 }
 
 body.dark .contact-form-container {
   background: var(--surface-dark);
   border-color: var(--border-dark);
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
 }
 
 .contact-form h2 {
-  font-size: clamp(1.3rem, 4vw, 1.8rem);
+  font-size: clamp(1.28rem, 4vw, 1.8rem);
   font-weight: 700;
   margin-bottom: clamp(20px, 3.5vw, 28px);
   color: var(--text-light);
@@ -183,20 +171,16 @@ body.dark .contact-form h2 {
   color: var(--text-dark);
 }
 
-/* ============================================
-   FORM ELEMENTS
-   ============================================ */
-
 .form-group {
   margin-bottom: clamp(16px, 3vw, 22px);
 }
 
 .form-group label {
   display: block;
-  font-weight: 600;
+  font-weight: 700;
   margin-bottom: 7px;
   color: var(--text-light);
-  font-size: clamp(0.82rem, 2vw, 0.9rem);
+  font-size: clamp(0.8rem, 2vw, 0.88rem);
 }
 
 body.dark .form-group label {
@@ -209,13 +193,12 @@ body.dark .form-group label {
   width: 100%;
   padding: clamp(12px, 2.5vw, 15px) clamp(13px, 3vw, 16px);
   border-radius: var(--radius);
-  border: 1.5px solid var(--border-light);
-  background: var(--bg-light);
+  border: 1px solid var(--border-light);
+  background: rgba(255, 255, 255, 0.62);
   color: var(--text-light);
   font-family: inherit;
   font-size: 16px;
-  /* Prevent iOS zoom */
-  transition: all 0.25s ease;
+  transition: border-color 0.22s ease, box-shadow 0.22s ease, background 0.22s ease;
   -webkit-appearance: none;
   appearance: none;
 }
@@ -223,7 +206,7 @@ body.dark .form-group label {
 body.dark .form-group input,
 body.dark .form-group textarea,
 body.dark .form-group select {
-  background: rgba(255, 255, 255, 0.04);
+  background: rgba(15, 26, 48, 0.78);
   color: var(--text-dark);
   border-color: var(--border-dark);
 }
@@ -232,26 +215,25 @@ body.dark .form-group select {
 .form-group textarea:focus,
 .form-group select:focus {
   outline: none;
-  border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.12);
-  background: var(--surface-light);
+  border-color: rgba(11, 95, 255, 0.52);
+  box-shadow: 0 0 0 3px rgba(11, 95, 255, 0.14);
+  background: var(--surface-light-strong);
 }
 
 body.dark .form-group input:focus,
 body.dark .form-group textarea:focus,
 body.dark .form-group select:focus {
-  background: rgba(255, 255, 255, 0.06);
+  background: rgba(18, 31, 58, 0.9);
 }
 
 .form-group textarea {
   min-height: 140px;
   resize: vertical;
-  line-height: 1.6;
+  line-height: 1.64;
 }
 
-/* Select arrow */
 .form-group select {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23475569'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%234a5f80'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 12px center;
   background-size: 18px;
@@ -260,42 +242,38 @@ body.dark .form-group select:focus {
 }
 
 body.dark .form-group select {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2394a3b8'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2398accf'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
 }
 
-body[dir="rtl"] .form-group select {
+body[dir='rtl'] .form-group select {
   background-position: left 12px center;
   padding-left: 40px;
   padding-right: clamp(13px, 3vw, 16px);
 }
 
-/* ============================================
-   SUBMIT BUTTON
-   ============================================ */
-
 .submit-btn {
   width: 100%;
   padding: clamp(14px, 2.8vw, 17px);
-  font-size: clamp(0.95rem, 2.5vw, 1.05rem);
+  font-size: clamp(0.92rem, 2.5vw, 1.04rem);
   font-weight: 700;
   border-radius: var(--radius-lg);
   background: linear-gradient(135deg, var(--primary), var(--secondary));
-  color: white;
+  color: #fff;
   border: none;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: transform 0.24s ease, box-shadow 0.24s ease, opacity 0.24s ease;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
-  box-shadow: 0 6px 24px rgba(79, 70, 229, 0.35);
+  box-shadow: 0 10px 28px rgba(11, 95, 255, 0.34);
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
 }
 
 .submit-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 12px 36px rgba(79, 70, 229, 0.45);
+  box-shadow: 0 16px 34px rgba(11, 95, 255, 0.4);
 }
 
 .submit-btn:active {
@@ -310,20 +288,16 @@ body[dir="rtl"] .form-group select {
 }
 
 .submit-btn svg {
-  font-size: 1.2rem;
+  font-size: 1.16rem;
 }
-
-/* ============================================
-   SOCIAL MEDIA SECTION
-   ============================================ */
 
 .social-media-section {
   background: var(--surface-light);
   padding: clamp(20px, 4vw, 30px);
   border-radius: clamp(14px, 3vw, 18px);
-  border: 1.5px solid var(--border-light);
+  border: 1px solid var(--border-light);
   margin-bottom: clamp(32px, 5vw, 50px);
-  transition: all 0.3s ease;
+  box-shadow: var(--shadow-sm);
 }
 
 body.dark .social-media-section {
@@ -332,10 +306,10 @@ body.dark .social-media-section {
 }
 
 .social-media-section h3 {
-  font-size: clamp(1.1rem, 3vw, 1.4rem);
+  font-size: clamp(1.04rem, 2.8vw, 1.28rem);
   font-weight: 700;
   color: var(--text-light);
-  margin-bottom: clamp(16px, 2.5vw, 20px);
+  margin-bottom: clamp(14px, 2.2vw, 18px);
 }
 
 body.dark .social-media-section h3 {
@@ -355,11 +329,11 @@ body.dark .social-media-section h3 {
   align-items: center;
   gap: 7px;
   padding: clamp(12px, 2.5vw, 16px) clamp(8px, 2vw, 12px);
-  background: var(--bg-light);
-  border: 1.5px solid var(--border-light);
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid var(--border-light);
   border-radius: clamp(10px, 2vw, 13px);
   text-decoration: none;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.24s ease, border-color 0.24s ease, box-shadow 0.24s ease;
   position: relative;
   overflow: hidden;
   -webkit-tap-highlight-color: transparent;
@@ -367,7 +341,7 @@ body.dark .social-media-section h3 {
 }
 
 body.dark .social-link-card {
-  background: rgba(255, 255, 255, 0.04);
+  background: rgba(15, 26, 48, 0.78);
   border-color: var(--border-dark);
 }
 
@@ -377,21 +351,17 @@ body.dark .social-link-card {
   inset: 0;
   background: var(--social-color, var(--primary));
   opacity: 0;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.24s ease;
 }
 
 .social-link-card:hover::before {
-  opacity: 0.1;
+  opacity: 0.11;
 }
 
 .social-link-card:hover {
   border-color: var(--social-color, var(--primary));
   transform: translateY(-3px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-}
-
-body.dark .social-link-card:hover {
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  box-shadow: var(--shadow-sm);
 }
 
 .social-link-card:active {
@@ -399,9 +369,9 @@ body.dark .social-link-card:hover {
 }
 
 .social-icon {
-  font-size: clamp(1.5rem, 4vw, 1.9rem);
+  font-size: clamp(1.4rem, 3.8vw, 1.82rem);
   color: var(--text-light);
-  transition: all 0.3s ease;
+  transition: transform 0.24s ease, color 0.24s ease;
   position: relative;
   z-index: 1;
 }
@@ -416,8 +386,8 @@ body.dark .social-icon {
 }
 
 .social-name {
-  font-size: clamp(0.7rem, 1.8vw, 0.8rem);
-  font-weight: 600;
+  font-size: clamp(0.68rem, 1.8vw, 0.78rem);
+  font-weight: 700;
   color: var(--text-light-secondary);
   position: relative;
   z-index: 1;
@@ -432,18 +402,15 @@ body.dark .social-name {
   color: var(--social-color, var(--primary));
 }
 
-/* ============================================
-   MAP SECTION
-   ============================================ */
-
 .map-section {
-  margin-top: clamp(40px, 7vw, 80px);
+  margin-top: clamp(40px, 7vw, 82px);
 }
 
 .map-section h2 {
   text-align: center;
-  font-size: clamp(1.5rem, 4.5vw, 2.3rem);
-  font-weight: 900;
+  font-size: clamp(1.5rem, 4.5vw, 2.35rem);
+  font-weight: 700;
+  font-family: var(--font-heading-en);
   margin-bottom: clamp(24px, 4vw, 38px);
   background: linear-gradient(135deg, var(--primary), var(--secondary));
   -webkit-background-clip: text;
@@ -457,7 +424,7 @@ body.dark .social-name {
   overflow: hidden;
   box-shadow: var(--shadow-xl);
   position: relative;
-  border: 1.5px solid var(--border-light);
+  border: 1px solid var(--border-light);
 }
 
 body.dark .map-container {
@@ -484,7 +451,7 @@ body.dark .map-placeholder {
 }
 
 .map-placeholder h3 {
-  font-size: clamp(1.1rem, 3vw, 1.4rem);
+  font-size: clamp(1.04rem, 2.8vw, 1.34rem);
   font-weight: 700;
   color: var(--text-light);
 }
@@ -495,16 +462,21 @@ body.dark .map-placeholder h3 {
 
 .map-placeholder p {
   color: var(--text-light-secondary);
-  font-size: clamp(0.85rem, 2vw, 0.95rem);
+  font-size: clamp(0.84rem, 2vw, 0.93rem);
 }
 
 body.dark .map-placeholder p {
   color: var(--text-dark-secondary);
 }
 
-/* ============================================
-   RESPONSIVE BREAKPOINTS
-   ============================================ */
+body[dir='rtl'] .contact-method,
+body[dir='rtl'] .contact-form {
+  text-align: right;
+}
+
+body[dir='rtl'] .contact-method-header {
+  flex-direction: row-reverse;
+}
 
 @media (max-width: 900px) {
   .contact-grid {
@@ -523,7 +495,7 @@ body.dark .map-placeholder p {
   }
 
   .contact-method h3 {
-    font-size: 1.05rem;
+    font-size: 1.02rem;
   }
 
   .social-links-grid {
@@ -536,11 +508,11 @@ body.dark .map-placeholder p {
   }
 
   .social-icon {
-    font-size: clamp(1.3rem, 3.5vw, 1.6rem);
+    font-size: clamp(1.26rem, 3.5vw, 1.56rem);
   }
 
   .social-name {
-    font-size: clamp(0.65rem, 1.6vw, 0.75rem);
+    font-size: clamp(0.64rem, 1.6vw, 0.73rem);
   }
 
   .map-container {
@@ -554,6 +526,6 @@ body.dark .map-placeholder p {
   }
 
   .social-icon {
-    font-size: 1.4rem;
+    font-size: 1.34rem;
   }
 }

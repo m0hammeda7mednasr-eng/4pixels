@@ -38,7 +38,7 @@
 - **الموقع الرئيسي (Frontend):** [https://4pixels.vercel.app](https://4pixels.vercel.app)
 - **API Backend:** [https://4pixels-backend.railway.app](https://4pixels-backend.railway.app)
 - **لوحة التحكم:** [https://4pixels.vercel.app/admin](https://4pixels.vercel.app/admin)
-
+بص  خش على ال
 ### 📱 جرب المميزات
 - ✅ تبديل اللغة (عربي/English)
 - ✅ تبديل الثيم (فاتح/داكن)
