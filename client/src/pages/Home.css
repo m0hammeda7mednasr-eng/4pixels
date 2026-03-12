@@ -873,11 +873,40 @@ body[dir='rtl'] .review-top {
 @media (max-width: 720px) {
   .home-hero {
     padding-top: 92px;
-    padding-bottom: 42px;
+    padding-bottom: 34px;
+    background:
+      radial-gradient(circle at 18% 8%, rgba(11, 95, 255, 0.2) 0%, transparent 44%),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.92) 0%, rgba(244, 248, 255, 0.96) 70%);
+  }
+
+  body.dark .home-hero {
+    background:
+      radial-gradient(circle at 18% 8%, rgba(11, 95, 255, 0.28) 0%, transparent 44%),
+      linear-gradient(180deg, rgba(9, 19, 39, 0.95) 0%, rgba(7, 16, 34, 0.98) 70%);
+  }
+
+  .hero-glow {
+    display: none;
   }
 
   .hero-floating-cloud {
     display: none;
+  }
+
+  .hero-shell {
+    gap: 10px;
+  }
+
+  .hero-copy {
+    text-align: left;
+  }
+
+  body[dir='rtl'] .hero-copy {
+    text-align: right;
+  }
+
+  .hero-subtitle {
+    max-width: none;
   }
 
   .hero-actions .btn {
@@ -887,12 +916,54 @@ body[dir='rtl'] .review-top {
   }
 
   .hero-side-panel {
-    max-width: none;
+    display: none;
+  }
+
+  .hero-trust-list {
+    margin-top: 16px;
+    gap: 8px;
+  }
+
+  .hero-trust-list li {
+    padding: 9px 10px;
+    border-radius: 10px;
+    border: 1px solid var(--border-light);
+    background: var(--surface-light);
+    box-shadow: var(--shadow-sm);
+    font-size: 0.82rem;
+  }
+
+  body.dark .hero-trust-list li {
+    border-color: var(--border-dark);
+    background: var(--surface-dark);
   }
 
   .pillars-grid,
   .process-grid {
     grid-template-columns: 1fr;
+  }
+
+  .block-header {
+    margin-bottom: 18px;
+    text-align: left;
+  }
+
+  body[dir='rtl'] .block-header {
+    text-align: right;
+  }
+
+  .pillar-card,
+  .process-card {
+    border-radius: 14px;
+    padding: 14px;
+  }
+
+  .pillar-icon {
+    width: 46px;
+    height: 46px;
+    border-radius: 12px;
+    font-size: 1.06rem;
+    margin-bottom: 10px;
   }
 
   .services-grid-home,
@@ -909,6 +980,49 @@ body[dir='rtl'] .review-top {
   .project-card-home,
   .review-card-home {
     min-width: 0;
+    width: 100%;
+    border-radius: 16px;
+  }
+
+  .service-card-home,
+  .review-card-home {
+    min-height: 0;
+    padding: 16px;
+  }
+
+  .service-card-home::before {
+    display: none;
+  }
+
+  .project-body {
+    padding: 16px;
+  }
+
+  .service-meta a,
+  .project-link {
+    min-height: 42px;
+    padding: 8px 10px;
+    border-radius: 10px;
+    border: 1px solid var(--border-light);
+    background: rgba(11, 95, 255, 0.08);
+  }
+
+  body.dark .service-meta a,
+  body.dark .project-link {
+    border-color: var(--border-dark);
+    background: rgba(142, 200, 255, 0.12);
+  }
+
+  .cta-card {
+    border-radius: 18px;
+    padding: 20px 16px;
+  }
+
+  .cta-actions {
+    gap: 10px;
+  }
+
+  .cta-actions .btn {
     width: 100%;
   }
 
@@ -933,18 +1047,6 @@ body[dir='rtl'] .review-top {
   .project-body p,
   .review-card-home p {
     font-size: 0.84rem;
-  }
-
-  .hero-side-panel {
-    padding: 14px;
-  }
-
-  .hero-metric h3 {
-    font-size: 1.16rem;
-  }
-
-  .hero-metric p {
-    font-size: 0.75rem;
   }
 
   .service-card-home,

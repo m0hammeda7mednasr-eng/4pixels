@@ -408,12 +408,50 @@ body[dir='rtl'] .form-group label {
 }
 
 @media (max-width: 680px) {
+  .contact-header {
+    margin-bottom: 24px;
+    text-align: left;
+  }
+
+  body[dir='rtl'] .contact-header {
+    text-align: right;
+  }
+
+  .contact-header h2 {
+    font-size: 1.2rem;
+  }
+
+  .contact-method {
+    min-height: 0;
+    border-radius: 16px;
+    padding: 16px;
+  }
+
+  .contact-form-container {
+    border-radius: 16px;
+    padding: 16px;
+  }
+
+  .contact-form h2 {
+    margin-bottom: 6px;
+  }
+
+  .submit-btn {
+    min-height: 48px;
+  }
+
   .contact-methods-grid {
     grid-template-columns: 1fr;
   }
 
   .social-links-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .social-link-card {
+    border-radius: 10px;
+    padding: 10px 8px;
   }
 
   .form-row {
@@ -426,11 +464,29 @@ body[dir='rtl'] .form-group label {
     padding-top: 84px;
   }
 
+  .contact-header h1 {
+    font-size: 1.75rem;
+  }
+
+  .contact-header h2 {
+    font-size: 1.08rem;
+  }
+
   .social-links-grid {
     grid-template-columns: 1fr 1fr;
   }
 
+  .contact-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+  }
+
   .social-name {
     font-size: 0.68rem;
+  }
+
+  .map-placeholder {
+    min-height: 180px;
   }
 }

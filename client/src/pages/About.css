@@ -372,12 +372,74 @@ body[dir='rtl'] .execution-card {
   .about-page {
     padding-top: 84px;
   }
+
+  .about-page::before {
+    display: none;
+  }
+
+  .about-intro {
+    text-align: left;
+  }
+
+  body[dir='rtl'] .about-intro {
+    text-align: right;
+  }
+
+  .about-story-card,
+  .about-strengths,
+  .value-card,
+  .execution-card {
+    border-radius: 16px;
+  }
+
+  .about-stats {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin-top: 18px;
+  }
+
+  .about-stat-card {
+    padding: 16px 14px;
+    text-align: left;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 10px;
+  }
+
+  body[dir='rtl'] .about-stat-card {
+    text-align: right;
+    grid-template-columns: 1fr auto;
+  }
+
+  .stat-icon-large {
+    font-size: 1.3rem;
+  }
+
+  .stat-number-large {
+    margin-top: 0;
+    font-size: 1.26rem;
+  }
+
+  .stat-label-large {
+    margin-top: 4px;
+    font-size: 0.72rem;
+  }
+
+  .about-story-card,
+  .execution-card {
+    padding: 16px;
+  }
 }
 
 @media (max-width: 560px) {
   .about-stats,
   .values-grid {
     grid-template-columns: 1fr;
+  }
+
+  .about-intro h2 {
+    font-size: 1.25rem;
   }
 
   .about-strengths li,

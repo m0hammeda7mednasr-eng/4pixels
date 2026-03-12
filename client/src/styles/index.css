@@ -382,7 +382,28 @@ img {
   }
 
   .section {
-    padding: 52px 0;
+    padding: 46px 0;
+  }
+}
+
+@media (max-width: 680px) {
+  .btn {
+    min-height: 44px;
+  }
+
+  body::before,
+  body::after {
+    display: none;
+  }
+
+  .section-title {
+    margin-bottom: 24px;
+    padding-bottom: 10px;
+  }
+
+  .section-title::after {
+    width: 88px;
+    height: 3px;
   }
 }
 

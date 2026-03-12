@@ -279,8 +279,7 @@ body.dark .icon-btn {
     pointer-events: auto;
   }
 
-  .header.menu-open .header-actions,
-  .header.menu-open .logo {
+  .header.menu-open .header-actions {
     opacity: 0;
     pointer-events: none;
   }
@@ -321,7 +320,15 @@ body.dark .icon-btn {
   .nav {
     top: 68px;
     height: calc(100dvh - 68px);
-    width: min(272px, 84vw);
+    width: 100vw;
+    max-width: 100vw;
+    border-right: none;
+    box-shadow: none;
+    padding-inline: 12px;
+  }
+
+  body[dir='rtl'] .nav {
+    border-left: none;
   }
 
   .nav-overlay {
