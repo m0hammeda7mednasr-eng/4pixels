@@ -327,6 +327,21 @@ const Home = () => {
                 </li>
               ))}
             </ul>
+
+            <div
+              className="hero-metrics-mobile"
+              aria-label={language === 'en' ? 'Delivery metrics' : 'مؤشرات التنفيذ'}
+            >
+              {metrics.map((metric) => (
+                <article key={`mobile-${metric.value}-${metric.label}`} className="hero-metric">
+                  <div className="hero-metric-icon">{metric.icon}</div>
+                  <div>
+                    <h3>{metric.value}</h3>
+                    <p>{metric.label}</p>
+                  </div>
+                </article>
+              ))}
+            </div>
           </motion.div>
 
           <motion.aside
@@ -370,7 +385,7 @@ const Home = () => {
             <p>{copy.pillarSubtitle}</p>
           </div>
 
-          <div className="pillars-grid">
+          <div className="pillars-grid home-mobile-rail">
             {pillars.map((pillar, index) => (
               <motion.article
                 key={pillar.title}
@@ -396,7 +411,7 @@ const Home = () => {
             <p>{copy.processSubtitle}</p>
           </div>
 
-          <div className="process-grid">
+          <div className="process-grid home-mobile-rail">
             {steps.map((step, index) => (
               <motion.article
                 key={step.number}
@@ -422,7 +437,7 @@ const Home = () => {
             <p>{copy.servicesIntro}</p>
           </div>
 
-          <div className="services-grid-home">
+          <div className="services-grid-home home-mobile-rail">
             {services.slice(0, 3).map((service, index) => (
               <motion.article
                 key={service.id}
@@ -460,7 +475,7 @@ const Home = () => {
             <p>{copy.projectsIntro}</p>
           </div>
 
-          <div className="projects-grid-home">
+          <div className="projects-grid-home home-mobile-rail">
             {featuredProjects.map((project, index) => (
               <motion.article
                 key={project.id}
@@ -501,7 +516,7 @@ const Home = () => {
             <p>{copy.reviewsIntro}</p>
           </div>
 
-          <div className="reviews-grid-home">
+          <div className="reviews-grid-home home-mobile-rail">
             {reviews.length > 0 ? (
               reviews.map((review, index) => (
                 <motion.article

@@ -65,6 +65,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--header-height) + 14px);
   -webkit-text-size-adjust: 100%;
   overflow-x: clip;
 }
@@ -375,6 +376,10 @@ img {
 @media (max-width: 520px) {
   :root {
     --header-height: 68px;
+  }
+
+  html {
+    scroll-padding-top: 82px;
   }
 
   .container {

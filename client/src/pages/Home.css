@@ -280,6 +280,10 @@ body.dark .hero-panel-head span {
   gap: 10px;
 }
 
+.hero-metrics-mobile {
+  display: none;
+}
+
 .hero-metric {
   display: grid;
   grid-template-columns: auto 1fr;
@@ -919,6 +923,33 @@ body[dir='rtl'] .review-top {
     display: none;
   }
 
+  .hero-metrics-mobile {
+    margin-top: 14px;
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(190px, 1fr);
+    gap: 10px;
+    overflow-x: auto;
+    padding: 2px 0 10px;
+    scroll-snap-type: x mandatory;
+    overscroll-behavior-x: contain;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(11, 95, 255, 0.45) transparent;
+  }
+
+  .hero-metrics-mobile::-webkit-scrollbar {
+    height: 5px;
+  }
+
+  .hero-metrics-mobile::-webkit-scrollbar-thumb {
+    border-radius: 999px;
+    background: rgba(11, 95, 255, 0.45);
+  }
+
+  .hero-metrics-mobile .hero-metric {
+    scroll-snap-align: start;
+  }
+
   .hero-trust-list {
     margin-top: 16px;
     gap: 8px;
@@ -940,7 +971,7 @@ body[dir='rtl'] .review-top {
 
   .pillars-grid,
   .process-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: unset;
   }
 
   .block-header {
@@ -966,22 +997,46 @@ body[dir='rtl'] .review-top {
     margin-bottom: 10px;
   }
 
-  .services-grid-home,
-  .projects-grid-home,
-  .reviews-grid-home {
+  .home-mobile-rail {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(min(84vw, 320px), 1fr);
     gap: 12px;
-    overflow: visible;
-    padding-bottom: 0;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(11, 95, 255, 0.45) transparent;
+    padding: 2px 1px 10px;
+  }
+
+  .home-mobile-rail::-webkit-scrollbar {
+    height: 5px;
+  }
+
+  .home-mobile-rail::-webkit-scrollbar-thumb {
+    border-radius: 999px;
+    background: rgba(11, 95, 255, 0.45);
+  }
+
+  .home-mobile-rail > * {
+    scroll-snap-align: start;
+  }
+
+  .pillars-grid.home-mobile-rail .pillar-card,
+  .process-grid.home-mobile-rail .process-card,
+  .service-card-home,
+  .project-card-home,
+  .review-card-home {
+    min-width: 0;
+    width: min(84vw, 320px);
+    border-radius: 16px;
   }
 
   .service-card-home,
   .project-card-home,
   .review-card-home {
-    min-width: 0;
-    width: 100%;
-    border-radius: 16px;
+    width: min(84vw, 320px);
   }
 
   .service-card-home,
@@ -1029,6 +1084,11 @@ body[dir='rtl'] .review-top {
   .scroll-indicator {
     display: none;
   }
+
+  body[dir='rtl'] .home-mobile-rail,
+  body[dir='rtl'] .hero-metrics-mobile {
+    direction: rtl;
+  }
 }
 
 @media (max-width: 520px) {
@@ -1052,6 +1112,6 @@ body[dir='rtl'] .review-top {
   .service-card-home,
   .project-card-home,
   .review-card-home {
-    width: 100%;
+    width: min(86vw, 300px);
   }
 }

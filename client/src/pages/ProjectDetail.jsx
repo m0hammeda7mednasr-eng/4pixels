@@ -275,6 +275,16 @@ const ProjectDetail = () => {
             {copy.ctaButton}
           </Link>
         </motion.div>
+
+        <div className="project-mobile-actions">
+          <button type="button" className="btn btn-outline" onClick={() => navigate(-1)}>
+            <FiArrowLeft />
+            {copy.back}
+          </button>
+          <Link to="/contact" className="btn btn-primary">
+            {copy.ctaButton}
+          </Link>
+        </div>
       </div>
     </div>
   );

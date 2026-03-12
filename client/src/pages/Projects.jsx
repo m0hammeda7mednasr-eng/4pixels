@@ -87,6 +87,7 @@ const Projects = () => {
         searchPlaceholder: 'Search projects...',
         all: 'All',
         details: 'View details',
+        resultsSuffix: 'projects matched your filters',
         empty: 'No projects match your filters.'
       }
     : {
@@ -132,6 +133,16 @@ const Projects = () => {
             ))}
           </div>
         </div>
+
+        {!loading && (
+          <div className="portfolio-results" aria-live="polite">
+            <strong>{filteredProjects.length}</strong>
+            <span>
+              {copy.resultsSuffix ||
+                (language === 'en' ? 'projects matched your filters' : 'Ù…Ø´Ø§Ø±ÙŠØ¹ Ù…Ø·Ø§Ø¨Ù‚Ø© Ù„Ù„ÙÙ„Ø§ØªØ±')}
+            </span>
+          </div>
+        )}
 
         {loading ? (
           <div className="portfolio-loading">
