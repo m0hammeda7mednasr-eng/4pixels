@@ -1,136 +1,267 @@
-import React from 'react';
 import { motion } from 'framer-motion';
-import { FiUsers, FiAward, FiTarget, FiTrendingUp } from 'react-icons/fi';
+import {
+  FiAward,
+  FiCheckCircle,
+  FiLayers,
+  FiTarget,
+  FiTrendingUp,
+  FiUsers
+} from 'react-icons/fi';
 import { useLanguage } from '../context/LanguageContext';
 import './About.css';
 
 const About = () => {
   const { t, language } = useLanguage();
 
-  const content = {
-    en: {
-      story: '4Pixels is a leading digital agency specializing in Shopify development, automation solutions, CRM integration, and AI-powered tools. Founded with a passion for innovation and excellence, we help businesses transform their digital presence and achieve measurable results.',
-      mission: 'Our mission is to empower businesses with cutting-edge digital solutions that deliver measurable results and exceed expectations through innovative technology and exceptional service.',
-      vision: 'To be the most trusted digital partner for businesses worldwide, known for our creativity, innovation, and commitment to excellence in Shopify, automation, CRM, and AI solutions.',
-    },
-    ar: {
-      story: '4Pixels هي وكالة رقمية رائدة متخصصة في تطوير Shopify وحلول الأتمتة وتكامل CRM والأدوات المدعومة بالذكاء الاصطناعي. تأسست بشغف للابتكار والتميز، نساعد الشركات على تحويل حضورها الرقمي وتحقيق نتائج قابلة للقياس.',
-      mission: 'مهمتنا هي تمكين الشركات بحلول رقمية متطورة تحقق نتائج قابلة للقياس وتتجاوز التوقعات من خلال التكنولوجيا المبتكرة والخدمة الاستثنائية.',
-      vision: 'أن نكون الشريك الرقمي الأكثر ثقة للشركات في جميع أنحاء العالم، معروفين بإبداعنا وابتكارنا والتزامنا بالتميز في حلول Shopify والأتمتة وCRM والذكاء الاصطناعي.',
-    }
-  };
-
-  const stats = [
-    { icon: <FiUsers />, number: '50+', label: { en: 'Happy Clients', ar: 'عميل سعيد' } },
-    { icon: <FiAward />, number: '150+', label: { en: 'Projects Completed', ar: 'مشروع مكتمل' } },
-    { icon: <FiTarget />, number: '98%', label: { en: 'Success Rate', ar: 'معدل النجاح' } },
-    { icon: <FiTrendingUp />, number: '5+', label: { en: 'Years Experience', ar: 'سنوات خبرة' } },
-  ];
-
-  const values = [
-    {
-      icon: <FiAward />,
-      title: { en: 'Excellence', ar: 'التميز' },
-      description: { en: 'We strive for excellence in every project we undertake', ar: 'نسعى للتميز في كل مشروع نقوم به' }
-    },
-    {
-      icon: <FiUsers />,
-      title: { en: 'Client-Focused', ar: 'التركيز على العميل' },
-      description: { en: 'Your success is our priority', ar: 'نجاحك هو أولويتنا' }
-    },
-    {
-      icon: <FiTarget />,
-      title: { en: 'Innovation', ar: 'الابتكار' },
-      description: { en: 'We embrace new technologies and creative solutions', ar: 'نتبنى التقنيات الجديدة والحلول الإبداعية' }
-    },
-    {
-      icon: <FiTrendingUp />,
-      title: { en: 'Results-Driven', ar: 'موجه بالنتائج' },
-      description: { en: 'We deliver measurable results that matter', ar: 'نقدم نتائج قابلة للقياس ومهمة' }
-    },
-  ];
-
-  const data = content[language];
+  const copy =
+    language === 'en'
+      ? {
+          introTitle: 'A Delivery-First Digital Partner',
+          introText:
+            '4Pixels builds high-performance Shopify stores, automation workflows, CRM systems, and AI media operations that turn strategy into measurable execution.',
+          storyTitle: 'Who We Are',
+          storyText:
+            'We are a multidisciplinary team focused on practical digital transformation. Every project is built around business impact, not just visual polish.',
+          missionTitle: 'Mission',
+          missionText:
+            'Enable ambitious teams to scale revenue and operations through connected systems, automation, and premium digital execution.',
+          visionTitle: 'Vision',
+          visionText:
+            'Become the trusted execution partner for brands that want serious growth across commerce, systems, and AI-driven media.',
+          strengthsTitle: 'What Makes Us Different',
+          valuesTitle: 'Core Values',
+          executionTitle: 'How We Execute',
+          executionSubtitle: 'A practical framework designed for speed, quality, and repeatable results.',
+          stats: [
+            { icon: <FiUsers />, value: '50+', label: 'Active Clients' },
+            { icon: <FiLayers />, value: '150+', label: 'Projects Delivered' },
+            { icon: <FiTarget />, value: '98%', label: 'Success Rate' },
+            { icon: <FiTrendingUp />, value: '5+', label: 'Years Operating' }
+          ],
+          strengths: [
+            'Shopify development from A to Z with conversion focus.',
+            'Automation workflows connected to CRM and sales operations.',
+            'Systems and reporting setups for real business tracking.',
+            'AI media production for brand visuals and promotional video.'
+          ],
+          values: [
+            {
+              icon: <FiAward />,
+              title: 'Execution Quality',
+              description: 'We ship clean, scalable, and business-ready solutions.'
+            },
+            {
+              icon: <FiUsers />,
+              title: 'Partnership Mindset',
+              description: 'We work as an extension of your team, not as a vendor.'
+            },
+            {
+              icon: <FiTarget />,
+              title: 'Measurable Outcomes',
+              description: 'Every decision is tied to growth, efficiency, or clarity.'
+            },
+            {
+              icon: <FiTrendingUp />,
+              title: 'Continuous Optimization',
+              description: 'After launch, we keep tuning and improving performance.'
+            }
+          ],
+          executionSteps: [
+            {
+              step: '01',
+              title: 'Business Discovery',
+              description: 'Understand goals, constraints, and current workflow gaps.'
+            },
+            {
+              step: '02',
+              title: 'System Blueprint',
+              description: 'Map store, automation, and data architecture into one model.'
+            },
+            {
+              step: '03',
+              title: 'Build & Launch',
+              description: 'Implement, test, optimize, and hand over with clear tracking.'
+            }
+          ]
+        }
+      : {
+          introTitle: 'شريك رقمي يركز على التنفيذ الحقيقي',
+          introText:
+            '4Pixels تبني متاجر Shopify احترافية، وتدفقات أتمتة، وأنظمة CRM، وتشغيل ميديا بالذكاء الاصطناعي لنتائج قابلة للقياس.',
+          storyTitle: 'من نحن',
+          storyText:
+            'نحن فريق متعدد الخبرات يركز على التحول الرقمي العملي. كل مشروع عندنا مبني على أثر تجاري واضح وليس شكل فقط.',
+          missionTitle: 'مهمتنا',
+          missionText:
+            'تمكين الفرق الطموحة من توسيع الإيرادات والعمليات عبر منظومة مترابطة من الأنظمة والأتمتة والتنفيذ الاحترافي.',
+          visionTitle: 'رؤيتنا',
+          visionText:
+            'أن نكون شريك التنفيذ الموثوق للبراندات التي تريد نموًا قويًا في التجارة والأنظمة والميديا المدعومة بالذكاء الاصطناعي.',
+          strengthsTitle: 'لماذا نحن مختلفون',
+          valuesTitle: 'قيمنا الأساسية',
+          executionTitle: 'منهج التنفيذ',
+          executionSubtitle: 'إطار عملي مصمم للسرعة والجودة ونتائج يمكن تكرارها بثبات.',
+          stats: [
+            { icon: <FiUsers />, value: '50+', label: 'عميل نشط' },
+            { icon: <FiLayers />, value: '150+', label: 'مشروع مُنجز' },
+            { icon: <FiTarget />, value: '98%', label: 'معدل نجاح' },
+            { icon: <FiTrendingUp />, value: '5+', label: 'سنوات خبرة' }
+          ],
+          strengths: [
+            'تنفيذ Shopify كامل من البداية للنهاية مع تركيز على التحويل.',
+            'أتمتة متصلة بـ CRM وعمليات المبيعات.',
+            'بناء أنظمة تشغيل ولوحات متابعة لقياس الأداء الفعلي.',
+            'إنتاج صور وفيديو للبراند بالذكاء الاصطناعي.'
+          ],
+          values: [
+            {
+              icon: <FiAward />,
+              title: 'جودة التنفيذ',
+              description: 'نقدّم حلول نظيفة، قابلة للتوسع، وجاهزة للتشغيل.'
+            },
+            {
+              icon: <FiUsers />,
+              title: 'شراكة حقيقية',
+              description: 'نشتغل كامتداد لفريقك وليس مجرد مزود خدمة.'
+            },
+            {
+              icon: <FiTarget />,
+              title: 'نتائج قابلة للقياس',
+              description: 'كل قرار مرتبط بالنمو أو الكفاءة أو وضوح التشغيل.'
+            },
+            {
+              icon: <FiTrendingUp />,
+              title: 'تحسين مستمر',
+              description: 'بعد الإطلاق نواصل التطوير ورفع الأداء.'
+            }
+          ],
+          executionSteps: [
+            {
+              step: '01',
+              title: 'فهم العمل',
+              description: 'تحليل الأهداف والتحديات التشغيلية ونقاط التعطل الحالية.'
+            },
+            {
+              step: '02',
+              title: 'تصميم المنظومة',
+              description: 'ربط المتجر والأتمتة والبيانات في نموذج تشغيل واحد.'
+            },
+            {
+              step: '03',
+              title: 'تنفيذ وإطلاق',
+              description: 'بناء واختبار وتحسين ثم تسليم المشروع مع تتبع واضح.'
+            }
+          ]
+        };
 
   return (
     <div className="about-page section">
       <div className="container">
-        <motion.h1 
-          className="section-title"
-          initial={{ opacity: 0, y: 50 }}
+        <motion.div
+          className="about-intro"
+          initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
         >
-          {t('about')}
-        </motion.h1>
+          <h1 className="section-title">{t('about')}</h1>
+          <h2>{copy.introTitle}</h2>
+          <p>{copy.introText}</p>
+        </motion.div>
 
         <motion.div
           className="about-stats"
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
+          transition={{ delay: 0.15 }}
         >
-          {stats.map((stat, index) => (
-            <motion.div
-              key={index}
+          {copy.stats.map((stat, index) => (
+            <motion.article
+              key={`${stat.label}-${index}`}
               className="about-stat-card"
-              initial={{ opacity: 0, scale: 0.8 }}
+              initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.3 + index * 0.1 }}
-              whileHover={{ scale: 1.05, y: -5 }}
+              transition={{ delay: 0.25 + index * 0.08 }}
             >
               <div className="stat-icon-large">{stat.icon}</div>
-              <div className="stat-number-large">{stat.number}</div>
-              <div className="stat-label-large">{stat.label[language]}</div>
-            </motion.div>
+              <div className="stat-number-large">{stat.value}</div>
+              <div className="stat-label-large">{stat.label}</div>
+            </motion.article>
           ))}
         </motion.div>
 
         <motion.div
-          className="about-content"
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
+          className="about-story-grid"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
         >
-          <div className="about-section">
-            <h2>{language === 'en' ? 'Our Story' : 'قصتنا'}</h2>
-            <p>{data.story}</p>
-          </div>
-
-          <div className="about-section">
-            <h2>{language === 'en' ? 'Mission' : 'المهمة'}</h2>
-            <p>{data.mission}</p>
-          </div>
-
-          <div className="about-section">
-            <h2>{language === 'en' ? 'Vision' : 'الرؤية'}</h2>
-            <p>{data.vision}</p>
-          </div>
+          <article className="about-story-card">
+            <h3>{copy.storyTitle}</h3>
+            <p>{copy.storyText}</p>
+          </article>
+          <article className="about-story-card">
+            <h3>{copy.missionTitle}</h3>
+            <p>{copy.missionText}</p>
+          </article>
+          <article className="about-story-card">
+            <h3>{copy.visionTitle}</h3>
+            <p>{copy.visionText}</p>
+          </article>
         </motion.div>
 
-        <motion.div
-          className="values-section"
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6 }}
+        <motion.section
+          className="about-strengths"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
         >
-          <h2 className="values-title">{language === 'en' ? 'Our Values' : 'قيمنا'}</h2>
+          <h3>{copy.strengthsTitle}</h3>
+          <ul>
+            {copy.strengths.map((item) => (
+              <li key={item}>
+                <FiCheckCircle />
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </motion.section>
+
+        <motion.section
+          className="values-section"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+        >
+          <h2 className="values-title">{copy.valuesTitle}</h2>
           <div className="values-grid">
-            {values.map((value, index) => (
-              <motion.div
-                key={index}
-                className="value-card"
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.7 + index * 0.1 }}
-                whileHover={{ y: -8 }}
-              >
+            {copy.values.map((value) => (
+              <article key={value.title} className="value-card">
                 <div className="value-icon">{value.icon}</div>
-                <h3>{value.title[language]}</h3>
-                <p>{value.description[language]}</p>
-              </motion.div>
+                <h3>{value.title}</h3>
+                <p>{value.description}</p>
+              </article>
             ))}
           </div>
-        </motion.div>
+        </motion.section>
+
+        <motion.section
+          className="execution-section"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+        >
+          <h2>{copy.executionTitle}</h2>
+          <p>{copy.executionSubtitle}</p>
+
+          <div className="execution-grid">
+            {copy.executionSteps.map((step) => (
+              <article key={step.step} className="execution-card">
+                <span>{step.step}</span>
+                <h3>{step.title}</h3>
+                <p>{step.description}</p>
+              </article>
+            ))}
+          </div>
+        </motion.section>
       </div>
     </div>
   );

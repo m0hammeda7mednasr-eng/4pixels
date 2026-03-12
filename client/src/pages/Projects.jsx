@@ -87,7 +87,6 @@ const Projects = () => {
         searchPlaceholder: 'Search projects...',
         all: 'All',
         details: 'View details',
-        swipeHint: 'Swipe to see more',
         empty: 'No projects match your filters.'
       }
     : {
@@ -96,7 +95,6 @@ const Projects = () => {
         searchPlaceholder: 'ابحث عن مشروع...',
         all: 'الكل',
         details: 'عرض التفاصيل',
-        swipeHint: 'اسحب لرؤية المزيد',
         empty: 'لا توجد مشاريع مطابقة للبحث.'
       };
 
@@ -170,20 +168,6 @@ const Projects = () => {
               ))}
             </div>
 
-            {filteredProjects.length > 0 && (
-              <p
-                className="scroll-indicator"
-                style={{
-                  textAlign: 'center',
-                  marginTop: '12px',
-                  color: 'var(--text-light-secondary)',
-                  fontSize: '0.8rem',
-                  fontWeight: 600
-                }}
-              >
-                {language === 'en' ? `← ${copy.swipeHint} →` : `→ ${copy.swipeHint} ←`}
-              </p>
-            )}
           </>
         )}
 

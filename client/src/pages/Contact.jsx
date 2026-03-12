@@ -1,11 +1,30 @@
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
-import { FiMail, FiPhone, FiMapPin, FiMessageSquare, FiUser, FiBriefcase } from 'react-icons/fi';
-import { FaWhatsapp, FaLinkedin, FaGithub, FaFacebook, FaInstagram, FaTiktok, FaYoutube } from 'react-icons/fa';
-import { useLanguage } from '../context/LanguageContext';
+import {
+  FiBriefcase,
+  FiMail,
+  FiMapPin,
+  FiMessageSquare,
+  FiPhone,
+  FiUser
+} from 'react-icons/fi';
+import {
+  FaBehance,
+  FaDribbble,
+  FaFacebook,
+  FaGithub,
+  FaInstagram,
+  FaLinkedin,
+  FaTiktok,
+  FaWhatsapp,
+  FaYoutube
+} from 'react-icons/fa';
+import { FaXTwitter } from 'react-icons/fa6';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import api from '../services/api';
+import { useLanguage } from '../context/LanguageContext';
+import api, { getCached } from '../services/api';
+import { getLocalizedText } from '../utils/localization';
 import './Contact.css';
 
 const Contact = () => {
@@ -19,198 +38,277 @@ const Contact = () => {
     message: ''
   });
   const [loading, setLoading] = useState(false);
+  const [content, setContent] = useState(null);
+  const [services, setServices] = useState([]);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    
-    // Client-side validation
+  useEffect(() => {
+    const controller = new AbortController();
+    let mounted = true;
+
+    const fetchData = async () => {
+      try {
+        const [contentData, servicesData] = await Promise.all([
+          getCached('/content', { ttl: 60000, signal: controller.signal }),
+          getCached('/services', { ttl: 120000, signal: controller.signal })
+        ]);
+
+        if (!mounted) {
+          return;
+        }
+
+        setContent(contentData || null);
+        setServices(Array.isArray(servicesData) ? servicesData : []);
+      } catch (err) {
+        if (!controller.signal.aborted) {
+          console.error('Error fetching contact data:', err.userMessage || err.message);
+        }
+      }
+    };
+
+    fetchData();
+
+    return () => {
+      mounted = false;
+      controller.abort();
+    };
+  }, []);
+
+  const copy =
+    language === 'en'
+      ? {
+          headline: 'Let’s Build Your Next Digital System',
+          intro:
+            'Tell us your goals and we will design the right Shopify, automation, CRM, or AI-media execution plan.',
+          methodEmail: 'Email',
+          methodPhone: 'Phone',
+          methodWhatsapp: 'WhatsApp',
+          methodLocation: 'Location',
+          connectTitle: 'Connect With Us',
+          connectDescription:
+            'Follow our channels for new launches, workflows, and client execution stories.',
+          contactFormTitle: 'Send Project Brief',
+          selectServicePlaceholder: 'Select a service',
+          messageHint: 'Describe what you want to build, automate, or improve...',
+          sending: 'Sending...',
+          sentSuccess: 'Message sent successfully. We will contact you soon.',
+          sendFail: 'Failed to send message. Please try again.',
+          locationTitle: 'Where We Operate',
+          locationSubtitle: 'Cairo, Egypt'
+        }
+      : {
+          headline: 'جاهز نبني نظامك الرقمي القادم؟',
+          intro:
+            'شاركنا أهدافك وسنصمم لك خطة تنفيذ مناسبة في Shopify أو الأتمتة أو CRM أو الميديا بالذكاء الاصطناعي.',
+          methodEmail: 'البريد',
+          methodPhone: 'الهاتف',
+          methodWhatsapp: 'واتساب',
+          methodLocation: 'العنوان',
+          connectTitle: 'تابعنا',
+          connectDescription:
+            'تابع قنواتنا لتعرف آخر الإطلاقات وتدفقات العمل وقصص التنفيذ مع العملاء.',
+          contactFormTitle: 'أرسل ملخص مشروعك',
+          selectServicePlaceholder: 'اختر الخدمة',
+          messageHint: 'اكتب المطلوب تنفيذه أو أتمتته أو تحسينه بالتفصيل...',
+          sending: 'جاري الإرسال...',
+          sentSuccess: 'تم إرسال الرسالة بنجاح، وسنتواصل معك قريبًا.',
+          sendFail: 'فشل إرسال الرسالة. حاول مرة أخرى.',
+          locationTitle: 'نطاق عملنا',
+          locationSubtitle: 'القاهرة، مصر'
+        };
+
+  const siteInfo = content?.siteInfo || {};
+  const socialMedia = content?.socialMedia || {};
+
+  const contactMethods = useMemo(
+    () => [
+      {
+        icon: <FiMail />,
+        title: copy.methodEmail,
+        value: siteInfo.email || 'info@4pixels.com',
+        link: siteInfo.email ? `mailto:${siteInfo.email}` : 'mailto:info@4pixels.com'
+      },
+      {
+        icon: <FiPhone />,
+        title: copy.methodPhone,
+        value: siteInfo.phone || '+20 106 618 4859',
+        link: siteInfo.phone ? `tel:${siteInfo.phone.replace(/\s+/g, '')}` : 'tel:+201066184859'
+      },
+      {
+        icon: <FaWhatsapp />,
+        title: copy.methodWhatsapp,
+        value: siteInfo.whatsapp || '+201066184859',
+        link: siteInfo.whatsapp
+          ? `https://wa.me/${siteInfo.whatsapp.replace(/[^\d]/g, '')}`
+          : 'https://wa.me/201066184859'
+      },
+      {
+        icon: <FiMapPin />,
+        title: copy.methodLocation,
+        value: siteInfo.address || copy.locationSubtitle,
+        link: null
+      }
+    ],
+    [copy.locationSubtitle, copy.methodEmail, copy.methodLocation, copy.methodPhone, copy.methodWhatsapp, siteInfo.address, siteInfo.email, siteInfo.phone, siteInfo.whatsapp]
+  );
+
+  const socialLinks = useMemo(() => {
+    const candidates = [
+      { key: 'facebook', label: 'Facebook', icon: <FaFacebook />, color: '#1877F2' },
+      { key: 'instagram', label: 'Instagram', icon: <FaInstagram />, color: '#E4405F' },
+      { key: 'twitter', label: 'X', icon: <FaXTwitter />, color: '#111111' },
+      { key: 'linkedin', label: 'LinkedIn', icon: <FaLinkedin />, color: '#0A66C2' },
+      { key: 'github', label: 'GitHub', icon: <FaGithub />, color: '#181717' },
+      { key: 'youtube', label: 'YouTube', icon: <FaYoutube />, color: '#FF0000' },
+      { key: 'tiktok', label: 'TikTok', icon: <FaTiktok />, color: '#000000' },
+      { key: 'behance', label: 'Behance', icon: <FaBehance />, color: '#1769FF' },
+      { key: 'dribbble', label: 'Dribbble', icon: <FaDribbble />, color: '#EA4C89' }
+    ];
+
+    return candidates.filter((item) => Boolean(socialMedia[item.key]));
+  }, [socialMedia]);
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
     if (!formData.name.trim()) {
-      toast.error(language === 'en' ? 'Please enter your name' : 'الرجاء إدخال اسمك');
+      toast.error(language === 'en' ? 'Please enter your name' : 'يرجى إدخال الاسم');
       return;
     }
-    
+
     if (!formData.email.trim()) {
-      toast.error(language === 'en' ? 'Please enter your email' : 'الرجاء إدخال بريدك الإلكتروني');
+      toast.error(language === 'en' ? 'Please enter your email' : 'يرجى إدخال البريد الإلكتروني');
       return;
     }
-    
-    // Email validation
+
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(formData.email)) {
-      toast.error(language === 'en' ? 'Please enter a valid email' : 'الرجاء إدخال بريد إلكتروني صحيح');
+      toast.error(language === 'en' ? 'Please enter a valid email' : 'يرجى إدخال بريد إلكتروني صحيح');
       return;
     }
-    
-    if (!formData.message.trim()) {
-      toast.error(language === 'en' ? 'Please enter your message' : 'الرجاء إدخال رسالتك');
+
+    if (!formData.message.trim() || formData.message.trim().length < 10) {
+      toast.error(
+        language === 'en'
+          ? 'Message must be at least 10 characters'
+          : 'يجب أن تحتوي الرسالة على 10 أحرف على الأقل'
+      );
       return;
     }
-    
-    if (formData.message.trim().length < 10) {
-      toast.error(language === 'en' ? 'Message must be at least 10 characters' : 'يجب أن تكون الرسالة 10 أحرف على الأقل');
-      return;
-    }
-    
+
     setLoading(true);
     try {
       await api.post('/messages', formData);
-      toast.success(language === 'en' ? 'Message sent successfully! We\'ll get back to you soon.' : 'تم إرسال الرسالة بنجاح! سنرد عليك قريبًا.');
-      setFormData({ name: '', email: '', phone: '', company: '', service: '', message: '' });
+      toast.success(copy.sentSuccess);
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        company: '',
+        service: '',
+        message: ''
+      });
     } catch (err) {
-      const errorMsg =
-        err.userMessage ||
-        (language === 'en'
-          ? 'Failed to send message. Please try again.'
-          : 'فشل إرسال الرسالة. يرجى المحاولة مرة أخرى.');
-      toast.error(errorMsg);
+      toast.error(err.userMessage || copy.sendFail);
     } finally {
       setLoading(false);
     }
   };
 
-  const contactMethods = [
-    {
-      icon: <FiMail />,
-      title: { en: 'Email Us', ar: 'راسلنا عبر البريد' },
-      description: { en: 'Send us an email and we\'ll get back to you within 24 hours', ar: 'أرسل لنا بريدًا إلكترونيًا وسنرد عليك خلال 24 ساعة' },
-      link: 'mailto:info@fourpixels.com',
-      linkText: 'info@fourpixels.com'
-    },
-    {
-      icon: <FiPhone />,
-      title: { en: 'Call Us', ar: 'اتصل بنا' },
-      description: { en: 'Available Monday to Friday, 9 AM to 6 PM', ar: 'متاح من الإثنين إلى الجمعة، من 9 صباحًا إلى 6 مساءً' },
-      link: 'tel:+201066184859',
-      linkText: '+20 106 618 4859'
-    },
-    {
-      icon: <FaWhatsapp />,
-      title: { en: 'WhatsApp', ar: 'واتساب' },
-      description: { en: 'Chat with us directly on WhatsApp for quick responses', ar: 'تحدث معنا مباشرة على واتساب للحصول على ردود سريعة' },
-      link: 'https://wa.me/201066184859',
-      linkText: 'Start Chat'
-    },
-    {
-      icon: <FiMapPin />,
-      title: { en: 'Visit Us', ar: 'زورنا' },
-      description: { en: '123 Digital Street, Cairo, Egypt', ar: '123 شارع ديجيتال، القاهرة، مصر' },
-      link: 'https://maps.google.com',
-      linkText: 'View on Map'
-    }
-  ];
-
-  const socialLinks = [
-    { icon: <FaLinkedin />, name: 'LinkedIn', url: 'https://linkedin.com/company/fourpixels', color: '#0A66C2' },
-    { icon: <FaGithub />, name: 'GitHub', url: 'https://github.com/fourpixels', color: '#181717' },
-    { icon: <FaFacebook />, name: 'Facebook', url: 'https://facebook.com/fourpixels', color: '#1877F2' },
-    { icon: <FaInstagram />, name: 'Instagram', url: 'https://instagram.com/fourpixels', color: '#E4405F' },
-    { icon: <FaTiktok />, name: 'TikTok', url: 'https://tiktok.com/@fourpixels', color: '#000000' },
-    { icon: <FaYoutube />, name: 'YouTube', url: 'https://youtube.com/@fourpixels', color: '#FF0000' },
-  ];
-
-  const services = [
-    { en: 'Web Development', ar: 'تطوير المواقع' },
-    { en: 'Mobile App Development', ar: 'تطوير تطبيقات الجوال' },
-    { en: 'Digital Marketing', ar: 'التسويق الرقمي' },
-    { en: 'UI/UX Design', ar: 'تصميم واجهات المستخدم' },
-    { en: 'Branding', ar: 'الهوية البصرية' },
-  ];
-
   return (
     <div className="contact-page">
       <ToastContainer position="top-center" />
       <div className="contact-container">
-        <motion.div 
+        <motion.div
           className="contact-header"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
         >
           <h1>{t('contact')}</h1>
-          <p>
-            {language === 'en' 
-              ? 'Get in touch with us. We\'re here to help you transform your digital presence.'
-              : 'تواصل معنا. نحن هنا لمساعدتك في تحويل حضورك الرقمي.'
-            }
-          </p>
+          <h2>{copy.headline}</h2>
+          <p>{copy.intro}</p>
         </motion.div>
 
         <div className="contact-grid">
-          <motion.div 
+          <motion.div
             className="contact-info"
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.2 }}
           >
-            {contactMethods.map((method, index) => (
-              <motion.div
-                key={method.title[language]}
-                className="contact-method"
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.1 * index }}
-              >
-                <div className="contact-method-header">
-                  <div className="contact-icon">
-                    {method.icon}
+            <div className="contact-methods-grid">
+              {contactMethods.map((method, index) => (
+                <motion.article
+                  key={method.title}
+                  className="contact-method"
+                  initial={{ opacity: 0, y: 24 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.08 }}
+                >
+                  <div className="contact-method-header">
+                    <div className="contact-icon">{method.icon}</div>
+                    <h3>{method.title}</h3>
                   </div>
-                  <h3>{method.title[language]}</h3>
-                </div>
-                <p>{method.description[language]}</p>
-                <a href={method.link} target="_blank" rel="noopener noreferrer" className="contact-link">
-                  {method.linkText}
-                </a>
-              </motion.div>
-            ))}
+                  {method.link ? (
+                    <a href={method.link} target="_blank" rel="noopener noreferrer" className="contact-link">
+                      {method.value}
+                    </a>
+                  ) : (
+                    <p>{method.value}</p>
+                  )}
+                </motion.article>
+              ))}
+            </div>
 
-            <motion.div 
+            <motion.div
               className="social-media-section"
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5 }}
+              transition={{ delay: 0.35 }}
             >
               <div className="contact-method-header">
                 <div className="contact-icon">
                   <FiMessageSquare />
                 </div>
-                <h3>{language === 'en' ? 'Connect With Us' : 'تواصل معنا'}</h3>
+                <h3>{copy.connectTitle}</h3>
               </div>
-              <p>
-                {language === 'en' 
-                  ? 'Follow us on social media for updates and insights'
-                  : 'تابعنا على وسائل التواصل للحصول على التحديثات والأفكار'
-                }
-              </p>
+              <p>{copy.connectDescription}</p>
+
               <div className="social-links-grid">
-                {socialLinks.map((social, index) => (
-                  <motion.a
-                    key={social.name}
-                    href={social.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="social-link-card"
-                    style={{ '--social-color': social.color }}
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 0.6 + index * 0.05 }}
-                    whileHover={{ scale: 1.05, y: -3 }}
-                  >
-                    <span className="social-icon">{social.icon}</span>
-                    <span className="social-name">{social.name}</span>
-                  </motion.a>
-                ))}
+                {socialLinks.length > 0 ? (
+                  socialLinks.map((social, index) => (
+                    <motion.a
+                      key={social.key}
+                      href={socialMedia[social.key]}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="social-link-card"
+                      style={{ '--social-color': social.color }}
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: 0.45 + index * 0.04 }}
+                    >
+                      <span className="social-icon">{social.icon}</span>
+                      <span className="social-name">{social.label}</span>
+                    </motion.a>
+                  ))
+                ) : (
+                  <p className="social-empty">
+                    {language === 'en'
+                      ? 'No social links added yet. You can add them from the admin dashboard.'
+                      : 'لا توجد روابط سوشيال مضافة حاليًا. يمكنك إضافتها من لوحة الأدمن.'}
+                  </p>
+                )}
               </div>
             </motion.div>
           </motion.div>
 
-          <motion.div 
+          <motion.div
             className="contact-form-container"
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.3 }}
           >
             <form onSubmit={handleSubmit} className="contact-form">
-              <h2>{t('sendMessage')}</h2>
-              
+              <h2>{copy.contactFormTitle}</h2>
+
               <div className="form-group">
                 <label htmlFor="name">
                   <FiUser /> {t('name')}
@@ -218,9 +316,8 @@ const Contact = () => {
                 <input
                   id="name"
                   type="text"
-                  placeholder=""
                   value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  onChange={(event) => setFormData({ ...formData, name: event.target.value })}
                   required
                 />
               </div>
@@ -232,37 +329,36 @@ const Contact = () => {
                 <input
                   id="email"
                   type="email"
-                  placeholder=""
                   value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  onChange={(event) => setFormData({ ...formData, email: event.target.value })}
                   required
                 />
               </div>
 
-              <div className="form-group">
-                <label htmlFor="phone">
-                  <FiPhone /> {t('phone')}
-                </label>
-                <input
-                  id="phone"
-                  type="tel"
-                  placeholder=""
-                  value={formData.phone}
-                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                />
-              </div>
+              <div className="form-row">
+                <div className="form-group">
+                  <label htmlFor="phone">
+                    <FiPhone /> {t('phone')}
+                  </label>
+                  <input
+                    id="phone"
+                    type="tel"
+                    value={formData.phone}
+                    onChange={(event) => setFormData({ ...formData, phone: event.target.value })}
+                  />
+                </div>
 
-              <div className="form-group">
-                <label htmlFor="company">
-                  <FiBriefcase /> {t('company')}
-                </label>
-                <input
-                  id="company"
-                  type="text"
-                  placeholder=""
-                  value={formData.company}
-                  onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-                />
+                <div className="form-group">
+                  <label htmlFor="company">
+                    <FiBriefcase /> {t('company')}
+                  </label>
+                  <input
+                    id="company"
+                    type="text"
+                    value={formData.company}
+                    onChange={(event) => setFormData({ ...formData, company: event.target.value })}
+                  />
+                </div>
               </div>
 
               <div className="form-group">
@@ -270,12 +366,12 @@ const Contact = () => {
                 <select
                   id="service"
                   value={formData.service}
-                  onChange={(e) => setFormData({ ...formData, service: e.target.value })}
+                  onChange={(event) => setFormData({ ...formData, service: event.target.value })}
                 >
-                  <option value="">{language === 'en' ? 'Select a service' : 'اختر خدمة'}</option>
+                  <option value="">{copy.selectServicePlaceholder}</option>
                   {services.map((service) => (
-                    <option key={service[language]} value={service[language]}>
-                      {service[language]}
+                    <option key={service.id} value={getLocalizedText(service.title, language)}>
+                      {getLocalizedText(service.title, language)}
                     </option>
                   ))}
                 </select>
@@ -285,38 +381,38 @@ const Contact = () => {
                 <label htmlFor="message">{t('message')}</label>
                 <textarea
                   id="message"
-                  placeholder=""
                   value={formData.message}
-                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                  onChange={(event) => setFormData({ ...formData, message: event.target.value })}
                   required
                   minLength={10}
                   maxLength={2000}
+                  placeholder={copy.messageHint}
                 />
               </div>
 
               <button type="submit" className="submit-btn" disabled={loading}>
-                <span>{loading ? (language === 'en' ? 'Sending...' : 'جاري الإرسال...') : t('sendMessage')}</span>
+                <span>{loading ? copy.sending : t('sendMessage')}</span>
                 <FiMessageSquare />
               </button>
             </form>
           </motion.div>
         </div>
 
-        <motion.div 
+        <motion.section
           className="map-section"
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6 }}
+          initial={{ opacity: 0, y: 28 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.25 }}
         >
-          <h2>{language === 'en' ? 'Our Location' : 'موقعنا'}</h2>
+          <h2>{copy.locationTitle}</h2>
           <div className="map-container">
             <div className="map-placeholder">
-              <FiMapPin style={{ fontSize: '3rem', marginBottom: '1rem', color: 'var(--primary)' }} />
-              <h3>{language === 'en' ? 'Cairo, Egypt' : 'القاهرة، مصر'}</h3>
-              <p>123 Digital Street</p>
+              <FiMapPin className="map-pin-icon" />
+              <h3>{siteInfo.address || copy.locationSubtitle}</h3>
+              <p>{siteInfo.siteName || '4Pixels'}</p>
             </div>
           </div>
-        </motion.div>
+        </motion.section>
       </div>
     </div>
   );

@@ -136,7 +136,12 @@ const Admin = () => {
     totalMessages: messages.length,
     reviews: reviews.length,
     activeReviews: reviews.filter(r => r.active).length,
-    revenue: services.reduce((sum, s) => sum + (s.price || 0), 0)
+    revenue: services.reduce((sum, s) => sum + (s.price || 0), 0),
+    featuredProjects: projects.filter((project) => Boolean(project.featured)).length,
+    serviceCategories: new Set(services.map((service) => service.category).filter(Boolean)).size,
+    avgReviewRating: reviews.length
+      ? Number((reviews.reduce((sum, review) => sum + Number(review.rating || 0), 0) / reviews.length).toFixed(1))
+      : 0
   };
 
   const navItems = [
@@ -191,7 +196,7 @@ const Admin = () => {
       <div className="admin-main">
         <AnimatePresence mode="wait">
           {activeTab === 'overview' && (
-            <OverviewTab stats={stats} services={services} messages={messages} reviews={reviews} />
+            <OverviewTab stats={stats} messages={messages} reviews={reviews} />
           )}
 
           {activeTab === 'services' && (
@@ -263,9 +268,66 @@ const Admin = () => {
 };
 
 // Overview Tab Component
-const OverviewTab = ({ stats, services, messages, reviews }) => {
+const OverviewTab = ({ stats, messages, reviews }) => {
   const recentMessages = messages.slice(0, 5);
   const recentReviews = reviews.filter(r => r.active).slice(0, 3);
+  const readRate = stats.totalMessages > 0
+    ? Math.round(((stats.totalMessages - stats.unreadMessages) / stats.totalMessages) * 100)
+    : 100;
+  const contentReadiness = Math.min(
+    100,
+    Math.round(
+      ((stats.services > 0 ? 30 : 0) +
+        (stats.projects > 0 ? 30 : 0) +
+        (stats.activeReviews > 0 ? 20 : 0) +
+        (stats.totalMessages > 0 ? 20 : 0))
+    )
+  );
+
+  const insightCards = [
+    {
+      title: 'Read Rate',
+      value: `${readRate}%`,
+      caption: `${stats.unreadMessages} unread from ${stats.totalMessages} total messages`,
+      meter: readRate,
+      icon: <FiMessageSquare />
+    },
+    {
+      title: 'Featured Projects',
+      value: stats.featuredProjects,
+      caption: `Portfolio highlights ready for homepage showcase`,
+      meter: stats.projects > 0 ? Math.round((stats.featuredProjects / stats.projects) * 100) : 0,
+      icon: <FiFolder />
+    },
+    {
+      title: 'Service Categories',
+      value: stats.serviceCategories,
+      caption: `Category coverage across your service catalog`,
+      meter: Math.min(100, stats.serviceCategories * 33),
+      icon: <FiGrid />
+    },
+    {
+      title: 'Avg. Review Rating',
+      value: stats.avgReviewRating ? `${stats.avgReviewRating}/5` : 'N/A',
+      caption: `Active social proof quality for your brand`,
+      meter: Math.min(100, Math.round((stats.avgReviewRating / 5) * 100)),
+      icon: <FiCheck />
+    },
+    {
+      title: 'Offer Value',
+      value: `$${stats.revenue.toLocaleString()}`,
+      caption: 'Combined listed value of active services',
+      meter: Math.min(100, Math.round(stats.revenue / 120)),
+      icon: <FiDollarSign />
+    },
+    {
+      title: 'Content Readiness',
+      value: `${contentReadiness}%`,
+      caption: 'Overall publishing readiness based on available modules',
+      meter: contentReadiness,
+      icon: <FiClock />
+    }
+  ];
 
   return (
     <motion.div
@@ -321,6 +383,22 @@ const OverviewTab = ({ stats, services, messages, reviews }) => {
             <p>Active Reviews</p>
           </div>
         </div>
+      </div>
+
+      <div className="admin-insights-grid">
+        {insightCards.map((insight) => (
+          <article key={insight.title} className="insight-card">
+            <div className="insight-head">
+              <span>{insight.title}</span>
+              {insight.icon}
+            </div>
+            <strong className="insight-value">{insight.value}</strong>
+            <p>{insight.caption}</p>
+            <div className="insight-meter" aria-hidden="true">
+              <span style={{ width: `${Math.max(0, Math.min(100, insight.meter))}%` }} />
+            </div>
+          </article>
+        ))}
       </div>
 
       <div className="overview-grid">

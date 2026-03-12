@@ -376,6 +376,14 @@ img {
   :root {
     --header-height: 68px;
   }
+
+  .container {
+    padding-inline: 14px;
+  }
+
+  .section {
+    padding: 52px 0;
+  }
 }
 
 @media (max-width: 768px) {

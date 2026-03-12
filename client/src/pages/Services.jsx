@@ -99,7 +99,6 @@ const Services = () => {
         filterByCategory: 'Filter by category',
         allServices: 'All services',
         discoverService: 'Discover service',
-        swipeHint: 'Swipe to see more',
         emptyState: 'No services found for this category.'
       }
     : {
@@ -111,7 +110,6 @@ const Services = () => {
         filterByCategory: 'تصفية حسب التصنيف',
         allServices: 'كل الخدمات',
         discoverService: 'استكشف الخدمة',
-        swipeHint: 'اسحب لرؤية المزيد',
         emptyState: 'لا توجد خدمات ضمن هذا التصنيف حاليًا.'
       };
 
@@ -218,12 +216,6 @@ const Services = () => {
                 );
               })}
             </div>
-
-            {filteredServices.length > 0 && (
-              <p className="scroll-indicator">
-                {language === 'en' ? `← ${copy.swipeHint} →` : `→ ${copy.swipeHint} ←`}
-              </p>
-            )}
 
             {!filteredServices.length && (
               <div className="services-empty-state">
