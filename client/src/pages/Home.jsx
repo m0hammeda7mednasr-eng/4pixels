@@ -107,8 +107,6 @@ const Home = () => {
             'High-impact services focused on growth operations, revenue automation, and digital execution.',
           projectsIntro:
             'Selected projects delivered across Shopify commerce, operations automation, and systems engineering.',
-          portfolioHighlight: 'Portfolio Highlight',
-          portfolioEmpty: 'Portfolio items will appear here soon.',
           reviewsTitle: 'Client Feedback',
           reviewsIntro: 'Outcomes from teams that trusted 4Pixels with critical digital execution.',
           serviceDetails: 'More details',
@@ -379,55 +377,6 @@ const Home = () => {
           </div>
         </section>
       )}
-
-      <section className="section home-showcase">
-        <div className="container">
-          <div className="block-header">
-            <h2 className="section-title">
-              {copy.portfolioHighlight || 'Portfolio Highlight'}
-            </h2>
-            <p>{copy.projectsIntro}</p>
-          </div>
-
-          {featuredProjects.length > 0 ? (
-            <motion.article
-              className="showcase-card"
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.3 }}
-            >
-              <Link to={`/projects/${featuredProjects[0].id}`} className="showcase-media">
-                <img
-                  src={featuredProjects[0].images?.[0]}
-                  alt={getLocalizedText(featuredProjects[0].title, language, 'Project')}
-                  loading="lazy"
-                />
-              </Link>
-
-              <div className="showcase-content">
-                <span className="project-category-home">
-                  {getCategoryLabel(featuredProjects[0].category, language)}
-                </span>
-                <h3>{getLocalizedText(featuredProjects[0].title, language)}</h3>
-                <p>{getLocalizedText(featuredProjects[0].description, language)}</p>
-                <div className="showcase-actions">
-                  <Link to={`/projects/${featuredProjects[0].id}`} className="btn btn-primary">
-                    {copy.projectCaseStudy}
-                    <FiArrowRight />
-                  </Link>
-                  <Link to="/projects" className="btn btn-outline">
-                    {copy.secondaryCta}
-                  </Link>
-                </div>
-              </div>
-            </motion.article>
-          ) : (
-            <p className="reviews-empty-text">
-              {copy.portfolioEmpty || 'Portfolio items will appear here soon.'}
-            </p>
-          )}
-        </div>
-      </section>
 
       <section className="section home-pillars">
         <div className="container">
