@@ -354,6 +354,81 @@ body.dark .block-header p {
   color: var(--text-dark-secondary);
 }
 
+.home-showcase {
+  padding-top: clamp(40px, 6vw, 68px);
+}
+
+.showcase-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1.12fr) minmax(0, 1fr);
+  gap: clamp(14px, 2.2vw, 22px);
+  border-radius: 24px;
+  border: 1px solid rgba(11, 95, 255, 0.2);
+  background: var(--surface-light);
+  box-shadow: var(--shadow);
+  padding: clamp(14px, 2.4vw, 20px);
+}
+
+body.dark .showcase-card {
+  border-color: rgba(142, 200, 255, 0.24);
+  background: var(--surface-dark);
+}
+
+.showcase-media {
+  display: block;
+  border-radius: 16px;
+  overflow: hidden;
+  aspect-ratio: 16 / 10;
+}
+
+.showcase-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.showcase-card:hover .showcase-media img {
+  transform: scale(1.04);
+}
+
+.showcase-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.showcase-content h3 {
+  margin-top: 10px;
+  font-size: clamp(1.18rem, 2.5vw, 1.7rem);
+  color: var(--text-light);
+}
+
+body.dark .showcase-content h3 {
+  color: var(--text-dark);
+}
+
+.showcase-content p {
+  margin-top: 10px;
+  color: var(--text-light-secondary);
+  font-size: 0.95rem;
+}
+
+body.dark .showcase-content p {
+  color: var(--text-dark-secondary);
+}
+
+.showcase-actions {
+  margin-top: auto;
+  padding-top: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.showcase-actions .btn {
+  min-height: 48px;
+}
+
 .pillars-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -825,6 +900,7 @@ body.dark .home-loading-state {
 body[dir='rtl'] .hero-trust-list li,
 body[dir='rtl'] .pillar-card,
 body[dir='rtl'] .process-card,
+body[dir='rtl'] .showcase-content,
 body[dir='rtl'] .service-card-home,
 body[dir='rtl'] .project-body,
 body[dir='rtl'] .review-card-home {
@@ -832,6 +908,7 @@ body[dir='rtl'] .review-card-home {
 }
 
 body[dir='rtl'] .hero-actions .btn svg,
+body[dir='rtl'] .showcase-actions .btn svg,
 body[dir='rtl'] .service-meta a svg,
 body[dir='rtl'] .project-link svg,
 body[dir='rtl'] .cta-actions .btn svg {
@@ -839,6 +916,7 @@ body[dir='rtl'] .cta-actions .btn svg {
 }
 
 body[dir='rtl'] .service-card-head,
+body[dir='rtl'] .showcase-actions,
 body[dir='rtl'] .service-meta,
 body[dir='rtl'] .review-top {
   flex-direction: row-reverse;
@@ -855,6 +933,10 @@ body[dir='rtl'] .review-top {
 
   .hero-side-panel {
     max-width: 560px;
+  }
+
+  .showcase-card {
+    grid-template-columns: 1fr;
   }
 
   .pillars-grid,
@@ -926,28 +1008,33 @@ body[dir='rtl'] .review-top {
   .hero-metrics-mobile {
     margin-top: 14px;
     display: grid;
-    grid-auto-flow: column;
-    grid-auto-columns: minmax(190px, 1fr);
-    gap: 10px;
-    overflow-x: auto;
-    padding: 2px 0 10px;
-    scroll-snap-type: x mandatory;
-    overscroll-behavior-x: contain;
-    scrollbar-width: thin;
-    scrollbar-color: rgba(11, 95, 255, 0.45) transparent;
-  }
-
-  .hero-metrics-mobile::-webkit-scrollbar {
-    height: 5px;
-  }
-
-  .hero-metrics-mobile::-webkit-scrollbar-thumb {
-    border-radius: 999px;
-    background: rgba(11, 95, 255, 0.45);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
   }
 
   .hero-metrics-mobile .hero-metric {
-    scroll-snap-align: start;
+    padding: 10px;
+  }
+
+  .showcase-card {
+    border-radius: 16px;
+    padding: 12px;
+  }
+
+  .showcase-media {
+    border-radius: 12px;
+  }
+
+  .showcase-content {
+    padding: 4px 2px 2px;
+  }
+
+  .showcase-content p {
+    font-size: 0.88rem;
+  }
+
+  .showcase-actions .btn {
+    width: 100%;
   }
 
   .hero-trust-list {
@@ -999,28 +1086,10 @@ body[dir='rtl'] .review-top {
 
   .home-mobile-rail {
     display: grid;
-    grid-auto-flow: column;
-    grid-auto-columns: minmax(min(84vw, 320px), 1fr);
+    grid-template-columns: 1fr;
     gap: 12px;
-    overflow-x: auto;
-    overscroll-behavior-x: contain;
-    scroll-snap-type: x mandatory;
-    scrollbar-width: thin;
-    scrollbar-color: rgba(11, 95, 255, 0.45) transparent;
-    padding: 2px 1px 10px;
-  }
-
-  .home-mobile-rail::-webkit-scrollbar {
-    height: 5px;
-  }
-
-  .home-mobile-rail::-webkit-scrollbar-thumb {
-    border-radius: 999px;
-    background: rgba(11, 95, 255, 0.45);
-  }
-
-  .home-mobile-rail > * {
-    scroll-snap-align: start;
+    overflow: visible;
+    padding: 0;
   }
 
   .pillars-grid.home-mobile-rail .pillar-card,
@@ -1029,14 +1098,14 @@ body[dir='rtl'] .review-top {
   .project-card-home,
   .review-card-home {
     min-width: 0;
-    width: min(84vw, 320px);
+    width: 100%;
     border-radius: 16px;
   }
 
   .service-card-home,
   .project-card-home,
   .review-card-home {
-    width: min(84vw, 320px);
+    width: 100%;
   }
 
   .service-card-home,
@@ -1085,9 +1154,8 @@ body[dir='rtl'] .review-top {
     display: none;
   }
 
-  body[dir='rtl'] .home-mobile-rail,
-  body[dir='rtl'] .hero-metrics-mobile {
-    direction: rtl;
+  body[dir='rtl'] .showcase-actions {
+    flex-direction: row-reverse;
   }
 }
 
@@ -1112,6 +1180,10 @@ body[dir='rtl'] .review-top {
   .service-card-home,
   .project-card-home,
   .review-card-home {
-    width: min(86vw, 300px);
+    width: 100%;
+  }
+
+  .hero-metrics-mobile {
+    grid-template-columns: 1fr;
   }
 }

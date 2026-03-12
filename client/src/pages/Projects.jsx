@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { FiSearch, FiArrowRight } from 'react-icons/fi';
+import { FiArrowRight, FiSearch } from 'react-icons/fi';
 import { useLanguage } from '../context/LanguageContext';
 import { getCached } from '../services/api';
 import { getCategoryLabel, PRIMARY_CATEGORIES } from '../utils/categoryLabels';
@@ -80,24 +80,28 @@ const Projects = () => {
     });
   }, [projects, activeCategory, search, language]);
 
-  const copy = language === 'en'
-    ? {
-        intro:
-          'Portfolio cases across Shopify stores, automation workflows, and systems operations.',
-        searchPlaceholder: 'Search projects...',
-        all: 'All',
-        details: 'View details',
-        resultsSuffix: 'projects matched your filters',
-        empty: 'No projects match your filters.'
-      }
-    : {
-        intro:
-          'نماذج أعمال عبر متاجر شوبيفاي وتدفقات الأتمتة وحلول الأنظمة والبيانات.',
-        searchPlaceholder: 'ابحث عن مشروع...',
-        all: 'الكل',
-        details: 'عرض التفاصيل',
-        empty: 'لا توجد مشاريع مطابقة للبحث.'
-      };
+  const copy =
+    language === 'en'
+      ? {
+          intro:
+            'Portfolio cases across Shopify stores, automation workflows, and systems operations.',
+          searchPlaceholder: 'Search projects...',
+          all: 'All',
+          details: 'View details',
+          featured: 'Featured case study',
+          empty: 'No projects match your filters.'
+        }
+      : {
+          intro: 'نماذج أعمال عبر متاجر Shopify والأتمتة وحلول الأنظمة والبيانات.',
+          searchPlaceholder: 'ابحث عن مشروع...',
+          all: 'الكل',
+          details: 'عرض التفاصيل',
+          featured: 'مشروع مميز',
+          empty: 'لا توجد مشاريع مطابقة للبحث.'
+        };
+
+  const featuredProject = filteredProjects[0] || null;
+  const listProjects = featuredProject ? filteredProjects.slice(1) : filteredProjects;
 
   return (
     <div className="portfolio-page section">
@@ -137,10 +141,7 @@ const Projects = () => {
         {!loading && (
           <div className="portfolio-results" aria-live="polite">
             <strong>{filteredProjects.length}</strong>
-            <span>
-              {copy.resultsSuffix ||
-                (language === 'en' ? 'projects matched your filters' : 'Ù…Ø´Ø§Ø±ÙŠØ¹ Ù…Ø·Ø§Ø¨Ù‚Ø© Ù„Ù„ÙÙ„Ø§ØªØ±')}
-            </span>
+            <span>{t('projects')}</span>
           </div>
         )}
 
@@ -150,35 +151,62 @@ const Projects = () => {
           </div>
         ) : (
           <>
-            <div className="portfolio-grid">
-              {filteredProjects.map((project, index) => (
-                <motion.article
-                  key={project.id}
-                  className="portfolio-card"
-                  initial={{ opacity: 0, y: 24 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.05 }}
-                >
-                  <Link to={`/projects/${project.id}`} className="portfolio-card-media">
-                    <img
-                      src={project.images?.[0]}
-                      alt={getLocalizedText(project.title, language, 'Project')}
-                      loading="lazy"
-                    />
-                  </Link>
-                  <div className="portfolio-card-body">
-                    <span>{getCategoryLabel(project.category, language)}</span>
-                    <h3>{getLocalizedText(project.title, language)}</h3>
-                    <p>{getLocalizedText(project.description, language)}</p>
-                    <Link to={`/projects/${project.id}`} className="portfolio-card-link">
-                      {copy.details}
-                      <FiArrowRight />
-                    </Link>
-                  </div>
-                </motion.article>
-              ))}
-            </div>
+            {featuredProject && (
+              <motion.article
+                className="portfolio-featured"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+              >
+                <Link to={`/projects/${featuredProject.id}`} className="portfolio-featured-media">
+                  <img
+                    src={featuredProject.images?.[0]}
+                    alt={getLocalizedText(featuredProject.title, language, 'Project')}
+                    loading="lazy"
+                  />
+                </Link>
 
+                <div className="portfolio-featured-content">
+                  <span>{copy.featured}</span>
+                  <h2>{getLocalizedText(featuredProject.title, language)}</h2>
+                  <p>{getLocalizedText(featuredProject.description, language)}</p>
+                  <Link to={`/projects/${featuredProject.id}`} className="portfolio-card-link">
+                    {copy.details}
+                    <FiArrowRight />
+                  </Link>
+                </div>
+              </motion.article>
+            )}
+
+            {listProjects.length > 0 && (
+              <div className="portfolio-grid">
+                {listProjects.map((project, index) => (
+                  <motion.article
+                    key={project.id}
+                    className="portfolio-card"
+                    initial={{ opacity: 0, y: 24 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.05 }}
+                  >
+                    <Link to={`/projects/${project.id}`} className="portfolio-card-media">
+                      <img
+                        src={project.images?.[0]}
+                        alt={getLocalizedText(project.title, language, 'Project')}
+                        loading="lazy"
+                      />
+                    </Link>
+                    <div className="portfolio-card-body">
+                      <span>{getCategoryLabel(project.category, language)}</span>
+                      <h3>{getLocalizedText(project.title, language)}</h3>
+                      <p>{getLocalizedText(project.description, language)}</p>
+                      <Link to={`/projects/${project.id}`} className="portfolio-card-link">
+                        {copy.details}
+                        <FiArrowRight />
+                      </Link>
+                    </div>
+                  </motion.article>
+                ))}
+              </div>
+            )}
           </>
         )}
 
