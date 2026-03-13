@@ -154,6 +154,60 @@ const About = () => {
           ]
         };
 
+  const leadershipTitle = language === 'en' ? 'Leadership Team' : 'فريق القيادة';
+  const leadershipSubtitle =
+    language === 'en'
+      ? 'Meet the founders behind our strategy, execution quality, and long-term partnerships.'
+      : 'تعرف على فريق المؤسسين المسؤول عن الاستراتيجية وجودة التنفيذ وبناء الشراكات.';
+  const leadershipNote =
+    language === 'en'
+      ? 'You can replace member photos anytime from About.jsx.'
+      : 'يمكنك تغيير صور الفريق في أي وقت من ملف About.jsx.';
+
+  const leadershipMembers =
+    language === 'en'
+      ? [
+          {
+            name: 'Your Name',
+            role: 'Founder & CEO',
+            image: '',
+            bio: 'Leads business strategy, growth direction, and delivery standards across all client projects.',
+            highlights: ['Shopify Strategy', 'Business Systems', 'Growth Planning']
+          },
+          {
+            name: 'Co-Founder Name',
+            role: 'Co-Founder & Operations Lead',
+            image: '',
+            bio: 'Owns operations, automation architecture, and client success workflows from kickoff to scale.',
+            highlights: ['Automation Ops', 'CRM Workflows', 'Delivery Management']
+          }
+        ]
+      : [
+          {
+            name: 'اسمك هنا',
+            role: 'المؤسس والمدير التنفيذي',
+            image: '',
+            bio: 'يقود الاستراتيجية العامة واتجاه النمو ومعايير التنفيذ في جميع المشاريع.',
+            highlights: ['استراتيجية Shopify', 'أنظمة الأعمال', 'تخطيط النمو']
+          },
+          {
+            name: 'اسم الشريك المؤسس',
+            role: 'الشريك المؤسس ومدير العمليات',
+            image: '',
+            bio: 'مسؤول عن التشغيل وتصميم الأتمتة وإدارة تجربة العميل من البداية وحتى التوسع.',
+            highlights: ['عمليات الأتمتة', 'تدفقات CRM', 'إدارة التسليم']
+          }
+        ];
+
+  const getInitials = (name) =>
+    String(name || '')
+      .split(' ')
+      .filter(Boolean)
+      .slice(0, 2)
+      .map((part) => part[0])
+      .join('')
+      .toUpperCase();
+
   return (
     <div className="about-page section">
       <div className="container">
@@ -166,6 +220,45 @@ const About = () => {
           <h2>{copy.introTitle}</h2>
           <p>{copy.introText}</p>
         </motion.div>
+
+        <motion.section
+          className="about-leadership"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+        >
+          <div className="about-leadership-head">
+            <h2>{leadershipTitle}</h2>
+            <p>{leadershipSubtitle}</p>
+          </div>
+
+          <div className="about-leadership-grid">
+            {leadershipMembers.map((member) => (
+              <article key={`${member.name}-${member.role}`} className="leader-card">
+                <div className="leader-avatar">
+                  {member.image ? (
+                    <img src={member.image} alt={member.name} loading="lazy" />
+                  ) : (
+                    <span>{getInitials(member.name)}</span>
+                  )}
+                </div>
+
+                <div className="leader-content">
+                  <h3>{member.name}</h3>
+                  <p className="leader-role">{member.role}</p>
+                  <p className="leader-bio">{member.bio}</p>
+                  <div className="leader-tags">
+                    {member.highlights.map((item) => (
+                      <span key={`${member.name}-${item}`}>{item}</span>
+                    ))}
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+
+          <p className="about-leadership-note">{leadershipNote}</p>
+        </motion.section>
 
         <motion.div
           className="about-stats"
