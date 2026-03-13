@@ -1,6 +1,7 @@
-# 🚀 Four Pixels - نسخة HTML بسيطة (بدون npm)
+# 🚀 4 Pixels - نسخة HTML بسيطة (بدون npm)
 
 ## ✅ المميزات
+
 - ✨ عربي/إنجليزي مع RTL/LTR
 - 🌓 وضع فاتح/داكن
 - 🎨 أنيميشن سلس
@@ -13,6 +14,7 @@
 2. خلاص! 🎉
 
 ## 📁 الملفات
+
 - `index.html` - الصفحة الرئيسية
 - `style.css` - التصميم
 - `script.js` - الوظائف
@@ -20,19 +22,23 @@
 ## 🔧 التعديل
 
 ### تغيير الألوان
+
 افتح `style.css` وعدل:
+
 ```css
 :root {
-    --primary: #6366f1;
-    --secondary: #8b5cf6;
-    --accent: #ec4899;
+  --primary: #6366f1;
+  --secondary: #8b5cf6;
+  --accent: #ec4899;
 }
 ```
 
 ### إضافة خدمة
+
 افتح `index.html` وانسخ `.service-card`
 
 ### تغيير النصوص
+
 كل عنصر فيه `data-en` و `data-ar` للترجمة
 
 ---

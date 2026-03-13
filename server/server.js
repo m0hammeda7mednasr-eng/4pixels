@@ -1,42 +1,42 @@
-const express = require('express');
-const cors = require('cors');
-const dotenv = require('dotenv');
-const { getJwtSecret } = require('./utils/jwt');
+const express = require("express");
+const cors = require("cors");
+const dotenv = require("dotenv");
+const { getJwtSecret } = require("./utils/jwt");
 
 dotenv.config();
 
 const app = express();
-const isProduction = process.env.NODE_ENV === 'production';
-const requestBodyLimit = process.env.REQUEST_BODY_LIMIT || '10mb';
+const isProduction = process.env.NODE_ENV === "production";
+const requestBodyLimit = process.env.REQUEST_BODY_LIMIT || "10mb";
 
 if (isProduction) {
   try {
     getJwtSecret();
   } catch (err) {
-    console.error('Server startup failed:', err.message);
+    console.error("Server startup failed:", err.message);
     process.exit(1);
   }
 }
 
 const allowedOrigins = new Set(
   [
-    'http://localhost:3000',
-    'http://localhost:3001',
-    'https://4pixels-two.vercel.app',
-    'https://4pixels-git-main-mohs-projects-0b03337a.vercel.app',
+    "http://localhost:3000",
+    "http://localhost:3001",
+    "https://4pixels-two.vercel.app",
+    "https://4pixels-git-main-mohs-projects-0b03337a.vercel.app",
     process.env.CORS_ORIGIN,
     process.env.FRONTEND_URL,
-    process.env.CLIENT_URL
+    process.env.CLIENT_URL,
   ]
-    .flatMap((origin) => String(origin || '').split(','))
+    .flatMap((origin) => String(origin || "").split(","))
     .map((origin) => origin.trim())
-    .filter(Boolean)
+    .filter(Boolean),
 );
 
-const allowVercelPreviews = process.env.ALLOW_VERCEL_PREVIEWS === 'true';
+const allowVercelPreviews = process.env.ALLOW_VERCEL_PREVIEWS === "true";
 const isVercelPreviewOrigin = (origin) => {
   try {
-    return new URL(origin).hostname.endsWith('.vercel.app');
+    return new URL(origin).hostname.endsWith(".vercel.app");
   } catch (_err) {
     return false;
   }
@@ -56,31 +56,36 @@ const corsOptions = {
       return callback(null, true);
     }
 
-    return callback(new Error('Not allowed by CORS'));
+    return callback(new Error("Not allowed by CORS"));
   },
   credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  optionsSuccessStatus: 204
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  optionsSuccessStatus: 204,
 };
 
-app.disable('x-powered-by');
-app.set('trust proxy', 1);
+app.disable("x-powered-by");
+app.set("trust proxy", 1);
 
 app.use((req, res, next) => {
-  res.setHeader('X-Content-Type-Options', 'nosniff');
-  res.setHeader('X-Frame-Options', 'SAMEORIGIN');
-  res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
-  res.setHeader('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
+  res.setHeader("X-Content-Type-Options", "nosniff");
+  res.setHeader("X-Frame-Options", "SAMEORIGIN");
+  res.setHeader("Referrer-Policy", "strict-origin-when-cross-origin");
+  res.setHeader(
+    "Permissions-Policy",
+    "camera=(), microphone=(), geolocation=()",
+  );
   next();
 });
 
 if (!isProduction) {
   app.use((req, res, next) => {
     const start = Date.now();
-    res.on('finish', () => {
+    res.on("finish", () => {
       const duration = Date.now() - start;
-      console.log(`${req.method} ${req.originalUrl} -> ${res.statusCode} (${duration}ms)`);
+      console.log(
+        `${req.method} ${req.originalUrl} -> ${res.statusCode} (${duration}ms)`,
+      );
     });
     next();
   });
@@ -89,61 +94,66 @@ if (!isProduction) {
 app.use(cors(corsOptions));
 app.use(express.json({ limit: requestBodyLimit }));
 app.use(express.urlencoded({ extended: true, limit: requestBodyLimit }));
-app.use('/uploads', express.static('uploads'));
+app.use("/uploads", express.static("uploads"));
 
 // Routes
-app.use('/api/auth', require('./routes/auth'));
-app.use('/api/services', require('./routes/services'));
-app.use('/api/projects', require('./routes/projects'));
-app.use('/api/content', require('./routes/content'));
-app.use('/api/messages', require('./routes/messages'));
-app.use('/api/reviews', require('./routes/reviews'));
-app.use('/api/shopify', require('./routes/shopify'));
-app.use('/api/upload', require('./routes/upload'));
+app.use("/api/auth", require("./routes/auth"));
+app.use("/api/services", require("./routes/services"));
+app.use("/api/projects", require("./routes/projects"));
+app.use("/api/content", require("./routes/content"));
+app.use("/api/messages", require("./routes/messages"));
+app.use("/api/reviews", require("./routes/reviews"));
+app.use("/api/shopify", require("./routes/shopify"));
+app.use("/api/upload", require("./routes/upload"));
 
 // Health checks
-app.get('/', (_req, res) => {
-  res.json({ message: 'Four Pixels API is running' });
+app.get("/", (_req, res) => {
+  res.json({ message: "✅ 4 Pixels API is running!" });
 });
 
-app.get('/health', (_req, res) => {
+app.get("/health", (_req, res) => {
   res.json({
-    status: 'ok',
-    environment: process.env.NODE_ENV || 'development',
-    timestamp: new Date().toISOString()
+    status: "ok",
+    environment: process.env.NODE_ENV || "development",
+    timestamp: new Date().toISOString(),
   });
 });
 
-app.use('/api/*', (_req, res) => {
-  res.status(404).json({ message: 'API route not found' });
+app.use("/api/*", (_req, res) => {
+  res.status(404).json({ message: "API route not found" });
 });
 
 app.use((err, _req, res, _next) => {
-  if (err.message === 'Not allowed by CORS') {
-    return res.status(403).json({ message: 'CORS blocked this origin' });
+  if (err.message === "Not allowed by CORS") {
+    return res.status(403).json({ message: "CORS blocked this origin" });
   }
 
-  if (err.type === 'entity.too.large') {
+  if (err.type === "entity.too.large") {
     return res.status(413).json({
-      message: `Payload too large. Reduce image/file size and keep request body under ${requestBodyLimit}.`
+      message: `Payload too large. Reduce image/file size and keep request body under ${requestBodyLimit}.`,
     });
   }
 
-  if (err instanceof SyntaxError && err.status === 400 && 'body' in err) {
-    return res.status(400).json({ message: 'Invalid JSON payload' });
+  if (err instanceof SyntaxError && err.status === 400 && "body" in err) {
+    return res.status(400).json({ message: "Invalid JSON payload" });
   }
 
   const statusCode = Number.isInteger(err.status) ? err.status : 500;
-  const message = statusCode === 500 ? 'Internal server error' : (err.message || 'Request failed');
+  const message =
+    statusCode === 500
+      ? "Internal server error"
+      : err.message || "Request failed";
 
-  console.error('Unhandled server error:', err.stack || err.message);
+  console.error("Unhandled server error:", err.stack || err.message);
   return res.status(statusCode).json({ message });
 });
 
 const PORT = process.env.PORT || 5001;
-app.listen(PORT, '0.0.0.0', () => {
+app.listen(PORT, "0.0.0.0", () => {
   console.log(`Server running on port ${PORT}`);
-  console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
+  console.log(`Environment: ${process.env.NODE_ENV || "development"}`);
   console.log(`Request body limit: ${requestBodyLimit}`);
-  console.log(`CORS origins: ${Array.from(allowedOrigins).join(', ') || 'None configured'}`);
+  console.log(
+    `CORS origins: ${Array.from(allowedOrigins).join(", ") || "None configured"}`,
+  );
 });

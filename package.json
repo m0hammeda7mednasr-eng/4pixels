@@ -1,7 +1,7 @@
 {
-  "name": "four-pixels",
+  "name": "4-pixels",
   "version": "1.0.0",
-  "description": "Full-stack bilingual portfolio website for Four Pixels digital agency",
+  "description": "Full-stack bilingual portfolio website for 4 Pixels digital agency",
   "scripts": {
     "install-all": "cd client && npm install && cd ../server && npm install",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
@@ -10,8 +10,14 @@
     "build": "cd client && npm install && npm run build",
     "check": "node check-setup.js"
   },
-  "keywords": ["portfolio", "bilingual", "react", "nodejs", "mongodb"],
-  "author": "Four Pixels",
+  "keywords": [
+    "portfolio",
+    "bilingual",
+    "react",
+    "nodejs",
+    "mongodb"
+  ],
+  "author": "4 Pixels",
   "license": "MIT",
   "engines": {
     "node": "18.x"

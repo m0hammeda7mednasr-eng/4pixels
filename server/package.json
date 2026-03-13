@@ -1,7 +1,7 @@
 {
-  "name": "four-pixels-server",
+  "name": "4-pixels-server",
   "version": "1.0.0",
-  "description": "Backend API for Four Pixels",
+  "description": "Backend API for 4 Pixels",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
