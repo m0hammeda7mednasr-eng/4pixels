@@ -2,18 +2,18 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
-  FaLinkedin,
-  FaGithub,
-  FaFacebook,
-  FaInstagram,
-  FaTiktok,
-  FaYoutube,
   FaBehance,
   FaDribbble,
-  FaWhatsapp
+  FaFacebook,
+  FaGithub,
+  FaInstagram,
+  FaLinkedin,
+  FaTiktok,
+  FaWhatsapp,
+  FaYoutube
 } from 'react-icons/fa';
 import { FaXTwitter } from 'react-icons/fa6';
-import { FiMail, FiPhone, FiMapPin } from 'react-icons/fi';
+import { FiArrowUpRight, FiClock, FiMail, FiMapPin, FiPhone, FiZap } from 'react-icons/fi';
 import { useLanguage } from '../context/LanguageContext';
 import { getCached } from '../services/api';
 import { PRIMARY_CATEGORIES, getCategoryLabel } from '../utils/categoryLabels';
@@ -40,7 +40,7 @@ const Footer = () => {
         }
       } catch (err) {
         if (!controller.signal.aborted) {
-          console.error('Failed to fetch content:', err.userMessage || err.message);
+          console.error('Failed to fetch footer content:', err.userMessage || err.message);
         }
       }
     };
@@ -53,6 +53,63 @@ const Footer = () => {
     };
   }, []);
 
+  const copy =
+    language === 'en'
+      ? {
+          about: 'About',
+          projects: 'Projects',
+          contact: 'Contact',
+          admin: 'Admin Login',
+          email: 'Email',
+          phone: 'Phone',
+          whatsapp: 'WhatsApp',
+          location: 'Location',
+          cairo: 'Cairo, Egypt',
+          defaultDescription:
+            'Shopify builds, automation systems, and operational workflows designed for measurable business growth.',
+          noSocial: 'Add your social links from the dashboard when ready.',
+          solutions: 'Solutions',
+          company: 'Company',
+          allRights: 'All rights reserved.',
+          calloutTitle: 'Have a project that needs serious execution?',
+          calloutText:
+            'Share the scope and we will turn it into a practical roadmap with design, systems, and delivery priorities.',
+          calloutButton: 'Start A Brief',
+          availabilityTitle: 'Working Model',
+          availability: [
+            'Reply within 24 business hours',
+            'Remote delivery with Cairo-based coordination',
+            'Shopify, automation, and systems under one team'
+          ]
+        }
+      : {
+          about: 'من نحن',
+          projects: 'المشاريع',
+          contact: 'التواصل',
+          admin: 'دخول الأدمن',
+          email: 'البريد',
+          phone: 'الهاتف',
+          whatsapp: 'واتساب',
+          location: 'العنوان',
+          cairo: 'القاهرة، مصر',
+          defaultDescription:
+            'تنفيذ متاجر شوبيفاي والأتمتة وأنظمة التشغيل بشكل احترافي يحقق نموًا قابلًا للقياس.',
+          noSocial: 'أضف روابط السوشيال من لوحة التحكم عند الجاهزية.',
+          solutions: 'الحلول',
+          company: 'الشركة',
+          allRights: 'جميع الحقوق محفوظة.',
+          calloutTitle: 'لديك مشروع يحتاج تنفيذًا جادًا؟',
+          calloutText:
+            'شاركنا نطاق العمل وسنحوّله إلى roadmap عملي واضح يشمل التصميم والأنظمة وأولويات التنفيذ.',
+          calloutButton: 'ابدأ الملخص',
+          availabilityTitle: 'أسلوب العمل',
+          availability: [
+            'الرد خلال 24 ساعة عمل',
+            'تنفيذ عن بُعد مع تنسيق من القاهرة',
+            'Shopify والأتمتة والأنظمة تحت فريق واحد'
+          ]
+        };
+
   const toggleSection = (section) => {
     if (window.innerWidth <= 768) {
       setOpenSections((prev) => ({
@@ -62,48 +119,14 @@ const Footer = () => {
     }
   };
 
-  const copy = language === 'en'
-    ? {
-      about: 'About Us',
-      projects: 'Projects',
-      contact: 'Contact',
-      admin: 'Admin Login',
-      email: 'Email',
-      phone: 'Phone',
-      whatsapp: 'WhatsApp',
-      location: 'Location',
-      cairo: 'Cairo, Egypt',
-      digitalAgency: 'Digital Agency',
-      defaultDescription: 'Shopify stores, automation, and systems built for measurable growth.',
-      noSocial: 'Add social links from admin dashboard.',
-      solutions: 'Solutions',
-      company: 'Company',
-      allRights: 'All rights reserved.'
-    }
-    : {
-      about: 'من نحن',
-      projects: 'المشاريع',
-      contact: 'التواصل',
-      admin: 'دخول الأدمن',
-      email: 'البريد',
-      phone: 'الهاتف',
-      whatsapp: 'واتساب',
-      location: 'العنوان',
-      cairo: 'القاهرة، مصر',
-      digitalAgency: 'الوكالة الرقمية',
-      defaultDescription: 'متاجر شوبيفاي وأتمتة وأنظمة رقمية بنتائج قابلة للقياس.',
-      noSocial: 'أضف روابط السوشيال من لوحة الأدمن.',
-      solutions: 'الحلول',
-      company: 'الشركة',
-      allRights: 'جميع الحقوق محفوظة.'
-    };
-
-  const solutionLinks = useMemo(() => {
-    return PRIMARY_CATEGORIES.map((category) => ({
-      label: getCategoryLabel(category, language),
-      to: '/services'
-    }));
-  }, [language]);
+  const solutionLinks = useMemo(
+    () =>
+      PRIMARY_CATEGORIES.map((category) => ({
+        label: getCategoryLabel(category, language),
+        to: '/services'
+      })),
+    [language]
+  );
 
   const companyLinks = [
     { label: copy.about, to: '/about' },
@@ -115,7 +138,7 @@ const Footer = () => {
   const socialLinks = [
     { icon: <FaFacebook />, key: 'facebook', name: 'Facebook' },
     { icon: <FaInstagram />, key: 'instagram', name: 'Instagram' },
-    { icon: <FaXTwitter />, key: 'twitter', name: 'Twitter' },
+    { icon: <FaXTwitter />, key: 'twitter', name: 'X' },
     { icon: <FaLinkedin />, key: 'linkedin', name: 'LinkedIn' },
     { icon: <FaGithub />, key: 'github', name: 'GitHub' },
     { icon: <FaYoutube />, key: 'youtube', name: 'YouTube' },
@@ -130,19 +153,21 @@ const Footer = () => {
       icon: <FiMail />,
       label: copy.email,
       value: siteInfo.email || 'info@4pixels.com',
-      href: siteInfo.email ? `mailto:${siteInfo.email}` : null
+      href: siteInfo.email ? `mailto:${siteInfo.email}` : 'mailto:info@4pixels.com'
     },
     {
       icon: <FiPhone />,
       label: copy.phone,
       value: siteInfo.phone || '+20 106 618 4859',
-      href: siteInfo.phone ? `tel:${siteInfo.phone.replace(/\s+/g, '')}` : null
+      href: siteInfo.phone ? `tel:${siteInfo.phone.replace(/\s+/g, '')}` : 'tel:+201066184859'
     },
     {
       icon: <FaWhatsapp />,
       label: copy.whatsapp,
       value: siteInfo.whatsapp || '+201066184859',
-      href: siteInfo.whatsapp ? `https://wa.me/${siteInfo.whatsapp.replace(/[^\d]/g, '')}` : null
+      href: siteInfo.whatsapp
+        ? `https://wa.me/${siteInfo.whatsapp.replace(/[^\d]/g, '')}`
+        : 'https://wa.me/201066184859'
     },
     {
       icon: <FiMapPin />,
@@ -152,9 +177,34 @@ const Footer = () => {
     }
   ];
 
+  const availabilityItems = [
+    { icon: <FiClock />, label: copy.availability[0] },
+    { icon: <FiMapPin />, label: copy.availability[1] },
+    { icon: <FiZap />, label: copy.availability[2] }
+  ];
+
   return (
     <footer className="footer">
       <div className="container footer-shell">
+        <motion.section
+          className="footer-callout"
+          initial={{ opacity: 0, y: 22 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.35 }}
+          transition={{ duration: 0.4 }}
+        >
+          <div>
+            <span className="footer-kicker">4 Pixels</span>
+            <h2>{copy.calloutTitle}</h2>
+            <p>{copy.calloutText}</p>
+          </div>
+
+          <Link to="/contact" className="footer-callout-btn">
+            {copy.calloutButton}
+            <FiArrowUpRight />
+          </Link>
+        </motion.section>
+
         <motion.div
           className="footer-top"
           initial={{ opacity: 0, y: 24 }}
@@ -164,8 +214,19 @@ const Footer = () => {
         >
           <section className="footer-brand">
             <h3>{siteInfo.siteName || '4 Pixels'}</h3>
-            <p className="footer-tagline">{siteInfo.tagline || copy.digitalAgency}</p>
+            <p className="footer-tagline">
+              {siteInfo.tagline || (language === 'en' ? 'Commerce Systems Studio' : 'استوديو التجارة والأنظمة')}
+            </p>
             <p className="footer-description">{siteInfo.description || copy.defaultDescription}</p>
+
+            <div className="footer-availability-inline">
+              {availabilityItems.map((item) => (
+                <span key={item.label}>
+                  {item.icon}
+                  {item.label}
+                </span>
+              ))}
+            </div>
 
             <div className="footer-socials">
               {socialLinks.length > 0 ? (
@@ -208,7 +269,7 @@ const Footer = () => {
             </ul>
           </section>
 
-          <section className={`footer-column ${openSections.contact ? 'open' : ''}`}>
+          <section className={`footer-column footer-contact-column ${openSections.contact ? 'open' : ''}`}>
             <h4 onClick={() => toggleSection('contact')}>{copy.contact}</h4>
             <ul className="footer-contact-list">
               {contactItems.map((item) => (
@@ -221,6 +282,18 @@ const Footer = () => {
                 </li>
               ))}
             </ul>
+
+            <div className="footer-availability-block">
+              <h5>{copy.availabilityTitle}</h5>
+              <ul>
+                {availabilityItems.map((item) => (
+                  <li key={item.label}>
+                    <span>{item.icon}</span>
+                    {item.label}
+                  </li>
+                ))}
+              </ul>
+            </div>
           </section>
         </motion.div>
 

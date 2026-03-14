@@ -1,621 +1,373 @@
 .about-page {
   position: relative;
-  padding: clamp(90px, 14vw, 126px) 0 clamp(62px, 9vw, 94px);
+  padding-top: clamp(100px, 13vw, 136px);
 }
 
-.about-page::before {
-  content: '';
-  position: absolute;
-  inset: 92px auto auto -118px;
-  width: 280px;
-  height: 280px;
-  border-radius: 50%;
-  filter: blur(82px);
-  background: rgba(11, 95, 255, 0.2);
-  pointer-events: none;
+.about-hero {
+  display: grid;
+  gap: 28px;
 }
 
-body.dark .about-page::before {
-  background: rgba(0, 166, 200, 0.22);
-}
-
-.about-intro {
-  max-width: 860px;
-  margin: 0 auto;
-  text-align: center;
-}
-
-.about-intro .section-title {
-  margin-bottom: 14px;
-}
-
-.about-intro h2 {
-  font-size: clamp(1.35rem, 3.8vw, 2.26rem);
+.about-hero-copy h1,
+.about-hero-copy h2,
+.about-values h2,
+.about-principles-card h2,
+.about-process-panel h2,
+.about-final-card h2 {
   color: var(--text-light);
 }
 
-body.dark .about-intro h2 {
+body.dark .about-hero-copy h1,
+body.dark .about-hero-copy h2,
+body.dark .about-values h2,
+body.dark .about-principles-card h2,
+body.dark .about-process-panel h2,
+body.dark .about-final-card h2 {
   color: var(--text-dark);
 }
 
-.about-intro p {
-  margin-top: 14px;
-  color: var(--text-light-secondary);
-  font-size: clamp(0.95rem, 2.2vw, 1.08rem);
-  line-height: 1.78;
+.about-hero-copy h1 {
+  margin-top: 16px;
+  font-size: clamp(1.9rem, 4.6vw, 3.3rem);
+  line-height: 1.04;
 }
 
-body.dark .about-intro p {
-  color: var(--text-dark-secondary);
+.about-hero-copy h2 {
+  margin-top: 16px;
+  font-size: clamp(1.25rem, 3vw, 2rem);
+  line-height: 1.2;
 }
 
-.about-leadership {
-  margin-top: clamp(24px, 4vw, 40px);
-}
-
-.about-leadership-head {
-  text-align: center;
-  max-width: 760px;
-  margin: 0 auto;
-}
-
-.about-leadership-head h2 {
-  color: var(--text-light);
-  font-size: clamp(1.4rem, 3.6vw, 2.1rem);
-}
-
-body.dark .about-leadership-head h2 {
-  color: var(--text-dark);
-}
-
-.about-leadership-head p {
-  margin-top: 10px;
+.about-hero-copy p,
+.about-story-card p,
+.about-value-card p,
+.about-principles-card p,
+.about-process-card p,
+.about-final-card p {
   color: var(--text-light-secondary);
 }
 
-body.dark .about-leadership-head p {
+body.dark .about-hero-copy p,
+body.dark .about-story-card p,
+body.dark .about-value-card p,
+body.dark .about-principles-card p,
+body.dark .about-process-card p,
+body.dark .about-final-card p {
   color: var(--text-dark-secondary);
 }
 
-.about-leadership-grid {
-  margin-top: 18px;
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: clamp(12px, 2vw, 18px);
-}
-
-.leader-card {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  align-items: center;
-  gap: 14px;
-  border-radius: 20px;
-  border: 1px solid rgba(11, 95, 255, 0.2);
-  background: var(--surface-light);
-  box-shadow: var(--shadow-sm);
-  padding: clamp(16px, 3vw, 22px);
-}
-
-body.dark .leader-card {
-  border-color: rgba(152, 212, 255, 0.24);
-  background: var(--surface-dark);
-}
-
-.leader-avatar {
-  width: 88px;
-  height: 88px;
-  border-radius: 18px;
-  overflow: hidden;
-  border: 2px solid rgba(11, 95, 255, 0.2);
-  background: linear-gradient(135deg, rgba(11, 95, 255, 0.16), rgba(0, 166, 200, 0.14));
-  display: grid;
-  place-items: center;
-}
-
-.leader-avatar img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.leader-avatar span {
-  font-size: 1.22rem;
-  font-weight: 800;
-  color: var(--primary);
-}
-
-.leader-content h3 {
-  color: var(--text-light);
-  font-size: 1.08rem;
-}
-
-body.dark .leader-content h3 {
-  color: var(--text-dark);
-}
-
-.leader-role {
-  margin-top: 5px;
-  width: fit-content;
-  font-size: 0.74rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.07em;
-  padding: 5px 10px;
-  border-radius: 999px;
-  color: var(--primary);
-  background: rgba(11, 95, 255, 0.1);
-}
-
-.leader-bio {
-  margin-top: 10px;
-  color: var(--text-light-secondary);
-  font-size: 0.88rem;
-  line-height: 1.68;
-}
-
-body.dark .leader-bio {
-  color: var(--text-dark-secondary);
-}
-
-.leader-tags {
-  margin-top: 10px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-}
-
-.leader-tags span {
-  display: inline-flex;
-  font-size: 0.73rem;
-  color: var(--text-light-secondary);
-  border: 1px solid var(--border-light);
-  background: var(--surface-light-strong);
-  border-radius: 999px;
-  padding: 4px 9px;
-}
-
-body.dark .leader-tags span {
-  color: var(--text-dark-secondary);
-  border-color: var(--border-dark);
-  background: rgba(255, 255, 255, 0.03);
-}
-
-.about-leadership-note {
-  margin-top: 10px;
-  text-align: center;
-  font-size: 0.78rem;
-  color: var(--text-light-secondary);
-}
-
-body.dark .about-leadership-note {
-  color: var(--text-dark-secondary);
+.about-hero-copy p {
+  margin-top: 16px;
+  max-width: 62ch;
 }
 
 .about-stats {
-  margin-top: clamp(28px, 5vw, 50px);
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: clamp(12px, 2.2vw, 22px);
+  gap: 16px;
+}
+
+.about-stat-card,
+.about-story-card,
+.about-value-card,
+.about-principles-card,
+.about-process-card,
+.about-final-card {
+  border-radius: 24px;
+  border: 1px solid var(--line-light);
+  background: var(--surface-light);
+  box-shadow: var(--shadow);
+}
+
+body.dark .about-stat-card,
+body.dark .about-story-card,
+body.dark .about-value-card,
+body.dark .about-principles-card,
+body.dark .about-process-card,
+body.dark .about-final-card {
+  border-color: var(--line-dark);
+  background: var(--surface-dark);
+  box-shadow: none;
 }
 
 .about-stat-card {
-  border-radius: 20px;
-  border: 1px solid var(--border-light);
-  background: var(--surface-light);
-  box-shadow: var(--shadow-sm);
+  padding: 22px 18px;
   text-align: center;
-  padding: 24px 16px;
-  transition: transform 0.24s ease, box-shadow 0.24s ease, border-color 0.24s ease;
 }
 
-body.dark .about-stat-card {
-  border-color: var(--border-dark);
-  background: var(--surface-dark);
-}
-
-.about-stat-card:hover {
-  transform: translateY(-5px);
-  box-shadow: var(--shadow);
-  border-color: rgba(11, 95, 255, 0.3);
-}
-
-.stat-icon-large {
-  font-size: 1.9rem;
-  color: var(--primary);
-}
-
-.stat-number-large {
-  margin-top: 12px;
-  font-size: clamp(1.7rem, 4vw, 2.2rem);
-  line-height: 1;
-  font-weight: 800;
-  font-family: var(--font-heading-en);
+.about-stat-icon {
+  width: 52px;
+  height: 52px;
+  margin: 0 auto;
+  border-radius: 16px;
+  display: grid;
+  place-items: center;
+  color: #ffffff;
   background: linear-gradient(135deg, var(--primary), var(--secondary));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  box-shadow: 0 16px 30px rgba(0, 87, 255, 0.24);
 }
 
-.stat-label-large {
+.about-stat-card strong {
+  display: block;
+  margin-top: 16px;
+  color: var(--text-light);
+  font-size: 1.8rem;
+}
+
+body.dark .about-stat-card strong {
+  color: var(--text-dark);
+}
+
+.about-stat-card span {
+  display: block;
   margin-top: 8px;
-  font-size: 0.77rem;
+  color: var(--text-light-secondary);
+  font-size: 0.8rem;
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: var(--text-light-secondary);
-  font-weight: 700;
 }
 
-body.dark .stat-label-large {
+body.dark .about-stat-card span {
   color: var(--text-dark-secondary);
 }
 
 .about-story-grid {
-  margin-top: clamp(24px, 4vw, 42px);
+  margin-top: 32px;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(12px, 2vw, 18px);
+  gap: 18px;
 }
 
 .about-story-card {
-  border-radius: 18px;
-  border: 1px solid var(--border-light);
-  background: var(--surface-light);
-  box-shadow: var(--shadow-sm);
-  padding: clamp(18px, 3vw, 24px);
+  padding: 22px;
 }
 
-body.dark .about-story-card {
-  border-color: var(--border-dark);
-  background: var(--surface-dark);
+.about-story-card h3,
+.about-value-card h3,
+.about-process-card h3 {
+  color: var(--text-light);
 }
 
-.about-story-card h3 {
-  color: var(--primary);
-  font-size: 1.12rem;
+body.dark .about-story-card h3,
+body.dark .about-value-card h3,
+body.dark .about-process-card h3 {
+  color: var(--text-dark);
 }
 
 .about-story-card p {
   margin-top: 10px;
-  color: var(--text-light-secondary);
-  font-size: 0.92rem;
-  line-height: 1.74;
+  line-height: 1.78;
 }
 
-body.dark .about-story-card p {
-  color: var(--text-dark-secondary);
+.about-values {
+  margin-top: clamp(46px, 6vw, 70px);
 }
 
-.about-strengths {
-  margin-top: clamp(24px, 4vw, 42px);
-  border-radius: 20px;
-  border: 1px solid rgba(11, 95, 255, 0.2);
+.about-values h2,
+.about-process-panel h2,
+.about-final-card h2 {
+  margin-top: 16px;
+  font-size: clamp(1.6rem, 4vw, 2.6rem);
+  line-height: 1.08;
+}
+
+.about-values-grid {
+  margin-top: 28px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.about-value-card {
+  padding: 22px;
+}
+
+.about-value-icon {
+  width: 54px;
+  height: 54px;
+  border-radius: 16px;
+  display: grid;
+  place-items: center;
+  color: #ffffff;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  box-shadow: 0 16px 30px rgba(0, 87, 255, 0.24);
+}
+
+.about-value-card h3 {
+  margin-top: 16px;
+  font-size: 1rem;
+}
+
+.about-value-card p {
+  margin-top: 10px;
+  line-height: 1.72;
+  font-size: 0.88rem;
+}
+
+.about-approach {
+  margin-top: clamp(46px, 6vw, 70px);
+  display: grid;
+  grid-template-columns: minmax(280px, 0.88fr) minmax(0, 1.12fr);
+  gap: 18px;
+}
+
+.about-principles-card {
+  padding: clamp(22px, 4vw, 30px);
   background:
-    radial-gradient(circle at 8% 18%, rgba(11, 95, 255, 0.14), transparent 48%),
-    radial-gradient(circle at 86% 82%, rgba(255, 122, 24, 0.14), transparent 50%),
+    radial-gradient(circle at 12% 20%, rgba(0, 87, 255, 0.12), transparent 42%),
     var(--surface-light);
-  box-shadow: var(--shadow-sm);
-  padding: clamp(18px, 4vw, 30px);
 }
 
-body.dark .about-strengths {
-  border-color: rgba(152, 212, 255, 0.24);
+body.dark .about-principles-card {
   background:
-    radial-gradient(circle at 8% 18%, rgba(11, 95, 255, 0.24), transparent 48%),
-    radial-gradient(circle at 86% 82%, rgba(255, 122, 24, 0.2), transparent 50%),
+    radial-gradient(circle at 12% 20%, rgba(0, 179, 164, 0.12), transparent 42%),
     var(--surface-dark);
 }
 
-.about-strengths h3 {
-  color: var(--text-light);
-  font-size: clamp(1.2rem, 3vw, 1.6rem);
+.about-principles-card p {
+  margin-top: 12px;
 }
 
-body.dark .about-strengths h3 {
-  color: var(--text-dark);
-}
-
-.about-strengths ul {
-  margin-top: 16px;
+.about-principles-card ul {
+  margin-top: 18px;
   list-style: none;
   display: grid;
-  gap: 10px;
+  gap: 12px;
 }
 
-.about-strengths li {
-  display: inline-flex;
+.about-principles-card li {
+  display: flex;
   align-items: flex-start;
-  gap: 8px;
+  gap: 10px;
   color: var(--text-light);
-  font-size: 0.92rem;
-  line-height: 1.68;
+  font-size: 0.9rem;
 }
 
-body.dark .about-strengths li {
+body.dark .about-principles-card li {
   color: var(--text-dark);
 }
 
-.about-strengths li svg {
+.about-principles-card li svg {
   color: var(--success);
   flex-shrink: 0;
   margin-top: 3px;
 }
 
-.values-section {
-  margin-top: clamp(30px, 5vw, 52px);
-}
-
-.values-title {
-  text-align: center;
-  font-size: clamp(1.7rem, 4vw, 2.5rem);
-  margin-bottom: 24px;
-  background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.values-grid {
+.about-process-grid {
+  margin-top: 26px;
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: clamp(12px, 2vw, 20px);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
 }
 
-.value-card {
-  border-radius: 18px;
-  border: 1px solid var(--border-light);
-  background: var(--surface-light);
-  box-shadow: var(--shadow-sm);
-  padding: clamp(20px, 3.5vw, 26px);
-  text-align: center;
+.about-process-card {
+  padding: 22px;
 }
 
-body.dark .value-card {
-  border-color: var(--border-dark);
-  background: var(--surface-dark);
-}
-
-.value-icon {
-  width: 58px;
-  height: 58px;
-  margin: 0 auto 14px;
-  border-radius: 14px;
-  display: grid;
-  place-items: center;
-  color: #fff;
-  font-size: 1.3rem;
-  background: linear-gradient(135deg, var(--primary), var(--secondary));
-  box-shadow: 0 12px 24px rgba(11, 95, 255, 0.28);
-}
-
-.value-card h3 {
-  color: var(--text-light);
-  font-size: 1.06rem;
-}
-
-body.dark .value-card h3 {
-  color: var(--text-dark);
-}
-
-.value-card p {
-  margin-top: 10px;
-  color: var(--text-light-secondary);
-  font-size: 0.88rem;
-  line-height: 1.65;
-}
-
-body.dark .value-card p {
-  color: var(--text-dark-secondary);
-}
-
-.execution-section {
-  margin-top: clamp(30px, 5vw, 58px);
-  text-align: center;
-}
-
-.execution-section h2 {
-  color: var(--text-light);
-  font-size: clamp(1.6rem, 4vw, 2.3rem);
-}
-
-body.dark .execution-section h2 {
-  color: var(--text-dark);
-}
-
-.execution-section > p {
-  margin: 12px auto 0;
-  max-width: 62ch;
-  color: var(--text-light-secondary);
-}
-
-body.dark .execution-section > p {
-  color: var(--text-dark-secondary);
-}
-
-.execution-grid {
-  margin-top: 22px;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(12px, 2vw, 18px);
-}
-
-.execution-card {
-  border-radius: 18px;
-  border: 1px solid var(--border-light);
-  background: var(--surface-light);
-  box-shadow: var(--shadow-sm);
-  padding: 20px;
-  text-align: left;
-}
-
-body.dark .execution-card {
-  border-color: var(--border-dark);
-  background: var(--surface-dark);
-}
-
-.execution-card span {
+.about-process-card span {
   display: inline-flex;
-  min-width: 54px;
-  height: 30px;
+  min-height: 32px;
   align-items: center;
-  justify-content: center;
+  padding: 0 12px;
   border-radius: 999px;
-  font-size: 0.75rem;
-  font-weight: 800;
-  letter-spacing: 0.07em;
+  background: rgba(0, 87, 255, 0.08);
   color: var(--primary);
-  background: rgba(11, 95, 255, 0.1);
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
 }
 
-body.dark .execution-card span {
-  color: #9ed8ff;
-  background: rgba(142, 200, 255, 0.14);
+body.dark .about-process-card span {
+  background: rgba(0, 179, 164, 0.1);
+  color: #9bdfff;
 }
 
-.execution-card h3 {
-  margin-top: 12px;
-  color: var(--text-light);
-  font-size: 1.02rem;
+.about-process-card h3 {
+  margin-top: 16px;
+  font-size: 1rem;
 }
 
-body.dark .execution-card h3 {
-  color: var(--text-dark);
-}
-
-.execution-card p {
-  margin-top: 9px;
-  color: var(--text-light-secondary);
+.about-process-card p {
+  margin-top: 10px;
   font-size: 0.88rem;
-  line-height: 1.66;
+  line-height: 1.72;
 }
 
-body.dark .execution-card p {
-  color: var(--text-dark-secondary);
+.about-final-card {
+  margin-top: 30px;
+  padding: clamp(22px, 4vw, 30px);
+  background:
+    radial-gradient(circle at 88% 20%, rgba(255, 140, 66, 0.12), transparent 38%),
+    var(--surface-light);
 }
 
+body.dark .about-final-card {
+  background:
+    radial-gradient(circle at 88% 20%, rgba(255, 140, 66, 0.16), transparent 38%),
+    var(--surface-dark);
+}
+
+.about-final-card p {
+  margin-top: 14px;
+  max-width: 58ch;
+}
+
+body[dir='rtl'] .about-hero-copy,
 body[dir='rtl'] .about-story-card,
-body[dir='rtl'] .about-strengths,
-body[dir='rtl'] .execution-card,
-body[dir='rtl'] .leader-content {
+body[dir='rtl'] .about-value-card,
+body[dir='rtl'] .about-principles-card,
+body[dir='rtl'] .about-process-panel,
+body[dir='rtl'] .about-final-card {
   text-align: right;
 }
 
-body[dir='rtl'] .leader-card {
-  grid-template-columns: 1fr auto;
-}
-
-body[dir='rtl'] .leader-tags {
+body[dir='rtl'] .about-principles-card li {
   flex-direction: row-reverse;
 }
 
 @media (max-width: 1080px) {
   .about-stats,
-  .values-grid {
+  .about-values-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .about-story-grid,
-  .execution-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .about-leadership-grid {
+  .about-approach {
     grid-template-columns: 1fr;
   }
 }
 
-@media (max-width: 720px) {
+@media (max-width: 760px) {
   .about-page {
-    padding-top: 84px;
+    padding-top: 90px;
   }
 
-  .about-page::before {
-    display: none;
-  }
-
-  .about-intro {
-    text-align: left;
-  }
-
-  body[dir='rtl'] .about-intro {
-    text-align: right;
-  }
-
-  .about-story-card,
-  .about-strengths,
-  .value-card,
-  .execution-card {
-    border-radius: 16px;
-  }
-
-  .about-stats {
+  .about-story-grid,
+  .about-process-grid {
     grid-template-columns: 1fr;
-    gap: 10px;
-    margin-top: 18px;
+  }
+
+  .about-stat-card,
+  .about-story-card,
+  .about-value-card,
+  .about-principles-card,
+  .about-process-card,
+  .about-final-card {
+    border-radius: 20px;
+  }
+}
+
+@media (max-width: 520px) {
+  .about-stats,
+  .about-values-grid {
+    grid-template-columns: 1fr;
   }
 
   .about-stat-card {
-    padding: 16px 14px;
     text-align: left;
-    display: grid;
-    grid-template-columns: auto 1fr;
-    align-items: center;
-    gap: 10px;
   }
 
   body[dir='rtl'] .about-stat-card {
     text-align: right;
-    grid-template-columns: 1fr auto;
-  }
-
-  .stat-icon-large {
-    font-size: 1.3rem;
-  }
-
-  .stat-number-large {
-    margin-top: 0;
-    font-size: 1.26rem;
-  }
-
-  .stat-label-large {
-    margin-top: 4px;
-    font-size: 0.72rem;
-  }
-
-  .about-story-card,
-  .execution-card {
-    padding: 16px;
-  }
-
-  .leader-card {
-    border-radius: 16px;
-    padding: 14px;
-  }
-
-  .leader-avatar {
-    width: 76px;
-    height: 76px;
-    border-radius: 14px;
-  }
-
-  .leader-bio {
-    font-size: 0.84rem;
-  }
-}
-
-@media (max-width: 560px) {
-  .about-stats,
-  .values-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .about-intro h2 {
-    font-size: 1.25rem;
-  }
-
-  .about-strengths li,
-  .about-story-card p,
-  .value-card p,
-  .execution-card p {
-    font-size: 0.84rem;
   }
 }

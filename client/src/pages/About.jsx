@@ -1,363 +1,323 @@
-import { motion } from "framer-motion";
+import { motion } from 'framer-motion';
 import {
   FiAward,
   FiCheckCircle,
   FiLayers,
   FiTarget,
   FiTrendingUp,
-  FiUsers,
-} from "react-icons/fi";
-import { useLanguage } from "../context/LanguageContext";
-import "./About.css";
+  FiUsers
+} from 'react-icons/fi';
+import { useLanguage } from '../context/LanguageContext';
+import './About.css';
 
 const About = () => {
   const { t, language } = useLanguage();
 
   const copy =
-    language === "en"
+    language === 'en'
       ? {
-          introTitle: "A Delivery-First Digital Partner",
-          introText:
-            "4Pixels builds high-performance Shopify stores, automation workflows, CRM systems, and AI media operations that turn strategy into measurable execution.",
-          storyTitle: "Who We Are",
-          storyText:
-            "We are a multidisciplinary team focused on practical digital transformation. Every project is built around business impact, not just visual polish.",
-          missionTitle: "Mission",
-          missionText:
-            "Enable ambitious teams to scale revenue and operations through connected systems, automation, and premium digital execution.",
-          visionTitle: "Vision",
-          visionText:
-            "Become the trusted execution partner for brands that want serious growth across commerce, systems, and AI-driven media.",
-          strengthsTitle: "What Makes Us Different",
-          valuesTitle: "Core Values",
-          executionTitle: "How We Execute",
-          executionSubtitle:
-            "A practical framework designed for speed, quality, and repeatable results.",
+          eyebrow: 'About 4 Pixels',
+          title: 'A delivery-focused studio for companies that need quality and structure.',
+          intro:
+            '4 Pixels builds premium digital experiences backed by serious execution. We connect UX, Shopify, automation, and operational systems into one clear delivery model.',
           stats: [
-            { icon: <FiUsers />, value: "50+", label: "Active Clients" },
-            { icon: <FiLayers />, value: "150+", label: "Projects Delivered" },
-            { icon: <FiTarget />, value: "98%", label: "Success Rate" },
-            { icon: <FiTrendingUp />, value: "5+", label: "Years Operating" },
+            { icon: <FiUsers />, value: '50+', label: 'Client relationships' },
+            { icon: <FiLayers />, value: '150+', label: 'Execution outcomes' },
+            { icon: <FiTarget />, value: '98%', label: 'Delivery focus' },
+            { icon: <FiTrendingUp />, value: '5+', label: 'Years of practice' }
           ],
-          strengths: [
-            "Shopify development from A to Z with conversion focus.",
-            "Automation workflows connected to CRM and sales operations.",
-            "Systems and reporting setups for real business tracking.",
-            "AI media production for brand visuals and promotional video.",
+          storyCards: [
+            {
+              title: 'What We Solve',
+              description:
+                'We help brands and teams move from disconnected efforts to one cohesive digital operating model.'
+            },
+            {
+              title: 'How We Think',
+              description:
+                'Every interface decision is tied to usability, speed, conversion, and smoother operations behind the scenes.'
+            },
+            {
+              title: 'How We Deliver',
+              description:
+                'We scope clearly, build carefully, and hand over systems that remain useful after launch.'
+            }
           ],
+          valuesEyebrow: 'Operating Principles',
+          valuesTitle: 'The standards that shape our work.',
+          valuesSubtitle:
+            'Strong UI is only one layer. Reliable delivery needs clarity, ownership, and measurable thinking.',
           values: [
             {
               icon: <FiAward />,
-              title: "Execution Quality",
-              description:
-                "We ship clean, scalable, and business-ready solutions.",
+              title: 'Execution Quality',
+              description: 'We deliver work that is visually sharp, technically sound, and ready for real use.'
             },
             {
               icon: <FiUsers />,
-              title: "Partnership Mindset",
-              description:
-                "We work as an extension of your team, not as a vendor.",
+              title: 'Partnership Mode',
+              description: 'We work as an extension of the client team with direct communication and shared priorities.'
             },
             {
               icon: <FiTarget />,
-              title: "Measurable Outcomes",
-              description:
-                "Every decision is tied to growth, efficiency, or clarity.",
+              title: 'Business Relevance',
+              description: 'Features, layouts, and automation are selected for business value, not decoration.'
             },
             {
               icon: <FiTrendingUp />,
-              title: "Continuous Optimization",
-              description:
-                "After launch, we keep tuning and improving performance.",
-            },
+              title: 'Continuous Improvement',
+              description: 'After launch, we keep refining speed, reporting, and operational flow where it matters.'
+            }
           ],
-          executionSteps: [
-            {
-              step: "01",
-              title: "Business Discovery",
-              description:
-                "Understand goals, constraints, and current workflow gaps.",
-            },
-            {
-              step: "02",
-              title: "System Blueprint",
-              description:
-                "Map store, automation, and data architecture into one model.",
-            },
-            {
-              step: "03",
-              title: "Build & Launch",
-              description:
-                "Implement, test, optimize, and hand over with clear tracking.",
-            },
+          principlesTitle: 'What clients can expect from our process',
+          principlesText:
+            'The best company websites and systems feel intentional because every layer has a reason to exist.',
+          principles: [
+            'Clear scoping before production starts.',
+            'Design language that supports trust and conversion.',
+            'Operational systems that reduce friction for internal teams.',
+            'A launch process that includes review, polish, and handoff clarity.'
           ],
+          processTitle: 'Our execution rhythm',
+          processSubtitle:
+            'A predictable process keeps creative quality and technical delivery moving in the same direction.',
+          process: [
+            {
+              step: '01',
+              title: 'Discovery',
+              description: 'We audit goals, current workflow, bottlenecks, and decision priorities.'
+            },
+            {
+              step: '02',
+              title: 'Blueprint',
+              description: 'We define UX direction, system architecture, and the exact production scope.'
+            },
+            {
+              step: '03',
+              title: 'Build',
+              description: 'Design, development, automation, and data setup move together as one track.'
+            },
+            {
+              step: '04',
+              title: 'Refine',
+              description: 'We test, polish, and improve the operational details before and after go-live.'
+            }
+          ],
+          finalTitle: 'The goal is not to look premium only. The goal is to operate premium too.',
+          finalText:
+            'That is the difference between a visually good website and a company asset that supports growth.'
         }
       : {
-          introTitle: "شريك رقمي يركز على التنفيذ الحقيقي",
-          introText:
-            "4Pixels تبني متاجر Shopify احترافية، وتدفقات أتمتة، وأنظمة CRM، وتشغيل ميديا بالذكاء الاصطناعي لنتائج قابلة للقياس.",
-          storyTitle: "من نحن",
-          storyText:
-            "نحن فريق متعدد الخبرات يركز على التحول الرقمي العملي. كل مشروع عندنا مبني على أثر تجاري واضح وليس شكل فقط.",
-          missionTitle: "مهمتنا",
-          missionText:
-            "تمكين الفرق الطموحة من توسيع الإيرادات والعمليات عبر منظومة مترابطة من الأنظمة والأتمتة والتنفيذ الاحترافي.",
-          visionTitle: "رؤيتنا",
-          visionText:
-            "أن نكون شريك التنفيذ الموثوق للبراندات التي تريد نموًا قويًا في التجارة والأنظمة والميديا المدعومة بالذكاء الاصطناعي.",
-          strengthsTitle: "لماذا نحن مختلفون",
-          valuesTitle: "قيمنا الأساسية",
-          executionTitle: "منهج التنفيذ",
-          executionSubtitle:
-            "إطار عملي مصمم للسرعة والجودة ونتائج يمكن تكرارها بثبات.",
+          eyebrow: 'عن 4 Pixels',
+          title: 'استوديو تنفيذ رقمي للشركات التي تحتاج جودة عالية وهيكلًا واضحًا.',
+          intro:
+            '4 Pixels تبني تجارب رقمية premium مدعومة بتنفيذ جاد. نربط بين UX وShopify والأتمتة وأنظمة التشغيل داخل نموذج تنفيذ واحد وواضح.',
           stats: [
-            { icon: <FiUsers />, value: "50+", label: "عميل نشط" },
-            { icon: <FiLayers />, value: "150+", label: "مشروع مُنجز" },
-            { icon: <FiTarget />, value: "98%", label: "معدل نجاح" },
-            { icon: <FiTrendingUp />, value: "5+", label: "سنوات خبرة" },
+            { icon: <FiUsers />, value: '50+', label: 'علاقات مع عملاء' },
+            { icon: <FiLayers />, value: '150+', label: 'نتائج تنفيذ' },
+            { icon: <FiTarget />, value: '98%', label: 'تركيز على التسليم' },
+            { icon: <FiTrendingUp />, value: '5+', label: 'سنوات ممارسة' }
           ],
-          strengths: [
-            "تنفيذ Shopify كامل من البداية للنهاية مع تركيز على التحويل.",
-            "أتمتة متصلة بـ CRM وعمليات المبيعات.",
-            "بناء أنظمة تشغيل ولوحات متابعة لقياس الأداء الفعلي.",
-            "إنتاج صور وفيديو للبراند بالذكاء الاصطناعي.",
+          storyCards: [
+            {
+              title: 'ما الذي نحلّه',
+              description:
+                'نساعد البراندات والفرق على الانتقال من جهود متفرقة إلى نموذج تشغيل رقمي مترابط وواضح.'
+            },
+            {
+              title: 'كيف نفكر',
+              description:
+                'كل قرار في الواجهة عندنا مرتبط بسهولة الاستخدام والسرعة والتحويل وسلاسة التشغيل خلف الكواليس.'
+            },
+            {
+              title: 'كيف ننفذ',
+              description:
+                'نحدد النطاق بوضوح، ونبني بعناية، ونسلم أنظمة تظل مفيدة بعد الإطلاق.'
+            }
           ],
+          valuesEyebrow: 'مبادئ العمل',
+          valuesTitle: 'المعايير التي تحكم شغلنا.',
+          valuesSubtitle:
+            'جودة الواجهة مجرد طبقة واحدة. التنفيذ الموثوق يحتاج وضوحًا وملكية وقرارات قابلة للقياس.',
           values: [
             {
               icon: <FiAward />,
-              title: "جودة التنفيذ",
-              description: "نقدّم حلول نظيفة، قابلة للتوسع، وجاهزة للتشغيل.",
+              title: 'جودة التنفيذ',
+              description: 'نسلم أعمالًا قوية بصريًا وسليمة تقنيًا وجاهزة للاستخدام الحقيقي.'
             },
             {
               icon: <FiUsers />,
-              title: "شراكة حقيقية",
-              description: "نشتغل كامتداد لفريقك وليس مجرد مزود خدمة.",
+              title: 'أسلوب شراكة',
+              description: 'نشتغل كامتداد مباشر لفريق العميل مع تواصل واضح وأولويات مشتركة.'
             },
             {
               icon: <FiTarget />,
-              title: "نتائج قابلة للقياس",
-              description: "كل قرار مرتبط بالنمو أو الكفاءة أو وضوح التشغيل.",
+              title: 'صلة بالعمل التجاري',
+              description: 'نختار الخصائص والواجهات والأتمتة بناءً على القيمة التجارية لا لمجرد الإبهار.'
             },
             {
               icon: <FiTrendingUp />,
-              title: "تحسين مستمر",
-              description: "بعد الإطلاق نواصل التطوير ورفع الأداء.",
-            },
+              title: 'تحسين مستمر',
+              description: 'بعد الإطلاق نواصل رفع السرعة والتقارير وجودة التدفق التشغيلي حيث يلزم.'
+            }
           ],
-          executionSteps: [
-            {
-              step: "01",
-              title: "فهم العمل",
-              description:
-                "تحليل الأهداف والتحديات التشغيلية ونقاط التعطل الحالية.",
-            },
-            {
-              step: "02",
-              title: "تصميم المنظومة",
-              description: "ربط المتجر والأتمتة والبيانات في نموذج تشغيل واحد.",
-            },
-            {
-              step: "03",
-              title: "تنفيذ وإطلاق",
-              description: "بناء واختبار وتحسين ثم تسليم المشروع مع تتبع واضح.",
-            },
+          principlesTitle: 'ما الذي يتوقعه العميل من طريقتنا',
+          principlesText:
+            'أفضل مواقع الشركات وأنظمتها تبدو مقصودة لأن كل طبقة فيها موجودة لسبب فعلي.',
+          principles: [
+            'تحديد نطاق واضح قبل بدء الإنتاج.',
+            'لغة تصميم تدعم الثقة والتحويل.',
+            'أنظمة تشغيل تقلل الاحتكاك داخل الفريق.',
+            'إطلاق يتضمن مراجعة وصقلًا وتسليمًا واضحًا.'
           ],
+          processTitle: 'إيقاع التنفيذ لدينا',
+          processSubtitle:
+            'وجود مسار واضح يجعل الجودة الإبداعية والتسليم التقني يتحركان في اتجاه واحد.',
+          process: [
+            {
+              step: '01',
+              title: 'الفهم',
+              description: 'نحلل الأهداف والتدفق الحالي ونقاط التعطل وأولويات القرار.'
+            },
+            {
+              step: '02',
+              title: 'الخطة',
+              description: 'نحدد اتجاه UX وهيكل الأنظمة ونطاق الإنتاج الفعلي.'
+            },
+            {
+              step: '03',
+              title: 'البناء',
+              description: 'التصميم والتطوير والأتمتة والبيانات تتحرك معًا داخل مسار واحد.'
+            },
+            {
+              step: '04',
+              title: 'التحسين',
+              description: 'نختبر ونصقل ونرفع التفاصيل التشغيلية قبل وبعد الإطلاق.'
+            }
+          ],
+          finalTitle: 'الهدف ليس أن يبدو الموقع premium فقط، بل أن تعمل الشركة بهذا المستوى أيضًا.',
+          finalText:
+            'وهذا هو الفرق بين موقع جميل بصريًا وأصل رقمي يدعم النمو فعليًا.'
         };
-
-  const leadershipTitle = language === "en" ? "Leadership" : "القيادة";
-  const leadershipSubtitle =
-    language === "en"
-      ? "Meet the founder behind our strategy, execution quality, and long-term partnerships."
-      : "تعرف على المؤسس المسؤول عن الاستراتيجية وجودة التنفيذ وبناء الشراكات.";
-  const leadershipNote =
-    language === "en"
-      ? "You can replace member photos anytime from About.jsx."
-      : "يمكنك تغيير صور الفريق في أي وقت من ملف About.jsx.";
-
-  const leadershipMembers =
-    language === "en"
-      ? [
-          {
-            name: "Your Name",
-            role: "Founder & CEO",
-            image: "",
-            bio: "Leads business strategy, growth direction, and delivery standards across all client projects.",
-            highlights: [
-              "Shopify Strategy",
-              "Business Systems",
-              "Growth Planning",
-            ],
-          },
-        ]
-      : [
-          {
-            name: "اسمك هنا",
-            role: "المؤسس والمدير التنفيذي",
-            image: "",
-            bio: "يقود الاستراتيجية العامة واتجاه النمو ومعايير التنفيذ في جميع المشاريع.",
-            highlights: ["استراتيجية Shopify", "أنظمة الأعمال", "تخطيط النمو"],
-          },
-        ];
-
-  const getInitials = (name) =>
-    String(name || "")
-      .split(" ")
-      .filter(Boolean)
-      .slice(0, 2)
-      .map((part) => part[0])
-      .join("")
-      .toUpperCase();
 
   return (
     <div className="about-page section">
       <div className="container">
-        <motion.div
-          className="about-intro"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-        >
-          <h1 className="section-title">{t("about")}</h1>
-          <h2>{copy.introTitle}</h2>
-          <p>{copy.introText}</p>
-        </motion.div>
-
-        <motion.section
-          className="about-leadership"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-        >
-          <div className="about-leadership-head">
-            <h2>{leadershipTitle}</h2>
-            <p>{leadershipSubtitle}</p>
+        <section className="about-hero">
+          <div className="section-copy about-hero-copy">
+            <span className="page-eyebrow">{copy.eyebrow}</span>
+            <h1>{t('about')}</h1>
+            <h2>{copy.title}</h2>
+            <p>{copy.intro}</p>
           </div>
 
-          <div className="about-leadership-grid">
-            {leadershipMembers.map((member) => (
-              <article
-                key={`${member.name}-${member.role}`}
-                className="leader-card"
+          <div className="about-stats">
+            {copy.stats.map((stat, index) => (
+              <motion.article
+                key={`${stat.label}-${index}`}
+                className="about-stat-card"
+                initial={{ opacity: 0, y: 18 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.25 }}
+                transition={{ delay: index * 0.05 }}
               >
-                <div className="leader-avatar">
-                  {member.image ? (
-                    <img src={member.image} alt={member.name} loading="lazy" />
-                  ) : (
-                    <span>{getInitials(member.name)}</span>
-                  )}
-                </div>
-
-                <div className="leader-content">
-                  <h3>{member.name}</h3>
-                  <p className="leader-role">{member.role}</p>
-                  <p className="leader-bio">{member.bio}</p>
-                  <div className="leader-tags">
-                    {member.highlights.map((item) => (
-                      <span key={`${member.name}-${item}`}>{item}</span>
-                    ))}
-                  </div>
-                </div>
-              </article>
+                <div className="about-stat-icon">{stat.icon}</div>
+                <strong>{stat.value}</strong>
+                <span>{stat.label}</span>
+              </motion.article>
             ))}
           </div>
+        </section>
 
-          <p className="about-leadership-note">{leadershipNote}</p>
-        </motion.section>
-
-        <motion.div
-          className="about-stats"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.15 }}
-        >
-          {copy.stats.map((stat, index) => (
+        <section className="about-story-grid">
+          {copy.storyCards.map((card, index) => (
             <motion.article
-              key={`${stat.label}-${index}`}
-              className="about-stat-card"
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.25 + index * 0.08 }}
+              key={card.title}
+              className="about-story-card"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.25 }}
+              transition={{ delay: index * 0.05 }}
             >
-              <div className="stat-icon-large">{stat.icon}</div>
-              <div className="stat-number-large">{stat.value}</div>
-              <div className="stat-label-large">{stat.label}</div>
+              <h3>{card.title}</h3>
+              <p>{card.description}</p>
             </motion.article>
           ))}
-        </motion.div>
+        </section>
 
-        <motion.div
-          className="about-story-grid"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-        >
-          <article className="about-story-card">
-            <h3>{copy.storyTitle}</h3>
-            <p>{copy.storyText}</p>
-          </article>
-          <article className="about-story-card">
-            <h3>{copy.missionTitle}</h3>
-            <p>{copy.missionText}</p>
-          </article>
-          <article className="about-story-card">
-            <h3>{copy.visionTitle}</h3>
-            <p>{copy.visionText}</p>
-          </article>
-        </motion.div>
+        <section className="about-values">
+          <div className="section-copy">
+            <span className="page-eyebrow">{copy.valuesEyebrow}</span>
+            <h2>{copy.valuesTitle}</h2>
+            <p>{copy.valuesSubtitle}</p>
+          </div>
 
-        <motion.section
-          className="about-strengths"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-        >
-          <h3>{copy.strengthsTitle}</h3>
-          <ul>
-            {copy.strengths.map((item) => (
-              <li key={item}>
-                <FiCheckCircle />
-                <span>{item}</span>
-              </li>
-            ))}
-          </ul>
-        </motion.section>
-
-        <motion.section
-          className="values-section"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-        >
-          <h2 className="values-title">{copy.valuesTitle}</h2>
-          <div className="values-grid">
-            {copy.values.map((value) => (
-              <article key={value.title} className="value-card">
-                <div className="value-icon">{value.icon}</div>
+          <div className="about-values-grid">
+            {copy.values.map((value, index) => (
+              <motion.article
+                key={value.title}
+                className="about-value-card"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ delay: index * 0.05 }}
+              >
+                <div className="about-value-icon">{value.icon}</div>
                 <h3>{value.title}</h3>
                 <p>{value.description}</p>
-              </article>
+              </motion.article>
             ))}
           </div>
-        </motion.section>
+        </section>
 
-        <motion.section
-          className="execution-section"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-        >
-          <h2>{copy.executionTitle}</h2>
-          <p>{copy.executionSubtitle}</p>
+        <section className="about-approach">
+          <motion.article
+            className="about-principles-card"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.25 }}
+          >
+            <h2>{copy.principlesTitle}</h2>
+            <p>{copy.principlesText}</p>
+            <ul>
+              {copy.principles.map((item) => (
+                <li key={item}>
+                  <FiCheckCircle />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </motion.article>
 
-          <div className="execution-grid">
-            {copy.executionSteps.map((step) => (
-              <article key={step.step} className="execution-card">
-                <span>{step.step}</span>
-                <h3>{step.title}</h3>
-                <p>{step.description}</p>
-              </article>
-            ))}
+          <div className="about-process-panel">
+            <div className="section-copy">
+              <h2>{copy.processTitle}</h2>
+              <p>{copy.processSubtitle}</p>
+            </div>
+
+            <div className="about-process-grid">
+              {copy.process.map((step, index) => (
+                <motion.article
+                  key={step.step}
+                  className="about-process-card"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.25 }}
+                  transition={{ delay: index * 0.05 }}
+                >
+                  <span>{step.step}</span>
+                  <h3>{step.title}</h3>
+                  <p>{step.description}</p>
+                </motion.article>
+              ))}
+            </div>
           </div>
-        </motion.section>
+        </section>
+
+        <section className="about-final-card">
+          <h2>{copy.finalTitle}</h2>
+          <p>{copy.finalText}</p>
+        </section>
       </div>
     </div>
   );

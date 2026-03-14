@@ -2,10 +2,14 @@ import { useEffect, useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import {
   FiBriefcase,
+  FiCheckCircle,
+  FiClock,
+  FiLayers,
   FiMail,
   FiMapPin,
   FiMessageSquare,
   FiPhone,
+  FiTrendingUp,
   FiUser
 } from 'react-icons/fi';
 import {
@@ -76,44 +80,82 @@ const Contact = () => {
   const copy =
     language === 'en'
       ? {
-          headline: 'Let’s Build Your Next Digital System',
+          eyebrow: 'Start The Conversation',
+          headline: 'Share the brief. We will shape the right execution path.',
           intro:
-            'Tell us your goals and we will design the right Shopify, automation, CRM, or AI-media execution plan.',
+            'Whether you need a premium company website, Shopify build, automation flow, or a full systems layer, we can scope it clearly and move fast.',
+          formTitle: 'Send project brief',
+          formSubtitle:
+            'The clearer the context, the faster we can recommend the right roadmap and estimate.',
+          selectServicePlaceholder: 'Select a service',
+          messageHint: 'Describe what you want to build, improve, or automate...',
+          sending: 'Sending...',
+          sentSuccess: 'Message sent successfully. We will contact you soon.',
+          sendFail: 'Failed to send message. Please try again.',
+          locationTitle: 'Where we coordinate from',
+          locationSubtitle: 'Cairo, Egypt',
+          responseHighlights: [
+            { icon: <FiClock />, label: 'Reply within 24 business hours' },
+            { icon: <FiLayers />, label: 'Clear scope before production starts' },
+            { icon: <FiTrendingUp />, label: 'Built for launch quality and growth' }
+          ],
+          nextStepsTitle: 'What happens next',
+          nextSteps: [
+            'We review the brief and identify the right scope.',
+            'You receive a practical response with next steps.',
+            'If the fit is right, we move into discovery and delivery planning.'
+          ],
+          connectTitle: 'Follow our channels',
+          connectDescription:
+            'Use social channels for updates, launches, and behind-the-scenes execution work.',
           methodEmail: 'Email',
           methodPhone: 'Phone',
           methodWhatsapp: 'WhatsApp',
           methodLocation: 'Location',
-          connectTitle: 'Connect With Us',
-          connectDescription:
-            'Follow our channels for new launches, workflows, and client execution stories.',
-          contactFormTitle: 'Send Project Brief',
-          selectServicePlaceholder: 'Select a service',
-          messageHint: 'Describe what you want to build, automate, or improve...',
-          sending: 'Sending...',
-          sentSuccess: 'Message sent successfully. We will contact you soon.',
-          sendFail: 'Failed to send message. Please try again.',
-          locationTitle: 'Where We Operate',
-          locationSubtitle: 'Cairo, Egypt'
+          namePlaceholder: 'Your full name',
+          emailPlaceholder: 'you@company.com',
+          phonePlaceholder: '+20...',
+          companyPlaceholder: 'Company or brand name',
+          noSocial: 'No social links added yet. You can add them from the admin dashboard.'
         }
       : {
-          headline: 'جاهز نبني نظامك الرقمي القادم؟',
+          eyebrow: 'ابدأ المحادثة',
+          headline: 'شاركنا الملخص، وسنحدد لك مسار التنفيذ المناسب.',
           intro:
-            'شاركنا أهدافك وسنصمم لك خطة تنفيذ مناسبة في Shopify أو الأتمتة أو CRM أو الميديا بالذكاء الاصطناعي.',
+            'سواء كنت تحتاج موقع شركة premium أو متجر Shopify أو أتمتة أو طبقة أنظمة كاملة، يمكننا تحديد النطاق بوضوح والتحرك بسرعة.',
+          formTitle: 'أرسل ملخص المشروع',
+          formSubtitle:
+            'كلما كان السياق أوضح، كان بإمكاننا اقتراح roadmap وتكلفة مبدئية بشكل أسرع.',
+          selectServicePlaceholder: 'اختر خدمة',
+          messageHint: 'اشرح ما الذي تريد بناءه أو تحسينه أو أتمتته...',
+          sending: 'جارٍ الإرسال...',
+          sentSuccess: 'تم إرسال الرسالة بنجاح، وسنتواصل معك قريبًا.',
+          sendFail: 'فشل إرسال الرسالة. حاول مرة أخرى.',
+          locationTitle: 'من أين ننسق العمل',
+          locationSubtitle: 'القاهرة، مصر',
+          responseHighlights: [
+            { icon: <FiClock />, label: 'الرد خلال 24 ساعة عمل' },
+            { icon: <FiLayers />, label: 'تحديد النطاق بوضوح قبل الإنتاج' },
+            { icon: <FiTrendingUp />, label: 'تنفيذ بجاهزية إطلاق ونمو' }
+          ],
+          nextStepsTitle: 'ماذا يحدث بعد ذلك',
+          nextSteps: [
+            'نراجع الملخص ونحدد النطاق الأنسب.',
+            'تصلك استجابة عملية مع الخطوات التالية.',
+            'إذا كان هناك توافق نبدأ مرحلة discovery وخطة التنفيذ.'
+          ],
+          connectTitle: 'تابع قنواتنا',
+          connectDescription:
+            'استخدم قنواتنا لمتابعة الإطلاقات والأعمال المنفذة وما يحدث خلف الكواليس.',
           methodEmail: 'البريد',
           methodPhone: 'الهاتف',
           methodWhatsapp: 'واتساب',
           methodLocation: 'العنوان',
-          connectTitle: 'تابعنا',
-          connectDescription:
-            'تابع قنواتنا لتعرف آخر الإطلاقات وتدفقات العمل وقصص التنفيذ مع العملاء.',
-          contactFormTitle: 'أرسل ملخص مشروعك',
-          selectServicePlaceholder: 'اختر الخدمة',
-          messageHint: 'اكتب المطلوب تنفيذه أو أتمتته أو تحسينه بالتفصيل...',
-          sending: 'جاري الإرسال...',
-          sentSuccess: 'تم إرسال الرسالة بنجاح، وسنتواصل معك قريبًا.',
-          sendFail: 'فشل إرسال الرسالة. حاول مرة أخرى.',
-          locationTitle: 'نطاق عملنا',
-          locationSubtitle: 'القاهرة، مصر'
+          namePlaceholder: 'اسمك الكامل',
+          emailPlaceholder: 'you@company.com',
+          phonePlaceholder: '+20...',
+          companyPlaceholder: 'اسم الشركة أو البراند',
+          noSocial: 'لا توجد روابط سوشيال مضافة حاليًا. يمكنك إضافتها من لوحة التحكم.'
         };
 
   const siteInfo = content?.siteInfo || {};
@@ -148,7 +190,17 @@ const Contact = () => {
         link: null
       }
     ],
-    [copy.locationSubtitle, copy.methodEmail, copy.methodLocation, copy.methodPhone, copy.methodWhatsapp, siteInfo.address, siteInfo.email, siteInfo.phone, siteInfo.whatsapp]
+    [
+      copy.locationSubtitle,
+      copy.methodEmail,
+      copy.methodLocation,
+      copy.methodPhone,
+      copy.methodWhatsapp,
+      siteInfo.address,
+      siteInfo.email,
+      siteInfo.phone,
+      siteInfo.whatsapp
+    ]
   );
 
   const socialLinks = useMemo(() => {
@@ -176,13 +228,17 @@ const Contact = () => {
     }
 
     if (!formData.email.trim()) {
-      toast.error(language === 'en' ? 'Please enter your email' : 'يرجى إدخال البريد الإلكتروني');
+      toast.error(
+        language === 'en' ? 'Please enter your email' : 'يرجى إدخال البريد الإلكتروني'
+      );
       return;
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(formData.email)) {
-      toast.error(language === 'en' ? 'Please enter a valid email' : 'يرجى إدخال بريد إلكتروني صحيح');
+      toast.error(
+        language === 'en' ? 'Please enter a valid email' : 'يرجى إدخال بريد إلكتروني صحيح'
+      );
       return;
     }
 
@@ -217,31 +273,36 @@ const Contact = () => {
   return (
     <div className="contact-page">
       <ToastContainer position="top-center" />
-      <div className="contact-container">
-        <motion.div
-          className="contact-header"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-        >
-          <h1>{t('contact')}</h1>
-          <h2>{copy.headline}</h2>
-          <p>{copy.intro}</p>
-        </motion.div>
+
+      <div className="container contact-shell">
+        <header className="contact-hero">
+          <div className="section-copy contact-hero-copy">
+            <span className="page-eyebrow">{copy.eyebrow}</span>
+            <h1>{t('contact')}</h1>
+            <h2>{copy.headline}</h2>
+            <p>{copy.intro}</p>
+          </div>
+
+          <div className="contact-highlights">
+            {copy.responseHighlights.map((item) => (
+              <article key={item.label} className="contact-highlight-card">
+                <div className="contact-highlight-icon">{item.icon}</div>
+                <span>{item.label}</span>
+              </article>
+            ))}
+          </div>
+        </header>
 
         <div className="contact-grid">
-          <motion.div
-            className="contact-info"
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-          >
+          <div className="contact-side">
             <div className="contact-methods-grid">
               {contactMethods.map((method, index) => (
                 <motion.article
                   key={method.title}
-                  className="contact-method"
+                  className="contact-method-card"
                   initial={{ opacity: 0, y: 24 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.08 }}
+                  transition={{ delay: index * 0.06 }}
                 >
                   <div className="contact-method-header">
                     <div className="contact-icon">{method.icon}</div>
@@ -258,56 +319,61 @@ const Contact = () => {
               ))}
             </div>
 
-            <motion.div
-              className="social-media-section"
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.35 }}
-            >
-              <div className="contact-method-header">
+            <div className="contact-social-card">
+              <div className="contact-card-head">
                 <div className="contact-icon">
                   <FiMessageSquare />
                 </div>
-                <h3>{copy.connectTitle}</h3>
+                <div>
+                  <h3>{copy.connectTitle}</h3>
+                  <p>{copy.connectDescription}</p>
+                </div>
               </div>
-              <p>{copy.connectDescription}</p>
 
-              <div className="social-links-grid">
+              <div className="contact-social-grid">
                 {socialLinks.length > 0 ? (
-                  socialLinks.map((social, index) => (
-                    <motion.a
+                  socialLinks.map((social) => (
+                    <a
                       key={social.key}
                       href={socialMedia[social.key]}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="social-link-card"
+                      className="contact-social-link"
                       style={{ '--social-color': social.color }}
-                      initial={{ opacity: 0, scale: 0.9 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ delay: 0.45 + index * 0.04 }}
                     >
-                      <span className="social-icon">{social.icon}</span>
-                      <span className="social-name">{social.label}</span>
-                    </motion.a>
+                      <span className="contact-social-icon">{social.icon}</span>
+                      <span>{social.label}</span>
+                    </a>
                   ))
                 ) : (
-                  <p className="social-empty">
-                    {language === 'en'
-                      ? 'No social links added yet. You can add them from the admin dashboard.'
-                      : 'لا توجد روابط سوشيال مضافة حاليًا. يمكنك إضافتها من لوحة الأدمن.'}
-                  </p>
+                  <p className="contact-social-empty">{copy.noSocial}</p>
                 )}
               </div>
-            </motion.div>
-          </motion.div>
+            </div>
+
+            <div className="contact-next-card">
+              <h3>{copy.nextStepsTitle}</h3>
+              <ul>
+                {copy.nextSteps.map((item) => (
+                  <li key={item}>
+                    <FiCheckCircle />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
 
           <motion.div
-            className="contact-form-container"
-            initial={{ opacity: 0, x: 30 }}
+            className="contact-form-panel"
+            initial={{ opacity: 0, x: 28 }}
             animate={{ opacity: 1, x: 0 }}
           >
             <form onSubmit={handleSubmit} className="contact-form">
-              <h2>{copy.contactFormTitle}</h2>
+              <div className="contact-form-head">
+                <h2>{copy.formTitle}</h2>
+                <p>{copy.formSubtitle}</p>
+              </div>
 
               <div className="form-group">
                 <label htmlFor="name">
@@ -318,6 +384,7 @@ const Contact = () => {
                   type="text"
                   value={formData.name}
                   onChange={(event) => setFormData({ ...formData, name: event.target.value })}
+                  placeholder={copy.namePlaceholder}
                   required
                 />
               </div>
@@ -331,6 +398,7 @@ const Contact = () => {
                   type="email"
                   value={formData.email}
                   onChange={(event) => setFormData({ ...formData, email: event.target.value })}
+                  placeholder={copy.emailPlaceholder}
                   required
                 />
               </div>
@@ -345,6 +413,7 @@ const Contact = () => {
                     type="tel"
                     value={formData.phone}
                     onChange={(event) => setFormData({ ...formData, phone: event.target.value })}
+                    placeholder={copy.phonePlaceholder}
                   />
                 </div>
 
@@ -357,6 +426,7 @@ const Contact = () => {
                     type="text"
                     value={formData.company}
                     onChange={(event) => setFormData({ ...formData, company: event.target.value })}
+                    placeholder={copy.companyPlaceholder}
                   />
                 </div>
               </div>
@@ -398,21 +468,16 @@ const Contact = () => {
           </motion.div>
         </div>
 
-        <motion.section
-          className="map-section"
-          initial={{ opacity: 0, y: 28 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.25 }}
-        >
-          <h2>{copy.locationTitle}</h2>
-          <div className="map-container">
-            <div className="map-placeholder">
-              <FiMapPin className="map-pin-icon" />
-              <h3>{siteInfo.address || copy.locationSubtitle}</h3>
-              <p>{siteInfo.siteName || '4Pixels'}</p>
-            </div>
+        <section className="contact-location-card">
+          <div className="contact-location-icon">
+            <FiMapPin />
           </div>
-        </motion.section>
+          <div>
+            <h2>{copy.locationTitle}</h2>
+            <p>{siteInfo.address || copy.locationSubtitle}</p>
+            <span>{siteInfo.siteName || '4 Pixels'}</span>
+          </div>
+        </section>
       </div>
     </div>
   );

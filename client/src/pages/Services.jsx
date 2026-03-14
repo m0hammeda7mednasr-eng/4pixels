@@ -1,7 +1,15 @@
 import { useEffect, useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { FiArrowRight, FiCheckCircle, FiClock, FiFilter } from 'react-icons/fi';
+import {
+  FiArrowRight,
+  FiCheckCircle,
+  FiClock,
+  FiFilter,
+  FiLayers,
+  FiTrendingUp,
+  FiZap
+} from 'react-icons/fi';
 import { useLanguage } from '../context/LanguageContext';
 import { getCached } from '../services/api';
 import { getCategoryLabel, PRIMARY_CATEGORIES } from '../utils/categoryLabels';
@@ -89,42 +97,122 @@ const Services = () => {
     };
   }, [services, categories]);
 
-  const copy = language === 'en'
-    ? {
-        intro:
-          'From strategy to execution, our service stack is designed for measurable growth.',
-        services: 'Services',
-        categories: 'Categories',
-        startingFrom: 'Starting from',
-        filterByCategory: 'Filter by category',
-        allServices: 'All services',
-        discoverService: 'Discover service',
-        emptyState: 'No services found for this category.'
-      }
-    : {
-        intro:
-          'من الاستراتيجية إلى التنفيذ، باقاتنا مصممة لتحقيق نمو قابل للقياس.',
-        services: 'الخدمات',
-        categories: 'التصنيفات',
-        startingFrom: 'تبدأ من',
-        filterByCategory: 'تصفية حسب التصنيف',
-        allServices: 'كل الخدمات',
-        discoverService: 'استكشف الخدمة',
-        emptyState: 'لا توجد خدمات ضمن هذا التصنيف حاليًا.'
-      };
+  const copy =
+    language === 'en'
+      ? {
+          eyebrow: 'Execution Offers',
+          intro:
+            'Every service is designed to help a company launch faster, automate more, and operate with less friction.',
+          sideTitle: 'What you get from every engagement',
+          sidePoints: [
+            'Clear delivery scope with business-focused priorities',
+            'Premium UX direction and production-ready implementation',
+            'Operational thinking that connects tools, teams, and reporting'
+          ],
+          sideCta: 'Request A Brief',
+          services: 'Services',
+          categories: 'Categories',
+          startingFrom: 'Starting from',
+          filterByCategory: 'Filter by category',
+          allServices: 'All services',
+          discoverService: 'Open service',
+          emptyState: 'No services found for this category.',
+          methodEyebrow: 'Delivery Model',
+          methodTitle: 'A practical engagement flow, not vague consulting.',
+          methodSubtitle:
+            'We move from business context to implementation and then optimize for stability and growth.',
+          methodSteps: [
+            {
+              title: 'Audit & Prioritize',
+              description: 'We identify the highest-impact fixes, systems gaps, and execution constraints first.'
+            },
+            {
+              title: 'Design & Build',
+              description: 'The interface, systems, and automation layer are built together with launch quality in mind.'
+            },
+            {
+              title: 'Measure & Improve',
+              description: 'After launch, we refine reporting, speed, and operational reliability.'
+            }
+          ],
+          finalTitle: 'Need a custom stack instead of a one-size-fits-all package?',
+          finalText:
+            'We can combine Shopify, automation, data, and UX into one scoped delivery plan for your exact business case.',
+          finalCta: 'Talk To Us'
+        }
+      : {
+          eyebrow: 'عروض التنفيذ',
+          intro:
+            'كل خدمة هنا مصممة لتساعد شركتك على الإطلاق أسرع، والأتمتة بشكل أذكى، والتشغيل باحتكاك أقل.',
+          sideTitle: 'ماذا تحصل عليه في كل تنفيذ',
+          sidePoints: [
+            'نطاق عمل واضح مع أولويات مرتبطة بالأثر التجاري',
+            'اتجاه UX احترافي وتنفيذ جاهز للإطلاق',
+            'فكر تشغيلي يربط الأدوات والفريق والتقارير'
+          ],
+          sideCta: 'اطلب ملخصًا',
+          services: 'الخدمات',
+          categories: 'التصنيفات',
+          startingFrom: 'تبدأ من',
+          filterByCategory: 'فلترة حسب التصنيف',
+          allServices: 'كل الخدمات',
+          discoverService: 'عرض الخدمة',
+          emptyState: 'لا توجد خدمات ضمن هذا التصنيف حاليًا.',
+          methodEyebrow: 'أسلوب التنفيذ',
+          methodTitle: 'مسار عمل عملي، وليس استشارات عامة بلا تنفيذ.',
+          methodSubtitle:
+            'نبدأ من فهم السياق التجاري ثم نبني ونحسن بعد الإطلاق للوصول إلى استقرار ونمو فعلي.',
+          methodSteps: [
+            {
+              title: 'تحليل وتحديد الأولويات',
+              description: 'نحدد أهم نقاط التحسين والفجوات التشغيلية والعوائق قبل البدء.'
+            },
+            {
+              title: 'تصميم وبناء',
+              description: 'ننفذ الواجهة والأنظمة والأتمتة بشكل متزامن مع جاهزية حقيقية للإطلاق.'
+            },
+            {
+              title: 'قياس وتحسين',
+              description: 'بعد التشغيل نرفع جودة التقارير والسرعة والاعتمادية التشغيلية.'
+            }
+          ],
+          finalTitle: 'تحتاج Stack مخصص بدل باقة ثابتة؟',
+          finalText:
+            'يمكننا دمج Shopify والأتمتة والبيانات والـ UX داخل خطة تنفيذ واحدة تناسب حالتك بالضبط.',
+          finalCta: 'تواصل معنا'
+        };
 
   return (
-    <div className="services-showcase section">
-      <div className="services-backdrop services-backdrop-1" />
-      <div className="services-backdrop services-backdrop-2" />
+    <div className="services-page section">
+      <div className="services-page-orb orb-left" />
+      <div className="services-page-orb orb-right" />
 
-      <div className="container">
-        <div className="services-showcase-header">
-          <h1 className="section-title">{t('services')}</h1>
-          <p>{copy.intro}</p>
-        </div>
+      <div className="container services-page-shell">
+        <header className="services-hero">
+          <div className="section-copy services-hero-copy">
+            <span className="page-eyebrow">{copy.eyebrow}</span>
+            <h1>{t('services')}</h1>
+            <p>{copy.intro}</p>
+          </div>
 
-        {error && <p className="scroll-indicator">{error}</p>}
+          <aside className="services-hero-panel">
+            <h2>{copy.sideTitle}</h2>
+            <ul>
+              {copy.sidePoints.map((item) => (
+                <li key={item}>
+                  <FiCheckCircle />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+            <Link to="/contact" className="btn btn-primary">
+              {copy.sideCta}
+              <FiArrowRight />
+            </Link>
+          </aside>
+        </header>
+
+        {error ? <p className="services-error">{error}</p> : null}
 
         <div className="services-summary-grid">
           <article className="services-summary-card">
@@ -162,51 +250,49 @@ const Services = () => {
         </div>
 
         {loading ? (
-          <div className="services-showcase-loading">
+          <div className="services-loading">
             <div className="spinner" />
           </div>
         ) : (
           <>
-            <div className="services-showcase-grid">
+            <div className="services-grid">
               {filteredServices.map((service, index) => {
-                const features = getLocalizedArray(service.features, language);
+                const features = getLocalizedArray(service.features, language).slice(0, 3);
                 const title = getLocalizedText(service.title, language, 'Service');
                 const description = getLocalizedText(service.description, language);
 
                 return (
                   <motion.article
                     key={service.id}
-                    className="services-showcase-card"
+                    className="services-card"
                     initial={{ opacity: 0, y: 24 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: index * 0.05 }}
                   >
-                    <div className="services-showcase-top">
-                      <span className="service-category">
+                    <div className="services-card-top">
+                      <span className="services-card-category">
                         {getCategoryLabel(service.category, language) || 'General'}
                       </span>
-                      <h3>{title}</h3>
-                      <p>{description}</p>
+                      <strong>${service.price}</strong>
                     </div>
 
-                    <ul className="service-features">
-                      {features.slice(0, 3).map((feature, featureIndex) => (
-                        <li key={`${service.id}-feature-${featureIndex}`}>
+                    <h3>{title}</h3>
+                    <p>{description}</p>
+
+                    <ul className="services-card-features">
+                      {features.map((feature) => (
+                        <li key={`${service.id}-${feature}`}>
                           <FiCheckCircle />
-                          {feature}
+                          <span>{feature}</span>
                         </li>
                       ))}
                     </ul>
 
-                    <div className="services-showcase-footer">
-                      <div className="service-price-group">
-                        <strong>${service.price}</strong>
-                        <span>
-                          <FiClock />
-                          {service.deliveryTime}
-                        </span>
-                      </div>
-
+                    <div className="services-card-footer">
+                      <span>
+                        <FiClock />
+                        {service.deliveryTime}
+                      </span>
                       <Link to={`/services/${service.id}`}>
                         {copy.discoverService}
                         <FiArrowRight />
@@ -217,13 +303,51 @@ const Services = () => {
               })}
             </div>
 
-            {!filteredServices.length && (
+            {!filteredServices.length ? (
               <div className="services-empty-state">
                 <p>{copy.emptyState}</p>
               </div>
-            )}
+            ) : null}
           </>
         )}
+
+        <section className="services-method">
+          <div className="section-copy">
+            <span className="page-eyebrow">{copy.methodEyebrow}</span>
+            <h2>{copy.methodTitle}</h2>
+            <p>{copy.methodSubtitle}</p>
+          </div>
+
+          <div className="services-method-grid">
+            {copy.methodSteps.map((step, index) => (
+              <motion.article
+                key={step.title}
+                className="services-method-card"
+                initial={{ opacity: 0, y: 22 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.25 }}
+                transition={{ delay: index * 0.05 }}
+              >
+                <div className="services-method-icon">
+                  {index === 0 ? <FiLayers /> : index === 1 ? <FiZap /> : <FiTrendingUp />}
+                </div>
+                <h3>{step.title}</h3>
+                <p>{step.description}</p>
+              </motion.article>
+            ))}
+          </div>
+        </section>
+
+        <section className="services-final-card">
+          <div>
+            <h2>{copy.finalTitle}</h2>
+            <p>{copy.finalText}</p>
+          </div>
+
+          <Link to="/contact" className="btn btn-outline">
+            {copy.finalCta}
+          </Link>
+        </section>
       </div>
     </div>
   );
