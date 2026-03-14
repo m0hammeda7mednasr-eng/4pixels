@@ -23,10 +23,16 @@ const NotFound = () => {
               ? 'The page you requested does not exist or may have been moved.'
               : 'الصفحة التي طلبتها غير موجودة أو تم نقلها.'}
           </p>
-          <Link to="/" className="btn btn-primary btn-lg">
-            {language === 'en' ? 'Back to home' : 'العودة للرئيسية'}
-            <FiArrowRight />
-          </Link>
+
+          <div className="not-found-actions">
+            <Link to="/" className="btn btn-primary btn-lg">
+              {language === 'en' ? 'Back to home' : 'العودة للرئيسية'}
+              <FiArrowRight />
+            </Link>
+            <Link to="/projects" className="btn btn-outline btn-lg">
+              {language === 'en' ? 'Browse projects' : 'تصفح المشاريع'}
+            </Link>
+          </div>
         </motion.div>
       </div>
     </section>

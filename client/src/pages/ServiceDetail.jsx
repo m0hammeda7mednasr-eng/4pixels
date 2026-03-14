@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { FiArrowLeft, FiCheck, FiClock, FiDollarSign, FiPackage } from 'react-icons/fi';
 import { useLanguage } from '../context/LanguageContext';
 import api from '../services/api';
+import { getCategoryLabel } from '../utils/categoryLabels';
 import { getLocalizedArray, getLocalizedText } from '../utils/localization';
 import './ServiceDetail.css';
 
@@ -94,6 +95,7 @@ const ServiceDetail = () => {
 
   const title = getLocalizedText(service.title, language, 'Service');
   const description = getLocalizedText(service.description, language);
+  const categoryLabel = getCategoryLabel(service.category, language);
   const features = getLocalizedArray(service.features, language);
   const faq = Array.isArray(service.faq) ? service.faq : [];
 
@@ -118,6 +120,7 @@ const ServiceDetail = () => {
             transition={{ delay: 0.1 }}
           >
             <div className="service-header">
+              {categoryLabel ? <span className="service-category-pill">{categoryLabel}</span> : null}
               <h1>{title}</h1>
               <p className="service-subtitle">{description}</p>
             </div>

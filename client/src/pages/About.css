@@ -371,3 +371,54 @@ body[dir='rtl'] .about-principles-card li {
     text-align: right;
   }
 }
+
+/* Refinement pass: steadier section rhythm and more consistent card heights. */
+.about-page {
+  padding-top: clamp(96px, 11vw, 124px);
+}
+
+.about-hero {
+  gap: 32px;
+}
+
+.about-hero-copy h2 {
+  max-width: 17ch;
+}
+
+.about-stats,
+.about-story-grid,
+.about-values-grid,
+.about-process-grid {
+  align-items: stretch;
+}
+
+.about-stat-card,
+.about-story-card,
+.about-value-card,
+.about-process-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.about-principles-card {
+  background:
+    radial-gradient(circle at 12% 20%, rgba(0, 87, 255, 0.1), transparent 40%),
+    var(--surface-light);
+}
+
+body.dark .about-principles-card {
+  background:
+    radial-gradient(circle at 12% 20%, rgba(0, 179, 164, 0.1), transparent 40%),
+    var(--surface-dark);
+}
+
+@media (max-width: 760px) {
+  .about-hero {
+    gap: 24px;
+  }
+
+  .about-hero-copy h2 {
+    max-width: none;
+  }
+}

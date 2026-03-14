@@ -106,6 +106,14 @@ const Header = () => {
         </div>
 
         <nav id="main-nav" className={`nav ${menuOpen ? 'open' : ''}`}>
+          <div className="mobile-nav-brand">
+            <div className="mobile-nav-brand-mark">4P</div>
+            <div className="mobile-nav-brand-copy">
+              <strong>4 Pixels</strong>
+              <span>{studioTagline}</span>
+            </div>
+          </div>
+
           <div className="nav-links">
             {navLinks.map((link) => (
               <Link
@@ -117,6 +125,56 @@ const Header = () => {
                 {link.label}
               </Link>
             ))}
+          </div>
+
+          <div className="mobile-nav-meta">
+            {user && isAdmin() ? (
+              <Link to="/admin" className="mobile-nav-link mobile-nav-link-secondary">
+                <FiUser />
+                {t('dashboard')}
+              </Link>
+            ) : null}
+
+            <div className="mobile-nav-tools">
+              <button
+                onClick={toggleLanguage}
+                className="mobile-nav-tool"
+                type="button"
+                aria-label={language === 'en' ? t('switchToArabic') : t('switchToEnglish')}
+              >
+                <span className="lang-text">{language.toUpperCase()}</span>
+                <span>{language === 'en' ? 'Arabic' : 'English'}</span>
+              </button>
+
+              <button
+                onClick={toggleTheme}
+                className="mobile-nav-tool"
+                type="button"
+                aria-label={theme === 'light' ? t('darkMode') : t('lightMode')}
+              >
+                {theme === 'light' ? <FiMoon /> : <FiSun />}
+                <span>{theme === 'light' ? t('darkMode') : t('lightMode')}</span>
+              </button>
+            </div>
+
+            {user ? (
+              <button
+                onClick={() => {
+                  logout();
+                  setMenuOpen(false);
+                }}
+                className="mobile-nav-link"
+                type="button"
+              >
+                <FiLogOut />
+                {t('logout')}
+              </button>
+            ) : (
+              <Link to="/login" className="mobile-nav-link">
+                <FiUser />
+                {t('login')}
+              </Link>
+            )}
           </div>
 
           <Link to="/contact" className="mobile-nav-cta btn btn-primary">

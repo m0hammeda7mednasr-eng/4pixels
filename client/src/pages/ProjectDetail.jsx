@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { FiArrowLeft, FiExternalLink, FiCalendar, FiTag, FiUser, FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 import { useLanguage } from '../context/LanguageContext';
 import api from '../services/api';
+import { getCategoryLabel } from '../utils/categoryLabels';
 import { getLocalizedText } from '../utils/localization';
 import './ProjectDetail.css';
 
@@ -101,6 +102,7 @@ const ProjectDetail = () => {
 
   const title = getLocalizedText(project.title, language, 'Project');
   const description = getLocalizedText(project.description, language);
+  const categoryLabel = getCategoryLabel(project.category, language);
   const clientName =
     typeof project.client === 'object'
       ? getLocalizedText(project.client, language)
@@ -126,7 +128,7 @@ const ProjectDetail = () => {
           transition={{ delay: 0.1 }}
         >
           <div className="project-header-content">
-            <span className="project-category">{project.category}</span>
+            <span className="project-category">{categoryLabel}</span>
             <h1>{title}</h1>
             <p className="project-description">{description}</p>
           </div>
@@ -183,10 +185,20 @@ const ProjectDetail = () => {
 
               {project.images.length > 1 && (
                 <>
-                  <button className="gallery-nav gallery-prev" onClick={prevImage}>
+                  <button
+                    type="button"
+                    className="gallery-nav gallery-prev"
+                    onClick={prevImage}
+                    aria-label={language === 'en' ? 'Previous image' : 'الصورة السابقة'}
+                  >
                     <FiChevronLeft />
                   </button>
-                  <button className="gallery-nav gallery-next" onClick={nextImage}>
+                  <button
+                    type="button"
+                    className="gallery-nav gallery-next"
+                    onClick={nextImage}
+                    aria-label={language === 'en' ? 'Next image' : 'الصورة التالية'}
+                  >
                     <FiChevronRight />
                   </button>
                 </>
@@ -202,8 +214,14 @@ const ProjectDetail = () => {
                 {project.images.map((image, index) => (
                   <button
                     key={index}
+                    type="button"
                     className={`thumbnail ${index === currentImageIndex ? 'active' : ''}`}
                     onClick={() => setCurrentImageIndex(index)}
+                    aria-label={
+                      language === 'en'
+                        ? `Show image ${index + 1}`
+                        : `عرض الصورة ${index + 1}`
+                    }
                   >
                     <img src={image} alt={`Thumbnail ${index + 1}`} />
                   </button>

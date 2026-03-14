@@ -1135,3 +1135,291 @@ body[dir='rtl'] .home-cta-actions .btn svg {
     padding: 18px;
   }
 }
+
+/* Refinement pass: quieter hero, steadier card system, better mobile readability. */
+.home-hero {
+  padding: clamp(104px, 12vw, 146px) 0 clamp(42px, 7vw, 70px);
+}
+
+.home-hero-layout {
+  grid-template-columns: minmax(0, 1.08fr) minmax(320px, 410px);
+  align-items: start;
+  gap: clamp(24px, 4vw, 44px);
+}
+
+.home-hero-layout > *,
+.home-services-grid > *,
+.home-projects-layout > *,
+.home-project-list > *,
+.home-reviews-grid > * {
+  min-width: 0;
+}
+
+.home-hero-copy {
+  max-width: 640px;
+}
+
+.home-hero-copy h1 {
+  max-width: 12ch;
+  font-size: clamp(2.4rem, 5.7vw, 4.8rem);
+  line-height: 1.01;
+}
+
+.home-hero-copy p {
+  max-width: 60ch;
+}
+
+.home-hero-actions,
+.home-hero-points {
+  margin-top: 24px;
+}
+
+.home-hero-points {
+  gap: 12px;
+  max-width: 58ch;
+}
+
+.home-market-strip {
+  margin-top: 26px;
+  padding: 18px 20px;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.74);
+}
+
+.home-market-chips span {
+  min-height: 32px;
+  padding: 0 11px;
+  font-size: 0.74rem;
+}
+
+.home-board-brand {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 12px;
+  align-items: center;
+  padding: 0 0 16px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid var(--line-light);
+}
+
+body.dark .home-board-brand {
+  border-bottom-color: var(--line-dark);
+}
+
+.home-board-brand-mark {
+  width: 46px;
+  height: 46px;
+  border-radius: 16px;
+  display: grid;
+  place-items: center;
+  color: #ffffff;
+  font-size: 0.96rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  box-shadow: 0 12px 24px rgba(0, 87, 255, 0.18);
+}
+
+.home-board-brand-copy {
+  min-width: 0;
+}
+
+.home-board-brand-copy strong {
+  display: block;
+  color: var(--text-light);
+  font-size: 1rem;
+}
+
+body.dark .home-board-brand-copy strong {
+  color: var(--text-dark);
+}
+
+.home-board-brand-copy p {
+  margin-top: 4px;
+  color: var(--text-light-secondary);
+  font-size: 0.82rem;
+  line-height: 1.65;
+}
+
+body.dark .home-board-brand-copy p {
+  color: var(--text-dark-secondary);
+}
+
+.home-hero-board {
+  padding: clamp(20px, 3vw, 26px);
+  border-radius: 30px;
+}
+
+.home-board-head h2 {
+  max-width: 16ch;
+}
+
+.home-board-metric {
+  padding: 13px;
+  border-radius: 16px;
+}
+
+.home-stack-card {
+  padding: 15px;
+}
+
+.home-section-heading {
+  max-width: 760px;
+}
+
+.home-section-heading p {
+  max-width: 62ch;
+}
+
+.home-story-panel,
+.home-framework-panel,
+.home-service-card,
+.home-review-card,
+.home-project-mini,
+.home-project-spotlight,
+.home-cta-card {
+  border-radius: 24px;
+}
+
+.home-services-grid,
+.home-reviews-grid,
+.home-projects-layout,
+.home-foundation-layout {
+  align-items: stretch;
+}
+
+.home-service-card h3,
+.home-service-card p,
+.home-project-body h3,
+.home-project-body p,
+.home-project-mini-body h4,
+.home-project-mini-body p,
+.home-review-card p,
+.home-board-brand-copy p,
+.home-step-card p,
+.home-board-metric span {
+  overflow-wrap: anywhere;
+}
+
+.home-service-card,
+.home-review-card,
+.home-project-mini {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.home-service-footer {
+  margin-top: auto;
+}
+
+.home-project-mini-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.home-project-mini-body a {
+  margin-top: auto;
+  padding-top: 12px;
+}
+
+.home-review-card p {
+  flex: 1;
+}
+
+.home-cta-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 24px;
+}
+
+.home-cta-actions {
+  align-self: center;
+}
+
+@media (max-width: 1120px) {
+  .home-hero-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .home-hero-board {
+    max-width: 680px;
+  }
+}
+
+@media (max-width: 720px) {
+  .home-hero {
+    padding-top: 88px;
+    padding-bottom: 28px;
+  }
+
+  .home-hero-copy h1 {
+    max-width: none;
+    font-size: clamp(2rem, 9.5vw, 3.25rem);
+  }
+
+  .home-hero-actions {
+    flex-direction: column;
+  }
+
+  .home-hero-board {
+    padding: 18px;
+    border-radius: 22px;
+  }
+
+  .home-board-brand {
+    padding-bottom: 14px;
+    margin-bottom: 14px;
+  }
+
+  .home-board-status {
+    white-space: normal;
+  }
+
+  .home-board-steps .home-step-card:last-child {
+    display: none;
+  }
+
+  .home-cta-card {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .home-cta-actions {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .home-project-body,
+  .home-project-mini-body,
+  .home-review-card {
+    padding: 18px;
+  }
+}
+
+@media (max-width: 520px) {
+  .home-market-strip {
+    padding: 16px;
+  }
+
+  .home-market-chips {
+    gap: 6px;
+  }
+
+  .home-market-chips span {
+    font-size: 0.72rem;
+  }
+
+  .home-board-head h2 {
+    font-size: 1.18rem;
+  }
+
+  .home-board-metrics {
+    grid-template-columns: 1fr;
+  }
+
+  .home-project-list-head {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

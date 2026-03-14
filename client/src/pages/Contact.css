@@ -272,11 +272,11 @@ body.dark .contact-social-link span:last-child {
   line-height: 1.72;
 }
 
-.form-group {
+.contact-form .form-group {
   margin-top: 16px;
 }
 
-.form-group label {
+.contact-form .form-group label {
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -286,13 +286,13 @@ body.dark .contact-social-link span:last-child {
   font-weight: 700;
 }
 
-body.dark .form-group label {
+body.dark .contact-form .form-group label {
   color: var(--text-dark);
 }
 
-.form-group input,
-.form-group textarea,
-.form-group select {
+.contact-form .form-group input,
+.contact-form .form-group textarea,
+.contact-form .form-group select {
   width: 100%;
   min-height: 48px;
   border-radius: 16px;
@@ -304,28 +304,28 @@ body.dark .form-group label {
   outline: none;
 }
 
-body.dark .form-group input,
-body.dark .form-group textarea,
-body.dark .form-group select {
+body.dark .contact-form .form-group input,
+body.dark .contact-form .form-group textarea,
+body.dark .contact-form .form-group select {
   border-color: var(--line-dark);
   background: var(--surface-dark-soft);
   color: var(--text-dark);
 }
 
-.form-group input:focus,
-.form-group textarea:focus,
-.form-group select:focus {
+.contact-form .form-group input:focus,
+.contact-form .form-group textarea:focus,
+.contact-form .form-group select:focus {
   border-color: rgba(0, 87, 255, 0.42);
   box-shadow: 0 0 0 3px rgba(0, 87, 255, 0.14);
 }
 
-.form-group textarea {
+.contact-form .form-group textarea {
   min-height: 150px;
   resize: vertical;
   line-height: 1.68;
 }
 
-.form-row {
+.contact-form .form-row {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 14px;
@@ -396,7 +396,7 @@ body[dir='rtl'] .contact-location-card {
 
 body[dir='rtl'] .contact-method-header,
 body[dir='rtl'] .contact-card-head,
-body[dir='rtl'] .form-group label,
+body[dir='rtl'] .contact-form .form-group label,
 body[dir='rtl'] .contact-next-card li,
 body[dir='rtl'] .contact-location-card {
   flex-direction: row-reverse;
@@ -420,7 +420,7 @@ body[dir='rtl'] .contact-location-card {
   .contact-highlights,
   .contact-methods-grid,
   .contact-social-grid,
-  .form-row {
+  .contact-form .form-row {
     grid-template-columns: 1fr;
   }
 
@@ -441,5 +441,62 @@ body[dir='rtl'] .contact-location-card {
   .contact-next-card,
   .contact-form-panel {
     padding: 18px;
+  }
+}
+
+/* Refinement pass: clearer contact flow with mobile-first action priority. */
+.contact-page {
+  padding: clamp(96px, 12vw, 128px) 0 clamp(56px, 8vw, 80px);
+}
+
+.contact-hero {
+  gap: 28px;
+}
+
+.contact-highlights,
+.contact-methods-grid {
+  align-items: stretch;
+}
+
+.contact-highlight-card,
+.contact-method-card,
+.contact-social-card,
+.contact-next-card,
+.contact-form-panel,
+.contact-location-card {
+  border-radius: 22px;
+}
+
+.contact-method-card,
+.contact-social-card,
+.contact-next-card {
+  height: 100%;
+}
+
+.contact-form-panel {
+  position: sticky;
+  top: calc(var(--header-height) + 22px);
+  align-self: start;
+}
+
+.contact-form-head p {
+  max-width: 56ch;
+}
+
+.contact-social-link {
+  min-height: 78px;
+}
+
+@media (max-width: 1080px) {
+  .contact-form-panel {
+    position: static;
+    order: -1;
+  }
+}
+
+@media (max-width: 760px) {
+  .contact-location-card,
+  body[dir='rtl'] .contact-location-card {
+    grid-template-columns: 1fr;
   }
 }

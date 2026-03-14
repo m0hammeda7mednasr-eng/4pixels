@@ -523,3 +523,52 @@ body[dir='rtl'] .projects-card-link svg {
     border-radius: 20px;
   }
 }
+
+/* Refinement pass: cleaner filtering and stronger card hierarchy. */
+.projects-page {
+  padding-top: clamp(96px, 11vw, 126px);
+}
+
+.projects-summary-grid {
+  gap: 14px;
+}
+
+.projects-toolbar {
+  padding: 14px 16px;
+  border-radius: 22px;
+}
+
+.projects-filters {
+  scrollbar-width: none;
+}
+
+.projects-filters::-webkit-scrollbar {
+  display: none;
+}
+
+.projects-card {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+.projects-card-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.projects-card-link {
+  margin-top: auto;
+  padding-top: 16px;
+}
+
+.projects-final-card {
+  align-items: center;
+}
+
+@media (max-width: 720px) {
+  .projects-toolbar {
+    padding: 12px;
+  }
+}

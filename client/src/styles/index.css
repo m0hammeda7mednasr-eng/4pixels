@@ -73,6 +73,7 @@ html {
   scroll-padding-top: calc(var(--header-height) + 14px);
   -webkit-text-size-adjust: 100%;
   overflow-x: clip;
+  overflow-x: hidden;
 }
 
 body {
@@ -89,6 +90,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   transition: background-color 0.35s ease, color 0.35s ease;
   overflow-x: clip;
+  overflow-x: hidden;
   position: relative;
 }
 
@@ -148,6 +150,7 @@ body[dir='rtl'] {
   min-height: 100vh;
   isolation: isolate;
   overflow-x: clip;
+  overflow-x: hidden;
 }
 
 body[dir='rtl'] h1,
@@ -389,6 +392,7 @@ body.dark .spinner {
 
 main {
   min-height: calc(100vh - var(--header-height));
+  overflow-x: hidden;
 }
 
 main:focus {
@@ -499,5 +503,129 @@ img {
   .footer,
   .btn {
     display: none !important;
+  }
+}
+
+/* Refinement pass: calmer surfaces, tighter spacing, and cleaner page rhythm. */
+:root {
+  --surface-light: rgba(255, 255, 255, 0.92);
+  --surface-light-soft: rgba(249, 251, 255, 0.96);
+  --surface-dark: rgba(9, 20, 38, 0.9);
+  --surface-dark-soft: rgba(13, 24, 44, 0.94);
+  --line-light: rgba(8, 40, 97, 0.07);
+  --line-dark: rgba(138, 182, 255, 0.12);
+  --shadow-sm: 0 10px 24px rgba(8, 31, 70, 0.06);
+  --shadow: 0 18px 42px rgba(8, 31, 70, 0.08);
+  --shadow-lg: 0 28px 68px rgba(8, 24, 55, 0.12);
+  --header-height: 74px;
+  --page-max-width: 1180px;
+}
+
+body {
+  background:
+    radial-gradient(circle at 10% 0%, rgba(0, 87, 255, 0.09) 0%, transparent 30%),
+    radial-gradient(circle at 92% 14%, rgba(0, 179, 164, 0.07) 0%, transparent 24%),
+    radial-gradient(circle at 50% 105%, rgba(255, 140, 66, 0.08) 0%, transparent 28%),
+    linear-gradient(180deg, #f6f8fc 0%, #eef3fa 52%, #f9fbff 100%);
+}
+
+body::before {
+  inset: -22% auto auto -8%;
+  width: min(34vw, 420px);
+  height: min(34vw, 420px);
+  background: radial-gradient(circle, rgba(0, 87, 255, 0.12) 0%, transparent 70%);
+}
+
+body::after {
+  inset: auto -6% -24% auto;
+  width: min(36vw, 460px);
+  height: min(36vw, 460px);
+  background: radial-gradient(circle, rgba(255, 140, 66, 0.1) 0%, transparent 72%);
+}
+
+body.dark {
+  background:
+    radial-gradient(circle at 10% 10%, rgba(0, 87, 255, 0.18) 0%, transparent 30%),
+    radial-gradient(circle at 88% 18%, rgba(0, 179, 164, 0.14) 0%, transparent 24%),
+    radial-gradient(circle at 50% 104%, rgba(255, 140, 66, 0.1) 0%, transparent 24%),
+    linear-gradient(180deg, #07101c 0%, #0b1425 48%, #0d182a 100%);
+}
+
+body.dark::before {
+  background: radial-gradient(circle, rgba(0, 179, 164, 0.14) 0%, transparent 72%);
+}
+
+body.dark::after {
+  background: radial-gradient(circle, rgba(0, 87, 255, 0.16) 0%, transparent 72%);
+}
+
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
+.container {
+  width: min(var(--page-max-width), 100%);
+  padding-inline: clamp(18px, 3vw, 28px);
+}
+
+.section {
+  padding: clamp(52px, 8vw, 92px) 0;
+}
+
+.page-eyebrow {
+  min-height: 32px;
+  padding: 0 13px;
+  font-size: 0.71rem;
+  letter-spacing: 0.11em;
+}
+
+body[dir='rtl'] .page-eyebrow {
+  letter-spacing: 0.03em;
+}
+
+.section-copy {
+  max-width: 720px;
+}
+
+.section-copy p {
+  font-size: clamp(0.98rem, 2vw, 1.05rem);
+  line-height: 1.82;
+}
+
+.btn {
+  padding: 11px 20px;
+  border-radius: 16px;
+}
+
+.btn-lg {
+  padding: 14px 26px;
+}
+
+main {
+  overflow: clip;
+}
+
+@media (max-width: 680px) {
+  :root {
+    --header-height: 70px;
+  }
+
+  .container {
+    padding-inline: 16px;
+  }
+
+  .section {
+    padding: 42px 0;
+  }
+
+  .page-eyebrow {
+    min-height: 30px;
+    font-size: 0.68rem;
+  }
+
+  .btn {
+    width: auto;
   }
 }

@@ -63,7 +63,7 @@ body.dark .service-detail-error p {
 }
 
 /* Back Button */
-.back-button {
+.service-detail .back-button {
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -81,20 +81,20 @@ body.dark .service-detail-error p {
   touch-action: manipulation;
 }
 
-body.dark .back-button {
+body.dark .service-detail .back-button {
   background: var(--surface-dark);
   border-color: var(--border-dark);
   color: var(--text-dark);
 }
 
-.back-button:hover {
+.service-detail .back-button:hover {
   background: var(--primary);
   color: white;
   border-color: var(--primary);
   transform: translateX(-4px);
 }
 
-body[dir="rtl"] .back-button:hover {
+body[dir="rtl"] .service-detail .back-button:hover {
   transform: translateX(4px);
 }
 
@@ -547,5 +547,122 @@ body.dark .why-choose-card li {
 
   .price-amount {
     font-size: 1.8rem;
+  }
+}
+
+/* Refinement pass: calmer detail layout and scoped interactions. */
+.service-detail {
+  padding: clamp(96px, 11vw, 126px) 0 clamp(56px, 8vw, 88px);
+  background: transparent;
+}
+
+.service-detail-content {
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 360px);
+  gap: clamp(22px, 4vw, 34px);
+}
+
+.service-main,
+.price-card,
+.why-choose-card {
+  border-radius: 24px;
+  border-color: var(--line-light);
+  box-shadow: var(--shadow);
+}
+
+body.dark .service-main,
+body.dark .price-card,
+body.dark .why-choose-card {
+  border-color: var(--line-dark);
+  box-shadow: none;
+}
+
+.service-main {
+  padding: clamp(22px, 4vw, 32px);
+}
+
+.service-header {
+  max-width: 760px;
+}
+
+.service-category-pill {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  padding: 0 14px;
+  border-radius: 999px;
+  background: rgba(0, 87, 255, 0.09);
+  color: var(--primary);
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+body.dark .service-category-pill {
+  background: rgba(0, 179, 164, 0.1);
+  color: #9bdfff;
+}
+
+.service-header h1 {
+  margin-top: 16px;
+}
+
+.service-subtitle {
+  max-width: 62ch;
+}
+
+.service-media {
+  border-radius: 20px;
+  border-color: var(--line-light);
+}
+
+body.dark .service-media {
+  border-color: var(--line-dark);
+}
+
+.feature-item,
+.faq-item,
+.price-detail-item {
+  border-color: var(--line-light);
+  background: var(--surface-light-soft);
+}
+
+body.dark .feature-item,
+body.dark .faq-item,
+body.dark .price-detail-item {
+  border-color: var(--line-dark);
+  background: var(--surface-dark-soft);
+}
+
+.service-sidebar {
+  top: calc(var(--header-height) + 20px);
+}
+
+.price-card,
+.why-choose-card {
+  background: var(--surface-light);
+}
+
+body.dark .price-card,
+body.dark .why-choose-card {
+  background: var(--surface-dark);
+}
+
+@media (max-width: 900px) {
+  .service-sidebar {
+    position: static;
+    order: 0;
+  }
+}
+
+@media (max-width: 560px) {
+  .service-main,
+  .price-card,
+  .why-choose-card {
+    border-radius: 20px;
+  }
+
+  .service-detail {
+    padding-top: 86px;
   }
 }

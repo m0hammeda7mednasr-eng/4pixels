@@ -95,11 +95,12 @@ const Login = () => {
               <input
                 id="email"
                 type="email"
-                placeholder=""
+                placeholder={language === "en" ? "you@company.com" : "name@example.com"}
                 value={formData.email}
                 onChange={(e) =>
                   setFormData({ ...formData, email: e.target.value })
                 }
+                autoComplete="email"
                 required
               />
             </div>
@@ -112,11 +113,12 @@ const Login = () => {
                 <input
                   id="password"
                   type={showPassword ? "text" : "password"}
-                  placeholder=""
+                  placeholder={language === "en" ? "Enter your password" : "اكتب كلمة المرور"}
                   value={formData.password}
                   onChange={(e) =>
                     setFormData({ ...formData, password: e.target.value })
                   }
+                  autoComplete={isRegister ? "new-password" : "current-password"}
                   required
                   minLength={8}
                 />

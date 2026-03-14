@@ -47,8 +47,8 @@ const Home = () => {
         }
 
         setServices((servicesData || []).slice(0, 3));
-        setProjects((projectsData || []).slice(0, 6));
-        setReviews((reviewsData || []).slice(0, 6));
+        setProjects((projectsData || []).slice(0, 4));
+        setReviews((reviewsData || []).slice(0, 2));
         setContent(contentData || null);
       } catch (err) {
         if (controller.signal.aborted || !mounted) {
@@ -269,6 +269,10 @@ const Home = () => {
     language,
     copy.heroSubtitleFallback
   );
+  const companySummary =
+    language === 'en'
+      ? 'Company websites, Shopify builds, and automation systems delivered with a cleaner structure.'
+      : 'مواقع شركات ومتاجر Shopify وأنظمة أتمتة بتنفيذ أنظف وهيكلة أوضح.';
 
   const featuredProjects = useMemo(() => {
     const pinned = projects.filter((project) => project.featured);
@@ -277,7 +281,7 @@ const Home = () => {
 
   const leadProject = featuredProjects[0] || null;
   const secondaryProjects = featuredProjects.slice(1, 3);
-  const featuredReviews = reviews.slice(0, 3);
+  const featuredReviews = reviews.slice(0, 2);
 
   const metrics = useMemo(
     () => [
@@ -342,14 +346,6 @@ const Home = () => {
               ))}
             </ul>
 
-            <div className="home-market-strip">
-              <span className="home-market-label">{copy.marketLabel}</span>
-              <div className="home-market-chips">
-                {copy.marketFocus.map((item) => (
-                  <span key={item}>{item}</span>
-                ))}
-              </div>
-            </div>
           </motion.div>
 
           <motion.aside
@@ -358,6 +354,14 @@ const Home = () => {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
           >
+            <div className="home-board-brand">
+              <div className="home-board-brand-mark">4P</div>
+              <div className="home-board-brand-copy">
+                <strong>4 Pixels</strong>
+                <p>{companySummary}</p>
+              </div>
+            </div>
+
             <div className="home-board-head">
               <div>
                 <span>{copy.boardEyebrow}</span>
@@ -393,15 +397,6 @@ const Home = () => {
               ))}
             </div>
 
-            <div className="home-board-stack">
-              {services.map((service) => (
-                <article key={service.id} className="home-stack-card">
-                  <span>{getCategoryLabel(service.category, language)}</span>
-                  <strong>{getLocalizedText(service.title, language, 'Service')}</strong>
-                  <p>{getLocalizedText(service.description, language)}</p>
-                </article>
-              ))}
-            </div>
           </motion.aside>
         </div>
       </section>
@@ -413,60 +408,6 @@ const Home = () => {
           </div>
         </section>
       ) : null}
-
-      <section className="section home-foundation">
-        <div className="container">
-          <div className="section-copy home-section-heading">
-            <span className="page-eyebrow">{copy.capabilitiesEyebrow}</span>
-            <h2>{copy.capabilitiesTitle}</h2>
-            <p>{copy.capabilitiesSubtitle}</p>
-          </div>
-
-          <div className="home-foundation-layout">
-            <motion.article
-              className="home-story-panel"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.25 }}
-            >
-              <h3>{copy.storyTitle}</h3>
-              <p>{copy.storyText}</p>
-              <ul>
-                {copy.storyPoints.map((item) => (
-                  <li key={item}>
-                    <FiCheckCircle />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </motion.article>
-
-            <div className="home-framework-panel">
-              <div className="home-framework-head">
-                <h3>{copy.frameworkTitle}</h3>
-                <p>{copy.frameworkSubtitle}</p>
-              </div>
-
-              <div className="home-framework-grid">
-                {copy.framework.map((item, index) => (
-                  <motion.article
-                    key={item.title}
-                    className="home-framework-card"
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, amount: 0.2 }}
-                    transition={{ delay: index * 0.05 }}
-                  >
-                    <div className="home-framework-icon">{item.icon}</div>
-                    <h4>{item.title}</h4>
-                    <p>{item.description}</p>
-                  </motion.article>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
       <section className="section home-services">
         <div className="container">
@@ -480,7 +421,7 @@ const Home = () => {
             {services.map((service, index) => {
               const title = getLocalizedText(service.title, language, 'Service');
               const description = getLocalizedText(service.description, language);
-              const features = getLocalizedArray(service.features, language).slice(0, 3);
+              const features = getLocalizedArray(service.features, language).slice(0, 2);
 
               return (
                 <motion.article
@@ -567,7 +508,7 @@ const Home = () => {
                   <p>{getLocalizedText(leadProject.description, language)}</p>
 
                   <div className="home-project-tags">
-                    {(leadProject.tags || []).slice(0, 3).map((tag) => (
+                    {(leadProject.tags || []).slice(0, 2).map((tag) => (
                       <span key={`${leadProject.id}-${tag}`}>{tag}</span>
                     ))}
                   </div>

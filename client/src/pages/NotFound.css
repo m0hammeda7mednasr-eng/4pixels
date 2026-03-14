@@ -47,3 +47,38 @@ body.dark .not-found-card {
 body.dark .not-found-card p {
   color: var(--text-dark-secondary);
 }
+
+.not-found-actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* Refinement pass: softer empty state and clearer recovery actions. */
+.not-found-page {
+  padding: clamp(104px, 12vw, 138px) 0 clamp(54px, 8vw, 84px);
+}
+
+.not-found-card {
+  background:
+    radial-gradient(circle at 14% 18%, rgba(0, 87, 255, 0.08), transparent 36%),
+    var(--surface-light);
+  box-shadow: var(--shadow);
+}
+
+body.dark .not-found-card {
+  background:
+    radial-gradient(circle at 14% 18%, rgba(0, 179, 164, 0.08), transparent 36%),
+    var(--surface-dark);
+}
+
+@media (max-width: 520px) {
+  .not-found-actions {
+    flex-direction: column;
+  }
+
+  .not-found-actions .btn {
+    width: 100%;
+  }
+}
