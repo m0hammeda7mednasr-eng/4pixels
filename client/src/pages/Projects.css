@@ -1,6 +1,6 @@
 .projects-page {
   position: relative;
-  padding-top: clamp(100px, 12vw, 132px);
+  padding-top: clamp(96px, 11vw, 126px);
   overflow: hidden;
 }
 
@@ -63,7 +63,7 @@ body.dark .projects-final-card p {
 
 .projects-summary-grid {
   display: grid;
-  gap: 12px;
+  gap: 14px;
 }
 
 .projects-summary-card,
@@ -137,7 +137,8 @@ body.dark .projects-summary-card strong {
 
 .projects-toolbar {
   margin-top: 24px;
-  padding: 14px;
+  padding: 14px 16px;
+  border-radius: 22px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -185,6 +186,11 @@ body.dark .projects-search input {
   align-items: center;
   flex-wrap: wrap;
   gap: 8px;
+  scrollbar-width: none;
+}
+
+.projects-filters::-webkit-scrollbar {
+  display: none;
 }
 
 .projects-filters button {
@@ -252,6 +258,9 @@ body.dark .projects-empty p {
 
 .projects-card {
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
 }
 
 .projects-card-media {
@@ -289,6 +298,9 @@ body.dark .projects-empty p {
 
 .projects-card-body {
   padding: 18px;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
 }
 
 .projects-card-topline {
@@ -400,7 +412,8 @@ body.dark .projects-card-tags span {
 }
 
 .projects-card-link {
-  margin-top: 16px;
+  margin-top: auto;
+  padding-top: 16px;
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -521,54 +534,5 @@ body[dir='rtl'] .projects-card-link svg {
   .projects-card,
   .projects-final-card {
     border-radius: 20px;
-  }
-}
-
-/* Refinement pass: cleaner filtering and stronger card hierarchy. */
-.projects-page {
-  padding-top: clamp(96px, 11vw, 126px);
-}
-
-.projects-summary-grid {
-  gap: 14px;
-}
-
-.projects-toolbar {
-  padding: 14px 16px;
-  border-radius: 22px;
-}
-
-.projects-filters {
-  scrollbar-width: none;
-}
-
-.projects-filters::-webkit-scrollbar {
-  display: none;
-}
-
-.projects-card {
-  display: flex;
-  flex-direction: column;
-  min-height: 100%;
-}
-
-.projects-card-body {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-}
-
-.projects-card-link {
-  margin-top: auto;
-  padding-top: 16px;
-}
-
-.projects-final-card {
-  align-items: center;
-}
-
-@media (max-width: 720px) {
-  .projects-toolbar {
-    padding: 12px;
   }
 }
