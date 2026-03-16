@@ -1,11 +1,11 @@
 .about-page {
   position: relative;
-  padding-top: clamp(100px, 13vw, 136px);
+  padding-top: clamp(96px, 11vw, 124px);
 }
 
 .about-hero {
   display: grid;
-  gap: 28px;
+  gap: 32px;
 }
 
 .about-hero-copy h1,
@@ -36,6 +36,7 @@ body.dark .about-final-card h2 {
   margin-top: 16px;
   font-size: clamp(1.25rem, 3vw, 2rem);
   line-height: 1.2;
+  max-width: 17ch;
 }
 
 .about-hero-copy p,
@@ -65,6 +66,7 @@ body.dark .about-final-card p {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 16px;
+  align-items: stretch;
 }
 
 .about-stat-card,
@@ -88,6 +90,15 @@ body.dark .about-final-card {
   border-color: var(--line-dark);
   background: var(--surface-dark);
   box-shadow: none;
+}
+
+.about-stat-card,
+.about-story-card,
+.about-value-card,
+.about-process-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .about-stat-card {
@@ -137,6 +148,7 @@ body.dark .about-stat-card span {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 18px;
+  align-items: stretch;
 }
 
 .about-story-card {
@@ -177,6 +189,7 @@ body.dark .about-process-card h3 {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 18px;
+  align-items: stretch;
 }
 
 .about-value-card {
@@ -215,13 +228,13 @@ body.dark .about-process-card h3 {
 .about-principles-card {
   padding: clamp(22px, 4vw, 30px);
   background:
-    radial-gradient(circle at 12% 20%, rgba(0, 87, 255, 0.12), transparent 42%),
+    radial-gradient(circle at 12% 20%, rgba(0, 87, 255, 0.1), transparent 40%),
     var(--surface-light);
 }
 
 body.dark .about-principles-card {
   background:
-    radial-gradient(circle at 12% 20%, rgba(0, 179, 164, 0.12), transparent 42%),
+    radial-gradient(circle at 12% 20%, rgba(0, 179, 164, 0.1), transparent 40%),
     var(--surface-dark);
 }
 
@@ -259,6 +272,7 @@ body.dark .about-principles-card li {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 18px;
+  align-items: stretch;
 }
 
 .about-process-card {
@@ -355,6 +369,14 @@ body[dir='rtl'] .about-principles-card li {
   .about-final-card {
     border-radius: 20px;
   }
+
+  .about-hero {
+    gap: 24px;
+  }
+
+  .about-hero-copy h2 {
+    max-width: none;
+  }
 }
 
 @media (max-width: 520px) {
@@ -369,56 +391,5 @@ body[dir='rtl'] .about-principles-card li {
 
   body[dir='rtl'] .about-stat-card {
     text-align: right;
-  }
-}
-
-/* Refinement pass: steadier section rhythm and more consistent card heights. */
-.about-page {
-  padding-top: clamp(96px, 11vw, 124px);
-}
-
-.about-hero {
-  gap: 32px;
-}
-
-.about-hero-copy h2 {
-  max-width: 17ch;
-}
-
-.about-stats,
-.about-story-grid,
-.about-values-grid,
-.about-process-grid {
-  align-items: stretch;
-}
-
-.about-stat-card,
-.about-story-card,
-.about-value-card,
-.about-process-card {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-
-.about-principles-card {
-  background:
-    radial-gradient(circle at 12% 20%, rgba(0, 87, 255, 0.1), transparent 40%),
-    var(--surface-light);
-}
-
-body.dark .about-principles-card {
-  background:
-    radial-gradient(circle at 12% 20%, rgba(0, 179, 164, 0.1), transparent 40%),
-    var(--surface-dark);
-}
-
-@media (max-width: 760px) {
-  .about-hero {
-    gap: 24px;
-  }
-
-  .about-hero-copy h2 {
-    max-width: none;
   }
 }

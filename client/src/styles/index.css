@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Alexandria:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=Tajawal:wght@500;700;800&display=swap');
-
 *,
 *::before,
 *::after {
@@ -22,12 +20,12 @@
   --bg-dark: #07111f;
   --bg-dark-alt: #0d182b;
 
-  --surface-light: rgba(255, 255, 255, 0.84);
+  --surface-light: rgba(255, 255, 255, 0.92);
   --surface-light-strong: #ffffff;
-  --surface-light-soft: rgba(246, 249, 255, 0.9);
-  --surface-dark: rgba(10, 21, 40, 0.82);
+  --surface-light-soft: rgba(249, 251, 255, 0.96);
+  --surface-dark: rgba(9, 20, 38, 0.9);
   --surface-dark-strong: #101b31;
-  --surface-dark-soft: rgba(12, 23, 42, 0.9);
+  --surface-dark-soft: rgba(13, 24, 44, 0.94);
 
   --text-light: #0b1730;
   --text-light-secondary: #53627c;
@@ -36,12 +34,12 @@
 
   --border-light: rgba(8, 40, 97, 0.1);
   --border-dark: rgba(138, 182, 255, 0.18);
-  --line-light: rgba(8, 40, 97, 0.08);
-  --line-dark: rgba(138, 182, 255, 0.14);
+  --line-light: rgba(8, 40, 97, 0.07);
+  --line-dark: rgba(138, 182, 255, 0.12);
 
-  --shadow-sm: 0 10px 24px rgba(8, 31, 70, 0.08);
-  --shadow: 0 18px 48px rgba(8, 31, 70, 0.12);
-  --shadow-lg: 0 28px 72px rgba(8, 24, 55, 0.18);
+  --shadow-sm: 0 10px 24px rgba(8, 31, 70, 0.06);
+  --shadow: 0 18px 42px rgba(8, 31, 70, 0.08);
+  --shadow-lg: 0 28px 68px rgba(8, 24, 55, 0.12);
   --shadow-xl: 0 40px 110px rgba(8, 24, 55, 0.26);
 
   --font-body-en: 'Manrope', sans-serif;
@@ -49,7 +47,8 @@
   --font-body-ar: 'Alexandria', sans-serif;
   --font-heading-ar: 'Tajawal', sans-serif;
 
-  --header-height: 78px;
+  --header-height: 74px;
+  --page-max-width: 1180px;
 
   --text-xs: clamp(0.72rem, 1.4vw, 0.8rem);
   --text-sm: clamp(0.84rem, 2vw, 0.92rem);
@@ -504,21 +503,6 @@ img {
   .btn {
     display: none !important;
   }
-}
-
-/* Refinement pass: calmer surfaces, tighter spacing, and cleaner page rhythm. */
-:root {
-  --surface-light: rgba(255, 255, 255, 0.92);
-  --surface-light-soft: rgba(249, 251, 255, 0.96);
-  --surface-dark: rgba(9, 20, 38, 0.9);
-  --surface-dark-soft: rgba(13, 24, 44, 0.94);
-  --line-light: rgba(8, 40, 97, 0.07);
-  --line-dark: rgba(138, 182, 255, 0.12);
-  --shadow-sm: 0 10px 24px rgba(8, 31, 70, 0.06);
-  --shadow: 0 18px 42px rgba(8, 31, 70, 0.08);
-  --shadow-lg: 0 28px 68px rgba(8, 24, 55, 0.12);
-  --header-height: 74px;
-  --page-max-width: 1180px;
 }
 
 body {

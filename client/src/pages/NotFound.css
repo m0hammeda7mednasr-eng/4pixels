@@ -2,14 +2,16 @@
   min-height: calc(100vh - 72px);
   display: flex;
   align-items: center;
-  padding: clamp(96px, 14vw, 150px) 0 clamp(64px, 10vw, 100px);
+  padding: clamp(104px, 12vw, 138px) 0 clamp(54px, 8vw, 84px);
 }
 
 .not-found-card {
   width: min(620px, 100%);
   margin: 0 auto;
   text-align: center;
-  background: var(--surface-light);
+  background:
+    radial-gradient(circle at 14% 18%, rgba(0, 87, 255, 0.08), transparent 36%),
+    var(--surface-light);
   border: 1px solid var(--border-light);
   border-radius: 24px;
   padding: clamp(28px, 5vw, 44px);
@@ -17,7 +19,9 @@
 }
 
 body.dark .not-found-card {
-  background: var(--surface-dark);
+  background:
+    radial-gradient(circle at 14% 18%, rgba(0, 179, 164, 0.08), transparent 36%),
+    var(--surface-dark);
   border-color: var(--border-dark);
 }
 
@@ -53,24 +57,6 @@ body.dark .not-found-card p {
   justify-content: center;
   gap: 12px;
   flex-wrap: wrap;
-}
-
-/* Refinement pass: softer empty state and clearer recovery actions. */
-.not-found-page {
-  padding: clamp(104px, 12vw, 138px) 0 clamp(54px, 8vw, 84px);
-}
-
-.not-found-card {
-  background:
-    radial-gradient(circle at 14% 18%, rgba(0, 87, 255, 0.08), transparent 36%),
-    var(--surface-light);
-  box-shadow: var(--shadow);
-}
-
-body.dark .not-found-card {
-  background:
-    radial-gradient(circle at 14% 18%, rgba(0, 179, 164, 0.08), transparent 36%),
-    var(--surface-dark);
 }
 
 @media (max-width: 520px) {

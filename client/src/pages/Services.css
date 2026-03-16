@@ -1,6 +1,6 @@
 .services-page {
   position: relative;
-  padding-top: clamp(104px, 13vw, 138px);
+  padding-top: clamp(96px, 11vw, 126px);
   overflow: hidden;
 }
 
@@ -34,7 +34,7 @@
   display: grid;
   grid-template-columns: minmax(0, 1.15fr) minmax(300px, 0.85fr);
   gap: clamp(18px, 3vw, 28px);
-  align-items: start;
+  align-items: stretch;
 }
 
 .services-hero-copy h1,
@@ -88,7 +88,16 @@ body.dark .services-final-card {
 }
 
 .services-hero-panel {
-  padding: 22px;
+  padding: 24px;
+  background:
+    radial-gradient(circle at 12% 14%, rgba(0, 87, 255, 0.1), transparent 40%),
+    var(--surface-light);
+}
+
+body.dark .services-hero-panel {
+  background:
+    radial-gradient(circle at 12% 14%, rgba(0, 179, 164, 0.1), transparent 40%),
+    var(--surface-dark);
 }
 
 .services-hero-panel h2,
@@ -147,7 +156,7 @@ body.dark .services-hero-panel li {
   margin-top: 24px;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 14px;
+  gap: 16px;
 }
 
 .services-summary-card {
@@ -175,12 +184,23 @@ body.dark .services-summary-card strong {
 }
 
 .services-toolbar {
-  margin-top: 22px;
+  margin-top: 24px;
+  padding: 14px 16px;
+  border-radius: 22px;
+  border: 1px solid var(--line-light);
+  background: var(--surface-light);
+  box-shadow: var(--shadow-sm);
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
   flex-wrap: wrap;
+}
+
+body.dark .services-toolbar {
+  border-color: var(--line-dark);
+  background: var(--surface-dark);
+  box-shadow: none;
 }
 
 .services-toolbar-label {
@@ -201,6 +221,11 @@ body.dark .services-toolbar-label {
   align-items: center;
   flex-wrap: wrap;
   gap: 8px;
+  scrollbar-width: none;
+}
+
+.services-category-list::-webkit-scrollbar {
+  display: none;
 }
 
 .services-category-list button {
@@ -247,6 +272,13 @@ body.dark .services-category-list button {
 
 .services-card {
   padding: 22px;
+}
+
+.services-card,
+.services-method-card {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
 }
 
 .services-card-top {
@@ -322,7 +354,7 @@ body.dark .services-card-features li {
 }
 
 .services-card-footer {
-  margin-top: 22px;
+  margin-top: auto;
   padding-top: 18px;
   border-top: 1px solid var(--line-light);
   display: flex;
@@ -502,6 +534,15 @@ body[dir='rtl'] .services-hero-panel .btn svg {
   body[dir='rtl'] .services-final-card {
     align-items: flex-end;
   }
+
+  .services-toolbar,
+  .services-final-card {
+    border-radius: 20px;
+  }
+
+  .services-toolbar {
+    padding: 12px;
+  }
 }
 
 @media (max-width: 520px) {
@@ -520,80 +561,5 @@ body[dir='rtl'] .services-hero-panel .btn svg {
   body[dir='rtl'] .services-card-footer {
     flex-direction: column;
     align-items: flex-start;
-  }
-}
-
-/* Refinement pass: cleaner filters and steadier card rhythm. */
-.services-page {
-  padding-top: clamp(96px, 11vw, 126px);
-}
-
-.services-hero {
-  align-items: stretch;
-}
-
-.services-hero-panel {
-  padding: 24px;
-  background:
-    radial-gradient(circle at 12% 14%, rgba(0, 87, 255, 0.1), transparent 40%),
-    var(--surface-light);
-}
-
-body.dark .services-hero-panel {
-  background:
-    radial-gradient(circle at 12% 14%, rgba(0, 179, 164, 0.1), transparent 40%),
-    var(--surface-dark);
-}
-
-.services-summary-grid {
-  gap: 16px;
-}
-
-.services-toolbar {
-  margin-top: 24px;
-  padding: 14px 16px;
-  border-radius: 22px;
-  border: 1px solid var(--line-light);
-  background: var(--surface-light);
-  box-shadow: var(--shadow-sm);
-}
-
-body.dark .services-toolbar {
-  border-color: var(--line-dark);
-  background: var(--surface-dark);
-  box-shadow: none;
-}
-
-.services-category-list {
-  scrollbar-width: none;
-}
-
-.services-category-list::-webkit-scrollbar {
-  display: none;
-}
-
-.services-card,
-.services-method-card {
-  display: flex;
-  flex-direction: column;
-  min-height: 100%;
-}
-
-.services-card-footer {
-  margin-top: auto;
-}
-
-.services-final-card {
-  align-items: center;
-}
-
-@media (max-width: 720px) {
-  .services-toolbar,
-  .services-final-card {
-    border-radius: 20px;
-  }
-
-  .services-toolbar {
-    padding: 12px;
   }
 }
