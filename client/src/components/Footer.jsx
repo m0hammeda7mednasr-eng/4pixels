@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
@@ -66,21 +66,22 @@ const Footer = () => {
           location: 'Location',
           cairo: 'Cairo, Egypt',
           defaultDescription:
-            'Shopify builds, automation systems, and operational workflows designed for measurable business growth.',
+            'Company websites, Shopify builds, and operational systems designed to make the brand look sharper and run cleaner.',
           noSocial: 'Add your social links from the dashboard when ready.',
           solutions: 'Solutions',
           company: 'Company',
           allRights: 'All rights reserved.',
-          calloutTitle: 'Have a project that needs serious execution?',
+          calloutTitle: 'Need a sharper company profile or a cleaner digital system?',
           calloutText:
-            'Share the scope and we will turn it into a practical roadmap with design, systems, and delivery priorities.',
+            'Send the scope and we will turn it into a practical roadmap covering messaging, interface, systems, and delivery priorities.',
           calloutButton: 'Start A Brief',
           availabilityTitle: 'Working Model',
           availability: [
             'Reply within 24 business hours',
             'Remote delivery with Cairo-based coordination',
             'Shopify, automation, and systems under one team'
-          ]
+          ],
+          fallbackTagline: 'Digital Product & Systems Studio'
         }
       : {
           about: 'من نحن',
@@ -93,21 +94,22 @@ const Footer = () => {
           location: 'العنوان',
           cairo: 'القاهرة، مصر',
           defaultDescription:
-            'تنفيذ متاجر شوبيفاي والأتمتة وأنظمة التشغيل بشكل احترافي يحقق نموًا قابلًا للقياس.',
-          noSocial: 'أضف روابط السوشيال من لوحة التحكم عند الجاهزية.',
+            'مواقع شركات، متاجر Shopify، وأنظمة تشغيل رقمية تخلي شكل البراند أقوى والشغل الداخلي أنضف.',
+          noSocial: 'أضف روابط السوشيال من لوحة التحكم وقت ما تكون جاهزة.',
           solutions: 'الحلول',
           company: 'الشركة',
           allRights: 'جميع الحقوق محفوظة.',
-          calloutTitle: 'لديك مشروع يحتاج تنفيذًا جادًا؟',
+          calloutTitle: 'محتاج بروفايل شركة أقوى أو سيستم رقمي أنضف؟',
           calloutText:
-            'شاركنا نطاق العمل وسنحوّله إلى roadmap عملي واضح يشمل التصميم والأنظمة وأولويات التنفيذ.',
+            'ابعت نطاق الشغل وسنحوّله لخارطة تنفيذ واضحة تشمل الرسالة والواجهة والأنظمة وأولوية التسليم.',
           calloutButton: 'ابدأ الملخص',
           availabilityTitle: 'أسلوب العمل',
           availability: [
             'الرد خلال 24 ساعة عمل',
-            'تنفيذ عن بُعد مع تنسيق من القاهرة',
+            'تنفيذ عن بعد مع تنسيق من القاهرة',
             'Shopify والأتمتة والأنظمة تحت فريق واحد'
-          ]
+          ],
+          fallbackTagline: 'استوديو المنتجات والأنظمة الرقمية'
         };
 
   const toggleSection = (section) => {
@@ -148,6 +150,9 @@ const Footer = () => {
   ].filter((item) => content?.socialMedia?.[item.key]);
 
   const siteInfo = content?.siteInfo || {};
+  const brandTagline = language === 'en' && siteInfo.tagline ? siteInfo.tagline : copy.fallbackTagline;
+  const brandDescription =
+    language === 'en' && siteInfo.description ? siteInfo.description : copy.defaultDescription;
   const contactItems = [
     {
       icon: <FiMail />,
@@ -214,10 +219,8 @@ const Footer = () => {
         >
           <section className="footer-brand">
             <h3>{siteInfo.siteName || '4 Pixels'}</h3>
-            <p className="footer-tagline">
-              {siteInfo.tagline || (language === 'en' ? 'Commerce Systems Studio' : 'استوديو التجارة والأنظمة')}
-            </p>
-            <p className="footer-description">{siteInfo.description || copy.defaultDescription}</p>
+            <p className="footer-tagline">{brandTagline}</p>
+            <p className="footer-description">{brandDescription}</p>
 
             <div className="footer-availability-inline">
               {availabilityItems.map((item) => (
@@ -269,7 +272,9 @@ const Footer = () => {
             </ul>
           </section>
 
-          <section className={`footer-column footer-contact-column ${openSections.contact ? 'open' : ''}`}>
+          <section
+            className={`footer-column footer-contact-column ${openSections.contact ? 'open' : ''}`}
+          >
             <h4 onClick={() => toggleSection('contact')}>{copy.contact}</h4>
             <ul className="footer-contact-list">
               {contactItems.map((item) => (

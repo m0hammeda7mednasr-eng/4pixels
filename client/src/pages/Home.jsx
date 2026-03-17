@@ -3,11 +3,11 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import {
   FiArrowRight,
-  FiBarChart2,
   FiCheckCircle,
   FiClock,
   FiLayers,
   FiShield,
+  FiTarget,
   FiTrendingUp,
   FiZap
 } from 'react-icons/fi';
@@ -17,6 +17,12 @@ import { getCached } from '../services/api';
 import { getCategoryLabel } from '../utils/categoryLabels';
 import { getLocalizedArray, getLocalizedText } from '../utils/localization';
 import './Home.css';
+
+const revealUp = {
+  initial: { opacity: 0, y: 24 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, amount: 0.22 }
+};
 
 const Home = () => {
   const { language } = useLanguage();
@@ -47,8 +53,8 @@ const Home = () => {
         }
 
         setServices((servicesData || []).slice(0, 3));
-        setProjects((projectsData || []).slice(0, 4));
-        setReviews((reviewsData || []).slice(0, 2));
+        setProjects((projectsData || []).slice(0, 5));
+        setReviews((reviewsData || []).slice(0, 3));
         setContent(contentData || null);
       } catch (err) {
         if (controller.signal.aborted || !mounted) {
@@ -59,7 +65,7 @@ const Home = () => {
         setError(
           language === 'en'
             ? 'Some live content could not be loaded right now.'
-            : 'تعذر تحميل بعض بيانات الصفحة الآن.'
+            : 'تعذر تحميل بعض البيانات الحية حالياً.'
         );
       } finally {
         if (mounted) {
@@ -79,189 +85,281 @@ const Home = () => {
   const copy =
     language === 'en'
       ? {
-          eyebrow: '4 Pixels Delivery Studio',
-          heroTitleFallback: 'Build faster storefronts, smarter automation, and cleaner operations.',
+          eyebrow: '4 Pixels Company Profile',
+          heroTitleFallback: 'Sharper digital products for teams that want serious execution.',
           heroSubtitleFallback:
-            'We design and ship premium Shopify experiences, AI-powered workflows, and operational systems that help brands move with confidence.',
-          primaryCta: 'Start Your Project',
-          secondaryCta: 'Explore Portfolio',
-          heroPoints: [
-            'Premium Shopify design and conversion-focused development.',
-            'Automation flows that reduce manual work and improve speed.',
-            'Operational systems with dashboards, data quality, and handoff clarity.'
+            'We design company websites, Shopify experiences, and operational systems with a premium visual layer and a clean delivery model.',
+          heroNote:
+            'Built for brands, founders, and internal teams that need a website to look credible and work hard for the business.',
+          primaryCta: 'Start a Brief',
+          secondaryCta: 'See Projects',
+          heroChecklist: [
+            'Company-profile websites with clear positioning and premium interface design.',
+            'Shopify development, landing pages, and conversion-focused structure.',
+            'Automation, CRM, and Google Sheets workflows that keep operations moving.'
           ],
-          marketLabel: 'Built for brands, operators, and teams that need execution.',
-          marketFocus: ['Shopify Brands', 'Scale-Up Teams', 'Operations Leaders', 'Modern Startups'],
-          boardEyebrow: 'Live Delivery Board',
-          boardTitle: 'One execution lane from brief to launch.',
-          boardStatus: 'Ready in 48h',
+          heroTags: ['Company Profiles', 'Shopify', 'Automation', 'Google Workspace'],
+          boardEyebrow: 'Delivery Cockpit',
+          boardTitle: 'Design, development, and systems in one operating lane.',
+          boardText:
+            'Instead of disconnected freelancers, you get one structured team shaping the message, interface, and backend workflow together.',
+          boardStatus: 'Kickoff in 48h',
+          boardStats: [
+            { label: 'Launch track', value: 'Strategy > UI > Build' },
+            { label: 'Working model', value: 'Remote, fast, structured' }
+          ],
           boardSteps: [
             {
-              title: 'Discover',
-              description: 'Audit goals, current stack, blockers, and commercial priorities.'
+              title: 'Clarify the offer',
+              description:
+                'We define the message, audience, and commercial priorities before the visuals start.'
             },
             {
-              title: 'Build',
-              description: 'Design, implement, test, and connect every operational layer.'
+              title: 'Build the experience',
+              description:
+                'Interface design, page structure, and development are shaped as one system.'
             },
             {
-              title: 'Scale',
-              description: 'Improve speed, reporting, and performance after go-live.'
+              title: 'Operational handoff',
+              description:
+                'Automation, data flow, and launch support make the website useful after go-live.'
             }
           ],
-          capabilitiesEyebrow: 'How We Work',
-          capabilitiesTitle: 'A company portfolio should prove execution, not just look polished.',
-          capabilitiesSubtitle:
-            '4 Pixels combines visual quality, systems thinking, and measurable delivery in one workflow.',
-          storyTitle: 'Why teams hire us',
+          boardTags: ['Premium UI', 'Shopify Builds', 'Automation Ops'],
+          storyEyebrow: 'Why 4 Pixels',
+          storyTitle:
+            'A company site should look premium, explain value fast, and support delivery behind the scenes.',
           storyText:
-            'We operate like a delivery partner, not a loose collection of freelancers. Design, automation, and operations are aligned from the first brief.',
+            'We treat the front-end brand layer and the operational layer as one product. That is why the result feels sharper, not just prettier.',
           storyPoints: [
-            'Clear delivery scope and practical roadmap from day one.',
-            'Design decisions that support conversion, speed, and usability.',
-            'Implementation that connects Shopify, CRM, data, and automation.'
+            'Clean messaging that makes the offer obvious in seconds.',
+            'Design direction that feels modern, intentional, and commercially useful.',
+            'Execution that connects interface, workflows, and business operations.'
           ],
-          frameworkTitle: 'Execution Framework',
-          frameworkSubtitle: 'Four lanes that keep strategy and production connected.',
-          framework: [
-            {
-              icon: <FaShopify />,
-              title: 'Shopify Experience',
-              description: 'Stores, landing pages, collection structure, and checkout UX with premium visual direction.'
-            },
-            {
-              icon: <FaHubspot />,
-              title: 'Automation Flow',
-              description: 'CRM routing, follow-up logic, notifications, approvals, and lead qualification.'
-            },
-            {
-              icon: <FaDatabase />,
-              title: 'Data Operations',
-              description: 'Dashboards, spreadsheets, reporting structure, and operational accuracy.'
-            },
-            {
-              icon: <FaRobot />,
-              title: 'AI-Ready Production',
-              description: 'Automated content assistance, workflow intelligence, and faster creative output.'
-            }
-          ],
-          servicesEyebrow: 'Service Stack',
-          servicesTitle: 'Focused offers built for business outcomes.',
+          principlesTitle: 'What changes when the work is done right',
+          frameworkEyebrow: 'Execution Model',
+          frameworkTitle:
+            'Four lanes that turn a polished website into a working business asset.',
+          frameworkSubtitle:
+            'We combine brand presentation, storefront logic, automation, and reporting in a single flow.',
+          servicesEyebrow: 'Services',
+          servicesTitle: 'Core offers for brands that need real delivery.',
           servicesSubtitle:
-            'Each service is designed to stand alone or integrate into one full digital operating system.',
+            'Each offer can launch on its own or connect into one full digital system.',
           serviceDetails: 'Open service',
-          servicesCta: 'View All Services',
+          servicesCta: 'All services',
+          emptyServices: 'Services will appear here once they are published.',
           projectsEyebrow: 'Selected Work',
-          projectsTitle: 'Recent delivery across commerce, automation, and systems.',
+          projectsTitle: 'Recent projects across commerce, automation, and internal systems.',
           projectsSubtitle:
-            'A practical portfolio of launches, migrations, and process redesign projects with real operational value.',
-          spotlight: 'Featured Case',
+            'A mix of launches, migrations, workflow redesign, and data operations work.',
+          spotlight: 'Featured Project',
           moreProjects: 'More selected work',
-          projectCaseStudy: 'View case study',
-          viewAllProjects: 'Browse All Projects',
-          reviewsEyebrow: 'Client Confidence',
-          reviewsTitle: 'Feedback from teams that trusted us with execution.',
+          projectCaseStudy: 'View project',
+          viewAllProjects: 'Browse all projects',
+          emptyProjects: 'Projects will appear here once they are published.',
+          reviewsEyebrow: 'Client Feedback',
+          reviewsTitle: 'Teams come for quality, but stay because the process is clear.',
           reviewsSubtitle:
-            'Results matter, but clarity, speed, and communication matter just as much during delivery.',
+            'Fast communication, clean handoff, and good taste are part of the product.',
           noReviews: 'No published reviews yet.',
-          finalTitle: 'Need a portfolio-level website and systems layer that actually feels premium?',
+          finalEyebrow: 'Ready to Build',
+          finalTitle:
+            'Need a stronger company profile, store, or system behind the brand?',
           finalSubtitle:
-            'Let us shape the full experience: messaging, UX, development, automation, and the business layer behind it.',
-          finalPrimary: 'Book Discovery Call',
-          finalSecondary: 'Go To Contact'
+            'We can shape the messaging, interface, development, and operational workflows into one solid delivery plan.',
+          finalPrimary: 'Book a Discovery Call',
+          finalSecondary: 'Contact Us'
         }
       : {
-          eyebrow: 'استوديو 4 Pixels للتنفيذ الرقمي',
-          heroTitleFallback: 'ابنِ متجرًا أسرع، وأتمتة أذكى، وعمليات تشغيل أكثر وضوحًا.',
+          eyebrow: 'بروفايل 4 Pixels',
+          heroTitleFallback: 'مواقع وشغل رقمي يدي شركتك شكل أقوى وثقة أعلى.',
           heroSubtitleFallback:
-            'نصمم وننفذ تجارب Shopify احترافية وتدفقات أتمتة مدعومة بالذكاء الاصطناعي وأنظمة تشغيل تساعد البراندات على النمو بثبات.',
-          primaryCta: 'ابدأ مشروعك',
-          secondaryCta: 'شاهد البورتفوليو',
-          heroPoints: [
-            'تصميم وتجربة Shopify احترافية تركّز على التحويل والسرعة.',
-            'تدفقات أتمتة تقلل العمل اليدوي وتسرّع التشغيل.',
-            'أنظمة تشغيل ولوحات متابعة بجودة عالية وتسليم واضح.'
+            'نصمم وننفذ مواقع شركات، تجارب Shopify، وأنظمة تشغيل رقمية بواجهة premium وتنفيذ منظم من أول خطوة لآخر تسليم.',
+          heroNote:
+            'مناسب للبراندات والشركات والفرق اللي محتاجة موقع شكله محترف ويشتغل فعلاً لصالح البيزنس.',
+          primaryCta: 'ابدأ الملخص',
+          secondaryCta: 'شوف المشاريع',
+          heroChecklist: [
+            'مواقع بروفايل شركات برسالة واضحة وواجهة احترافية.',
+            'تطوير Shopify ولاندنج بيدج وهيكلة ترفع التحويل.',
+            'أتمتة وCRM وGoogle Sheets يخلو التشغيل أسرع وأنضف.'
           ],
-          marketLabel: 'مناسب للبراندات والفرق التي تحتاج تنفيذًا حقيقيًا لا مجرد كلام.',
-          marketFocus: ['براندات Shopify', 'فرق النمو', 'قادة التشغيل', 'شركات ناشئة حديثة'],
-          boardEyebrow: 'لوحة تنفيذ مباشرة',
-          boardTitle: 'مسار تنفيذ واحد من الملخص حتى الإطلاق.',
-          boardStatus: 'جاهزون خلال 48 ساعة',
+          heroTags: ['بروفايل شركات', 'Shopify', 'أتمتة', 'Google Workspace'],
+          boardEyebrow: 'لوحة التنفيذ',
+          boardTitle: 'التصميم والتطوير والأنظمة في مسار واحد.',
+          boardText:
+            'بدل ما الشغل يتقسم بين أطراف منفصلة، عندك فريق واحد بيجمع الرسالة والواجهة والتنفيذ والتشغيل في نفس الخط.',
+          boardStatus: 'بداية خلال 48 ساعة',
+          boardStats: [
+            { label: 'مسار الشغل', value: 'رسالة > UI > تطوير' },
+            { label: 'طريقة العمل', value: 'عن بعد، سريع، منظم' }
+          ],
           boardSteps: [
             {
-              title: 'فهم المشروع',
-              description: 'تحليل الأهداف والتحديات الحالية والأدوات وأولويات النمو.'
+              title: 'فهم البيزنس',
+              description:
+                'نحدد الرسالة والجمهور وأولوية الخدمات اللي لازم تظهر بشكل مقنع من البداية.'
             },
             {
-              title: 'التنفيذ',
-              description: 'تصميم وبناء وربط كل الطبقات التشغيلية واختبارها فعليًا.'
+              title: 'بناء التجربة',
+              description:
+                'نصمم الواجهة ونبني الصفحات والربط التقني كمنظومة واحدة، مش أجزاء متفرقة.'
             },
             {
-              title: 'التوسع',
-              description: 'تحسين السرعة والتقارير والأداء بعد التشغيل.'
+              title: 'تشغيل وتسليم',
+              description:
+                'نرتب الأتمتة والبيانات وخطوات الإطلاق علشان الموقع يكمل شغله بعد التسليم.'
             }
           ],
-          capabilitiesEyebrow: 'أسلوب العمل',
-          capabilitiesTitle: 'الموقع الاحترافي لازم يثبت جودة التنفيذ، وليس الشكل فقط.',
-          capabilitiesSubtitle:
-            '4 Pixels تجمع بين جودة التصميم، وفكر الأنظمة، والتسليم القابل للقياس داخل مسار عمل واحد.',
-          storyTitle: 'لماذا تختارنا الفرق الجادة',
+          boardTags: ['واجهات احترافية', 'متاجر Shopify', 'أنظمة تشغيل'],
+          storyEyebrow: 'ليه 4 Pixels',
+          storyTitle:
+            'موقع الشركة لازم يدي انطباع قوي، يشرح القيمة بسرعة، ويخدم التشغيل اللي وراه.',
           storyText:
-            'نشتغل كشريك تنفيذ متكامل، وليس كمجموعة أفراد منفصلة. التصميم والأتمتة والتشغيل عندنا يتحركون معًا من أول ملخص.',
+            'إحنا بنعامل الواجهة والأنظمة التشغيلية كمنتج واحد. علشان كده النتيجة بتطلع أذكى وأوضح، مش مجرد شكل حلو.',
           storyPoints: [
-            'نطاق عمل واضح وخارطة تنفيذ عملية من البداية.',
-            'قرارات تصميم تدعم التحويل والسرعة وسهولة الاستخدام.',
-            'تنفيذ يربط Shopify وCRM والبيانات والأتمتة في منظومة واحدة.'
+            'رسالة واضحة تخلي العميل يفهم قيمة الشغل في ثواني.',
+            'تصميم محسوب يبان premium وفي نفس الوقت مفيد تجارياً.',
+            'تنفيذ يربط الواجهة مع الأتمتة والعمليات اليومية فعلياً.'
           ],
-          frameworkTitle: 'إطار التنفيذ',
-          frameworkSubtitle: 'أربع مسارات تربط الاستراتيجية بالإنتاج الفعلي.',
-          framework: [
+          principlesTitle: 'الفرق اللي بيظهر لما التنفيذ يبقى مظبوط',
+          frameworkEyebrow: 'طريقة التنفيذ',
+          frameworkTitle: 'أربع مسارات تحول الموقع من شكل كويس لأصل تجاري يشتغل فعلاً.',
+          frameworkSubtitle:
+            'بنربط صورة البراند، منطق البيع، الأتمتة، والتقارير داخل مسار تنفيذ واحد.',
+          servicesEyebrow: 'الخدمات',
+          servicesTitle: 'خدمات أساسية للبراندات اللي محتاجة شغل جاد.',
+          servicesSubtitle:
+            'كل خدمة تقدر تبدأ لوحدها أو تدخل ضمن منظومة رقمية كاملة للشركة.',
+          serviceDetails: 'عرض الخدمة',
+          servicesCta: 'كل الخدمات',
+          emptyServices: 'الخدمات هتظهر هنا بعد النشر.',
+          projectsEyebrow: 'أعمال مختارة',
+          projectsTitle: 'مشاريع حديثة في التجارة والأتمتة والأنظمة الداخلية.',
+          projectsSubtitle:
+            'إطلاقات ونقل منصات وتحسين تدفقات تشغيل ومشاريع بيانات لها قيمة فعلية.',
+          spotlight: 'مشروع مميز',
+          moreProjects: 'مشاريع مختارة أخرى',
+          projectCaseStudy: 'عرض المشروع',
+          viewAllProjects: 'تصفح كل المشاريع',
+          emptyProjects: 'المشاريع هتظهر هنا بعد النشر.',
+          reviewsEyebrow: 'آراء العملاء',
+          reviewsTitle: 'الفرق بتبدأ معنا بسبب الجودة، وتكمل بسبب وضوح العملية.',
+          reviewsSubtitle:
+            'سرعة الرد وجودة التسليم والذوق البصري جزء من الخدمة نفسها.',
+          noReviews: 'لا توجد مراجعات منشورة حالياً.',
+          finalEyebrow: 'جاهز نبدأ',
+          finalTitle: 'محتاج موقع شركة أقوى، متجر أشيك، أو سيستم أنضف وراء البراند؟',
+          finalSubtitle:
+            'نقدر نبني الرسالة والواجهة والتطوير والتشغيل في خطة تنفيذ واحدة وواضحة.',
+          finalPrimary: 'احجز جلسة اكتشاف',
+          finalSecondary: 'تواصل معنا'
+        };
+
+  const principleItems = useMemo(
+    () =>
+      language === 'en'
+        ? [
+            {
+              icon: <FiTarget />,
+              title: 'Clear positioning',
+              description:
+                'The website explains what you do, who it is for, and why it matters without noise.'
+            },
+            {
+              icon: <FiZap />,
+              title: 'Premium execution',
+              description:
+                'Sharper layout, better rhythm, and a more intentional visual system across every section.'
+            },
+            {
+              icon: <FiShield />,
+              title: 'Operational depth',
+              description:
+                'CRM, automation, reporting, and handoff are considered from the start.'
+            }
+          ]
+        : [
+            {
+              icon: <FiTarget />,
+              title: 'تموضع واضح',
+              description:
+                'الموقع يشرح أنت بتقدم إيه، لمين، وليه مهم، من غير لف أو حشو.'
+            },
+            {
+              icon: <FiZap />,
+              title: 'تنفيذ premium',
+              description:
+                'توزيع بصري أنضف، إيقاع أحسن، وهوية أوضح في كل جزء من الصفحة.'
+            },
+            {
+              icon: <FiShield />,
+              title: 'عمق تشغيلي',
+              description:
+                'الأتمتة والـ CRM والتقارير والتسليم متفكر فيهم من أول مرحلة.'
+            }
+          ],
+    [language]
+  );
+
+  const frameworkItems = useMemo(
+    () =>
+      language === 'en'
+        ? [
             {
               icon: <FaShopify />,
-              title: 'تجربة Shopify',
-              description: 'متاجر وصفحات هبوط وهيكلة منتجات وتجربة شراء بمستوى بصري premium.'
+              title: 'Company Websites & Shopify',
+              description:
+                'Profile websites, landing pages, stores, and conversion-ready interface systems.'
             },
             {
               icon: <FaHubspot />,
-              title: 'تدفقات الأتمتة',
-              description: 'ربط CRM والمتابعة والتنبيهات والموافقات وتأهيل العملاء المحتملين.'
+              title: 'Automation & CRM',
+              description:
+                'Lead routing, follow-up logic, approvals, and cleaner customer journeys.'
             },
             {
               icon: <FaDatabase />,
-              title: 'تشغيل البيانات',
-              description: 'لوحات متابعة وهيكلة تقارير وتشغيل بيانات بدقة واستقرار.'
+              title: 'Systems & Data',
+              description:
+                'Google Sheets operations, structured data entry, dashboards, and reporting layers.'
             },
             {
               icon: <FaRobot />,
-              title: 'إنتاج مدعوم بالذكاء الاصطناعي',
-              description: 'محتوى أسرع، تدفقات أكثر ذكاءً، ودعم للإنتاج الإبداعي والتشغيلي.'
+              title: 'AI-Ready Workflow',
+              description:
+                'Practical AI support inside content, operations, and repetitive delivery tasks.'
+            }
+          ]
+        : [
+            {
+              icon: <FaShopify />,
+              title: 'مواقع الشركات وShopify',
+              description:
+                'مواقع بروفايل، لاندنج بيدج، متاجر، وأنظمة واجهات جاهزة للتحويل والبيع.'
+            },
+            {
+              icon: <FaHubspot />,
+              title: 'الأتمتة وCRM',
+              description:
+                'تأهيل العملاء، متابعة أوتوماتيك، موافقات، ومسارات تواصل أنضف مع العميل.'
+            },
+            {
+              icon: <FaDatabase />,
+              title: 'الأنظمة والبيانات',
+              description:
+                'تشغيل Google Sheets، إدخال بيانات منظم، لوحات متابعة، وطبقة تقارير واضحة.'
+            },
+            {
+              icon: <FaRobot />,
+              title: 'شغل جاهز للذكاء الاصطناعي',
+              description:
+                'دعم عملي للذكاء الاصطناعي داخل المحتوى والتشغيل والمهام المتكررة.'
             }
           ],
-          servicesEyebrow: 'حزمة الخدمات',
-          servicesTitle: 'خدمات مركزة على النتيجة التجارية.',
-          servicesSubtitle:
-            'كل خدمة يمكن تنفيذها بشكل مستقل أو دمجها داخل منظومة تشغيل رقمية كاملة.',
-          serviceDetails: 'عرض الخدمة',
-          servicesCta: 'كل الخدمات',
-          projectsEyebrow: 'أعمال مختارة',
-          projectsTitle: 'تنفيذ حديث عبر التجارة والأتمتة والأنظمة.',
-          projectsSubtitle:
-            'بورتفوليو عملي يضم إطلاقات جديدة وعمليات نقل وتحسين تدفقات تشغيل لها قيمة فعلية.',
-          spotlight: 'حالة مميزة',
-          moreProjects: 'مشاريع أخرى مختارة',
-          projectCaseStudy: 'عرض دراسة الحالة',
-          viewAllProjects: 'تصفح كل المشاريع',
-          reviewsEyebrow: 'ثقة العملاء',
-          reviewsTitle: 'آراء فرق اعتمدت علينا في التنفيذ.',
-          reviewsSubtitle:
-            'النتائج مهمة، لكن الوضوح والسرعة وجودة التواصل أثناء التنفيذ مهمون بنفس الدرجة.',
-          noReviews: 'لا توجد مراجعات منشورة حاليًا.',
-          finalTitle: 'تحتاج موقع شركة وبنية تشغيل فعلًا بمستوى premium؟',
-          finalSubtitle:
-            'نقدر نبني لك التجربة كاملة: الرسالة، والواجهة، والتطوير، والأتمتة، والطبقة التشغيلية خلف الموقع.',
-          finalPrimary: 'احجز جلسة اكتشاف',
-          finalSecondary: 'اذهب للتواصل'
-        };
+    [language]
+  );
 
   const heroTitle = getLocalizedText(content?.hero?.title, language, copy.heroTitleFallback);
   const heroSubtitle = getLocalizedText(
@@ -269,40 +367,36 @@ const Home = () => {
     language,
     copy.heroSubtitleFallback
   );
-  const companySummary =
-    language === 'en'
-      ? 'Company websites, Shopify builds, and automation systems delivered with a cleaner structure.'
-      : 'مواقع شركات ومتاجر Shopify وأنظمة أتمتة بتنفيذ أنظف وهيكلة أوضح.';
 
+  const siteName = content?.siteInfo?.siteName || '4 Pixels';
   const featuredProjects = useMemo(() => {
     const pinned = projects.filter((project) => project.featured);
-    return (pinned.length > 0 ? pinned : projects).slice(0, 3);
+    return (pinned.length > 0 ? pinned : projects).slice(0, 4);
   }, [projects]);
 
   const leadProject = featuredProjects[0] || null;
-  const secondaryProjects = featuredProjects.slice(1, 3);
-  const featuredReviews = reviews.slice(0, 2);
+  const sideProjects = featuredProjects.slice(1, 4);
 
   const metrics = useMemo(
     () => [
       {
         value: `${Math.max(projects.length, 18)}+`,
-        label: language === 'en' ? 'Projects delivered' : 'مشروعات تم تنفيذها',
+        label: language === 'en' ? 'Projects shipped' : 'مشروع تم تنفيذه',
         icon: <FiLayers />
       },
       {
         value: `${Math.max(services.length, 3)}`,
-        label: language === 'en' ? 'Execution offers' : 'مسارات خدمة',
+        label: language === 'en' ? 'Core offers' : 'مسارات خدمة',
         icon: <FiZap />
       },
       {
-        value: `${Math.max(reviews.length, 6)}+`,
+        value: `${Math.max(reviews.length, 10)}+`,
         label: language === 'en' ? 'Client signals' : 'إشارات ثقة',
         icon: <FiShield />
       },
       {
         value: '48h',
-        label: language === 'en' ? 'Kickoff readiness' : 'جاهزية الانطلاق',
+        label: language === 'en' ? 'Kickoff speed' : 'جاهزية البداية',
         icon: <FiClock />
       }
     ],
@@ -312,20 +406,21 @@ const Home = () => {
   return (
     <div className="home-page">
       <section className="home-hero">
-        <div className="home-hero-orb hero-orb-a" />
-        <div className="home-hero-orb hero-orb-b" />
-        <div className="home-hero-gridlines" aria-hidden="true" />
+        <div className="home-hero-glow home-hero-glow-a" aria-hidden="true" />
+        <div className="home-hero-glow home-hero-glow-b" aria-hidden="true" />
+        <div className="home-hero-grid" aria-hidden="true" />
 
         <div className="container home-hero-layout">
           <motion.div
             className="home-hero-copy"
-            initial={{ opacity: 0, y: 24 }}
+            initial={{ opacity: 0, y: 28 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.55 }}
           >
             <span className="page-eyebrow">{copy.eyebrow}</span>
             <h1>{heroTitle}</h1>
-            <p>{heroSubtitle}</p>
+            <p className="home-hero-subtitle">{heroSubtitle}</p>
+            <div className="home-hero-note">{copy.heroNote}</div>
 
             <div className="home-hero-actions">
               <Link to="/contact" className="btn btn-primary btn-lg">
@@ -337,8 +432,8 @@ const Home = () => {
               </Link>
             </div>
 
-            <ul className="home-hero-points">
-              {copy.heroPoints.map((item) => (
+            <ul className="home-hero-checklist">
+              {copy.heroChecklist.map((item) => (
                 <li key={item}>
                   <FiCheckCircle />
                   <span>{item}</span>
@@ -346,48 +441,41 @@ const Home = () => {
               ))}
             </ul>
 
+            <div className="home-hero-tags">
+              {copy.heroTags.map((tag) => (
+                <span key={tag}>{tag}</span>
+              ))}
+            </div>
           </motion.div>
 
           <motion.aside
-            className="home-hero-board"
-            initial={{ opacity: 0, x: 24 }}
+            className="home-hero-panel"
+            initial={{ opacity: 0, x: 28 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
+            transition={{ duration: 0.55, delay: 0.08 }}
           >
-            <div className="home-board-brand">
-              <div className="home-board-brand-mark">4P</div>
-              <div className="home-board-brand-copy">
-                <strong>4 Pixels</strong>
-                <p>{companySummary}</p>
-              </div>
-            </div>
-
-            <div className="home-board-head">
+            <div className="home-panel-top">
               <div>
-                <span>{copy.boardEyebrow}</span>
+                <span className="home-panel-kicker">{copy.boardEyebrow}</span>
                 <h2>{copy.boardTitle}</h2>
               </div>
-              <div className="home-board-status">
-                <FiBarChart2 />
-                {copy.boardStatus}
-              </div>
+              <span className="home-panel-status">{copy.boardStatus}</span>
             </div>
 
-            <div className="home-board-metrics">
-              {metrics.map((metric) => (
-                <article key={`${metric.label}-${metric.value}`} className="home-board-metric">
-                  <div className="home-board-icon">{metric.icon}</div>
-                  <div>
-                    <strong>{metric.value}</strong>
-                    <span>{metric.label}</span>
-                  </div>
+            <p className="home-panel-text">{copy.boardText}</p>
+
+            <div className="home-panel-stats">
+              {copy.boardStats.map((item) => (
+                <article key={item.label} className="home-panel-stat">
+                  <span>{item.label}</span>
+                  <strong>{item.value}</strong>
                 </article>
               ))}
             </div>
 
-            <div className="home-board-steps">
+            <div className="home-panel-steps">
               {copy.boardSteps.map((step, index) => (
-                <article key={step.title} className="home-step-card">
+                <article key={step.title} className="home-panel-step">
                   <strong>{String(index + 1).padStart(2, '0')}</strong>
                   <div>
                     <h3>{step.title}</h3>
@@ -397,7 +485,40 @@ const Home = () => {
               ))}
             </div>
 
+            <div className="home-panel-footer">
+              <div className="home-panel-brand">
+                <span>{siteName}</span>
+                <p>{copy.boardEyebrow}</p>
+              </div>
+
+              <div className="home-panel-tags">
+                {copy.boardTags.map((tag) => (
+                  <span key={tag}>{tag}</span>
+                ))}
+              </div>
+            </div>
           </motion.aside>
+        </div>
+
+        <div className="container">
+          <div className="home-proof-grid">
+            {metrics.map((metric) => (
+              <motion.article
+                key={metric.label}
+                className="home-proof-card"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.28 }}
+                transition={{ duration: 0.35 }}
+              >
+                <div className="home-proof-icon">{metric.icon}</div>
+                <div>
+                  <strong>{metric.value}</strong>
+                  <span>{metric.label}</span>
+                </div>
+              </motion.article>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -409,62 +530,132 @@ const Home = () => {
         </section>
       ) : null}
 
+      <section className="section home-positioning">
+        <div className="container">
+          <div className="section-copy home-section-copy">
+            <span className="page-eyebrow">{copy.storyEyebrow}</span>
+            <h2>{copy.storyTitle}</h2>
+            <p>{copy.storyText}</p>
+          </div>
+
+          <div className="home-positioning-layout">
+            <motion.article className="home-story-card" {...revealUp}>
+              <p>{copy.storyText}</p>
+
+              <ul className="home-story-list">
+                {copy.storyPoints.map((item) => (
+                  <li key={item}>
+                    <FiCheckCircle />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </motion.article>
+
+            <div className="home-principles-wrap">
+              <div className="home-principles-head">
+                <h3>{copy.principlesTitle}</h3>
+              </div>
+
+              <div className="home-principles-grid">
+                {principleItems.map((item, index) => (
+                  <motion.article
+                    key={item.title}
+                    className="home-principle-card"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.22 }}
+                    transition={{ delay: index * 0.08 }}
+                  >
+                    <div className="home-principle-icon">{item.icon}</div>
+                    <h3>{item.title}</h3>
+                    <p>{item.description}</p>
+                  </motion.article>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <motion.div className="home-framework-block" {...revealUp}>
+            <div className="section-copy home-framework-copy">
+              <span className="page-eyebrow">{copy.frameworkEyebrow}</span>
+              <h2>{copy.frameworkTitle}</h2>
+              <p>{copy.frameworkSubtitle}</p>
+            </div>
+
+            <div className="home-framework-grid">
+              {frameworkItems.map((item) => (
+                <article key={item.title} className="home-framework-card">
+                  <div className="home-framework-icon">{item.icon}</div>
+                  <h3>{item.title}</h3>
+                  <p>{item.description}</p>
+                </article>
+              ))}
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
       <section className="section home-services">
         <div className="container">
-          <div className="section-copy home-section-heading">
+          <div className="section-copy home-section-copy">
             <span className="page-eyebrow">{copy.servicesEyebrow}</span>
             <h2>{copy.servicesTitle}</h2>
             <p>{copy.servicesSubtitle}</p>
           </div>
 
-          <div className="home-services-grid">
-            {services.map((service, index) => {
-              const title = getLocalizedText(service.title, language, 'Service');
-              const description = getLocalizedText(service.description, language);
-              const features = getLocalizedArray(service.features, language).slice(0, 2);
+          {services.length > 0 ? (
+            <div className="home-services-grid">
+              {services.map((service, index) => {
+                const title = getLocalizedText(service.title, language, 'Service');
+                const description = getLocalizedText(service.description, language);
+                const features = getLocalizedArray(service.features, language).slice(0, 3);
 
-              return (
-                <motion.article
-                  key={service.id}
-                  className="home-service-card"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.24 }}
-                  transition={{ delay: index * 0.06 }}
-                >
-                  <div className="home-service-top">
-                    <span className="home-service-category">
-                      {getCategoryLabel(service.category, language)}
-                    </span>
-                    <strong>${service.price}</strong>
-                  </div>
+                return (
+                  <motion.article
+                    key={service.id}
+                    className="home-service-card"
+                    initial={{ opacity: 0, y: 22 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.24 }}
+                    transition={{ delay: index * 0.08 }}
+                  >
+                    <div className="home-service-top">
+                      <span className="home-service-category">
+                        {getCategoryLabel(service.category, language)}
+                      </span>
+                      <strong>${service.price}</strong>
+                    </div>
 
-                  <h3>{title}</h3>
-                  <p>{description}</p>
+                    <h3>{title}</h3>
+                    <p>{description}</p>
 
-                  <ul className="home-service-features">
-                    {features.map((feature) => (
-                      <li key={feature}>
-                        <FiCheckCircle />
-                        <span>{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
+                    <ul className="home-service-features">
+                      {features.map((feature) => (
+                        <li key={feature}>
+                          <FiCheckCircle />
+                          <span>{feature}</span>
+                        </li>
+                      ))}
+                    </ul>
 
-                  <div className="home-service-footer">
-                    <span>
-                      <FiTrendingUp />
-                      {service.deliveryTime}
-                    </span>
-                    <Link to={`/services/${service.id}`}>
-                      {copy.serviceDetails}
-                      <FiArrowRight />
-                    </Link>
-                  </div>
-                </motion.article>
-              );
-            })}
-          </div>
+                    <div className="home-service-footer">
+                      <span>
+                        <FiTrendingUp />
+                        {service.deliveryTime}
+                      </span>
+                      <Link to={`/services/${service.id}`} className="home-inline-link">
+                        {copy.serviceDetails}
+                        <FiArrowRight />
+                      </Link>
+                    </div>
+                  </motion.article>
+                );
+              })}
+            </div>
+          ) : (
+            <p className="home-empty-state">{copy.emptyServices}</p>
+          )}
 
           <div className="home-section-action">
             <Link to="/services" className="btn btn-outline">
@@ -476,7 +667,7 @@ const Home = () => {
 
       <section className="section home-projects">
         <div className="container">
-          <div className="section-copy home-section-heading">
+          <div className="section-copy home-section-copy">
             <span className="page-eyebrow">{copy.projectsEyebrow}</span>
             <h2>{copy.projectsTitle}</h2>
             <p>{copy.projectsSubtitle}</p>
@@ -484,12 +675,7 @@ const Home = () => {
 
           {leadProject ? (
             <div className="home-projects-layout">
-              <motion.article
-                className="home-project-spotlight"
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.25 }}
-              >
+              <motion.article className="home-project-spotlight" {...revealUp}>
                 <Link to={`/projects/${leadProject.id}`} className="home-project-media">
                   <img
                     src={leadProject.images?.[0]}
@@ -508,12 +694,12 @@ const Home = () => {
                   <p>{getLocalizedText(leadProject.description, language)}</p>
 
                   <div className="home-project-tags">
-                    {(leadProject.tags || []).slice(0, 2).map((tag) => (
+                    {(leadProject.tags || []).slice(0, 3).map((tag) => (
                       <span key={`${leadProject.id}-${tag}`}>{tag}</span>
                     ))}
                   </div>
 
-                  <Link to={`/projects/${leadProject.id}`} className="home-project-link">
+                  <Link to={`/projects/${leadProject.id}`} className="home-inline-link">
                     {copy.projectCaseStudy}
                     <FiArrowRight />
                   </Link>
@@ -523,17 +709,20 @@ const Home = () => {
               <div className="home-project-list">
                 <div className="home-project-list-head">
                   <h3>{copy.moreProjects}</h3>
-                  <Link to="/projects">{copy.viewAllProjects}</Link>
+                  <Link to="/projects" className="home-inline-link">
+                    {copy.viewAllProjects}
+                    <FiArrowRight />
+                  </Link>
                 </div>
 
-                {secondaryProjects.map((project, index) => (
+                {sideProjects.map((project, index) => (
                   <motion.article
                     key={project.id}
                     className="home-project-mini"
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, amount: 0.2 }}
-                    transition={{ delay: index * 0.06 }}
+                    viewport={{ once: true, amount: 0.22 }}
+                    transition={{ delay: index * 0.08 }}
                   >
                     <Link to={`/projects/${project.id}`} className="home-project-mini-media">
                       <img
@@ -547,7 +736,7 @@ const Home = () => {
                       <span>{getCategoryLabel(project.category, language)}</span>
                       <h4>{getLocalizedText(project.title, language)}</h4>
                       <p>{getLocalizedText(project.description, language)}</p>
-                      <Link to={`/projects/${project.id}`}>
+                      <Link to={`/projects/${project.id}`} className="home-inline-link">
                         {copy.projectCaseStudy}
                         <FiArrowRight />
                       </Link>
@@ -556,28 +745,30 @@ const Home = () => {
                 ))}
               </div>
             </div>
-          ) : null}
+          ) : (
+            <p className="home-empty-state">{copy.emptyProjects}</p>
+          )}
         </div>
       </section>
 
       <section className="section home-reviews">
         <div className="container">
-          <div className="section-copy home-section-heading">
+          <div className="section-copy home-section-copy">
             <span className="page-eyebrow">{copy.reviewsEyebrow}</span>
             <h2>{copy.reviewsTitle}</h2>
             <p>{copy.reviewsSubtitle}</p>
           </div>
 
           <div className="home-reviews-grid">
-            {featuredReviews.length > 0 ? (
-              featuredReviews.map((review, index) => (
+            {reviews.length > 0 ? (
+              reviews.map((review, index) => (
                 <motion.article
                   key={review.id}
                   className="home-review-card"
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, amount: 0.24 }}
-                  transition={{ delay: index * 0.05 }}
+                  transition={{ delay: index * 0.08 }}
                 >
                   <div className="home-review-head">
                     <img
@@ -594,7 +785,7 @@ const Home = () => {
                 </motion.article>
               ))
             ) : (
-              <p className="home-reviews-empty">{copy.noReviews}</p>
+              <p className="home-empty-state">{copy.noReviews}</p>
             )}
           </div>
         </div>
@@ -602,14 +793,9 @@ const Home = () => {
 
       <section className="section home-cta">
         <div className="container">
-          <motion.div
-            className="home-cta-card"
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.32 }}
-          >
+          <motion.div className="home-cta-card" {...revealUp}>
             <div className="home-cta-copy">
-              <span className="page-eyebrow">{copy.eyebrow}</span>
+              <span className="page-eyebrow">{copy.finalEyebrow}</span>
               <h2>{copy.finalTitle}</h2>
               <p>{copy.finalSubtitle}</p>
             </div>

@@ -1,7 +1,7 @@
 export const CATEGORY_LABELS = {
   Shopify: {
     en: 'Shopify Store',
-    ar: 'متاجر شوبيفاي'
+    ar: 'متاجر Shopify'
   },
   Automation: {
     en: 'Automation & AI',

@@ -72,8 +72,10 @@ const Header = () => {
   };
 
   const studioTagline =
-    language === 'en' ? 'Commerce Systems Studio' : 'استوديو التجارة والأنظمة';
-  const ctaLabel = language === 'en' ? 'Book Discovery' : 'احجز جلسة اكتشاف';
+    language === 'en'
+      ? 'Digital Product & Systems Studio'
+      : 'استوديو المنتجات والأنظمة الرقمية';
+  const ctaLabel = language === 'en' ? 'Start a Brief' : 'ابدأ الملخص';
 
   return (
     <motion.header
