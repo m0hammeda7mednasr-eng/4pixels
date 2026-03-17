@@ -25,7 +25,7 @@ const Footer = () => {
   const [openSections, setOpenSections] = useState({
     solutions: false,
     company: false,
-    contact: false
+    contact: true
   });
 
   useEffect(() => {
@@ -251,7 +251,14 @@ const Footer = () => {
           </section>
 
           <section className={`footer-column ${openSections.solutions ? 'open' : ''}`}>
-            <h4 onClick={() => toggleSection('solutions')}>{copy.solutions}</h4>
+            <button
+              type="button"
+              className="footer-section-toggle"
+              onClick={() => toggleSection('solutions')}
+              aria-expanded={openSections.solutions}
+            >
+              <span>{copy.solutions}</span>
+            </button>
             <ul>
               {solutionLinks.map((item) => (
                 <li key={item.label}>
@@ -262,7 +269,14 @@ const Footer = () => {
           </section>
 
           <section className={`footer-column ${openSections.company ? 'open' : ''}`}>
-            <h4 onClick={() => toggleSection('company')}>{copy.company}</h4>
+            <button
+              type="button"
+              className="footer-section-toggle"
+              onClick={() => toggleSection('company')}
+              aria-expanded={openSections.company}
+            >
+              <span>{copy.company}</span>
+            </button>
             <ul>
               {companyLinks.map((item) => (
                 <li key={item.to}>
@@ -275,7 +289,14 @@ const Footer = () => {
           <section
             className={`footer-column footer-contact-column ${openSections.contact ? 'open' : ''}`}
           >
-            <h4 onClick={() => toggleSection('contact')}>{copy.contact}</h4>
+            <button
+              type="button"
+              className="footer-section-toggle"
+              onClick={() => toggleSection('contact')}
+              aria-expanded={openSections.contact}
+            >
+              <span>{copy.contact}</span>
+            </button>
             <ul className="footer-contact-list">
               {contactItems.map((item) => (
                 <li key={item.label}>

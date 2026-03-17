@@ -7,7 +7,7 @@ import {
   FiGrid, FiFolder, FiMessageSquare,
   FiEdit2, FiTrash2,
   FiPlus, FiX, FiSave, FiEye, FiDollarSign,
-  FiClock, FiCheck, FiSearch, FiChevronDown,
+  FiClock, FiCheck, FiSearch, FiChevronDown, FiStar,
   FiArrowUp, FiArrowDown
 } from 'react-icons/fi';
 import api, { clearApiCache } from '../services/api';
@@ -435,11 +435,18 @@ const OverviewTab = ({ stats, messages, reviews }) => {
                 <div key={review.id} className="service-preview">
                   <div>
                     <strong>{review.name.en}</strong>
-                    <p>{'★'.repeat(review.rating || 5)}</p>
+                    <p className="review-rating">
+                      {Array.from({ length: review.rating || 5 }, (_, index) => (
+                        <FiStar key={index} />
+                      ))}
+                    </p>
                   </div>
-                  <span className="delivery-time">
-                    {review.verified && '✓ Verified'}
-                  </span>
+                  {review.verified && (
+                    <span className="delivery-time">
+                      <FiCheck />
+                      Verified
+                    </span>
+                  )}
                 </div>
               ))
             ) : (
@@ -684,7 +691,7 @@ const MessagesTab = ({ messages, fetchData, onDelete }) => {
             <div className="message-header">
               <div className="message-sender">
                 <h3>{msg.name}</h3>
-                <p>{msg.email} • {msg.phone}</p>
+                <p>{msg.email} | {msg.phone}</p>
               </div>
               <div className="message-actions">
                 {!msg.read && (
@@ -773,7 +780,9 @@ const ReviewsTab = ({ reviews, onEdit, onDelete, onAdd, onToggle }) => {
               <img src={review.image} alt={review.name.en} />
               <div className="review-stars">
                 {[...Array(review.rating || 5)].map((_, i) => (
-                  <span key={i}>★</span>
+                  <span key={i}>
+                    <FiStar />
+                  </span>
                 ))}
               </div>
             </div>
@@ -783,7 +792,12 @@ const ReviewsTab = ({ reviews, onEdit, onDelete, onAdd, onToggle }) => {
                   <h3>{review.name.en}</h3>
                   <p className="review-name-ar">{review.name.ar}</p>
                 </div>
-                {review.verified && <span className="verified-badge-admin">✓ Verified</span>}
+                {review.verified && (
+                  <span className="verified-badge-admin">
+                    <FiCheck />
+                    Verified
+                  </span>
+                )}
               </div>
               <p className="review-text-preview">{(review.text?.en || '').substring(0, 100)}...</p>
               <div className="review-admin-actions">
@@ -1021,29 +1035,13 @@ let Modal = ({ type, item, onClose, onSave }) => {
                         reader.readAsDataURL(file);
                       }
                     }}
-                    style={{
-                      width: '100%',
-                      padding: '12px 16px',
-                      borderRadius: '10px',
-                      border: '2px solid var(--admin-border)',
-                      background: 'var(--admin-bg)',
-                      color: 'var(--admin-text)',
-                      fontSize: '0.95rem',
-                      cursor: 'pointer'
-                    }}
+                    className="file-input"
                   />
                   {formData.image && (
                     <img
                       src={formData.image}
                       alt="Preview"
-                      style={{
-                        width: '100px',
-                        height: '100px',
-                        objectFit: 'cover',
-                        borderRadius: '8px',
-                        marginTop: '10px',
-                        border: '2px solid var(--admin-border)'
-                      }}
+                      className="upload-preview upload-preview-sm"
                     />
                   )}
                 </div>
@@ -1113,16 +1111,7 @@ let Modal = ({ type, item, onClose, onSave }) => {
                         value={formData.category || ''}
                         onChange={(e) => setFormData({ ...formData, category: e.target.value })}
                         required
-                        style={{
-                          width: '100%',
-                          padding: '12px 16px',
-                          borderRadius: '10px',
-                          border: '2px solid var(--admin-border)',
-                          background: 'var(--admin-bg)',
-                          color: 'var(--admin-text)',
-                          fontSize: '0.95rem',
-                          cursor: 'pointer'
-                        }}
+                        className="file-input"
                       >
                         <option value="">Select Category</option>
                         {serviceCategories.map(cat => (
@@ -1169,36 +1158,20 @@ let Modal = ({ type, item, onClose, onSave }) => {
                           const reader = new FileReader();
                           reader.onloadend = () => {
                             setFormData({ ...formData, image: reader.result });
-                          };
-                          reader.readAsDataURL(file);
-                        }
-                      }}
-                      style={{
-                        width: '100%',
-                        padding: '12px 16px',
-                        borderRadius: '10px',
-                        border: '2px solid var(--admin-border)',
-                        background: 'var(--admin-bg)',
-                        color: 'var(--admin-text)',
-                        fontSize: '0.95rem',
-                        cursor: 'pointer'
-                      }}
+                        };
+                        reader.readAsDataURL(file);
+                      }
+                    }}
+                    className="file-input"
+                  />
+                  {formData.image && (
+                    <img
+                      src={formData.image}
+                      alt="Preview"
+                      className="upload-preview upload-preview-lg"
                     />
-                    {formData.image && (
-                      <img
-                        src={formData.image}
-                        alt="Preview"
-                        style={{
-                          width: '100%',
-                          maxHeight: '200px',
-                          objectFit: 'cover',
-                          borderRadius: '8px',
-                          marginTop: '10px',
-                          border: '2px solid var(--admin-border)'
-                        }}
-                      />
-                    )}
-                  </div>
+                  )}
+                </div>
 
                   <div className="form-group">
                     <label>Features</label>
@@ -1242,16 +1215,7 @@ let Modal = ({ type, item, onClose, onSave }) => {
                         value={formData.category || ''}
                         onChange={(e) => setFormData({ ...formData, category: e.target.value })}
                         required
-                        style={{
-                          width: '100%',
-                          padding: '12px 16px',
-                          borderRadius: '10px',
-                          border: '2px solid var(--admin-border)',
-                          background: 'var(--admin-bg)',
-                          color: 'var(--admin-text)',
-                          fontSize: '0.95rem',
-                          cursor: 'pointer'
-                        }}
+                        className="file-input"
                       >
                         <option value="">Select Category</option>
                         {projectCategories.map(cat => (
@@ -1277,62 +1241,22 @@ let Modal = ({ type, item, onClose, onSave }) => {
                       accept="image/*"
                       multiple
                       onChange={handleImageChange}
-                      style={{
-                        width: '100%',
-                        padding: '12px 16px',
-                        borderRadius: '10px',
-                        border: '2px solid var(--admin-border)',
-                        background: 'var(--admin-bg)',
-                        color: 'var(--admin-text)',
-                        fontSize: '0.95rem',
-                        cursor: 'pointer'
-                      }}
+                      className="file-input"
                     />
                     {imagePreviews.length > 0 && (
-                      <div style={{
-                        display: 'grid',
-                        gridTemplateColumns: 'repeat(auto-fill, minmax(120px, 1fr))',
-                        gap: '12px',
-                        marginTop: '12px'
-                      }}>
+                      <div className="legacy-project-preview-grid">
                         {imagePreviews.map((preview, index) => (
-                          <div key={index} style={{
-                            position: 'relative',
-                            borderRadius: '8px',
-                            overflow: 'hidden',
-                            border: '2px solid var(--admin-border)'
-                          }}>
+                          <div key={index} className="legacy-project-preview-card">
                             <img
                               src={preview}
                               alt={`Preview ${index + 1}`}
-                              style={{
-                                width: '100%',
-                                height: '120px',
-                                objectFit: 'cover'
-                              }}
                             />
                             <button
                               type="button"
                               onClick={() => removeImage(index)}
-                              style={{
-                                position: 'absolute',
-                                top: '4px',
-                                right: '4px',
-                                background: 'var(--admin-danger)',
-                                color: 'white',
-                                border: 'none',
-                                borderRadius: '50%',
-                                width: '24px',
-                                height: '24px',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                cursor: 'pointer',
-                                fontSize: '14px',
-                                fontWeight: 'bold'
-                              }}
+                              className="legacy-project-preview-remove"
                             >
-                              ×
+                              <FiX />
                             </button>
                           </div>
                         ))}
@@ -1727,16 +1651,7 @@ const ProjectModal = ({ item, onClose, onSave }) => {
               accept="image/*"
               multiple
               onChange={handleImageChange}
-              style={{
-                width: '100%',
-                padding: '12px 16px',
-                borderRadius: '10px',
-                border: '2px solid var(--admin-border)',
-                background: 'var(--admin-bg)',
-                color: 'var(--admin-text)',
-                fontSize: '0.95rem',
-                cursor: 'pointer'
-              }}
+              className="file-input"
             />
             <p className="project-list-helper">
               The first image is used as the cover in cards and detail pages.
