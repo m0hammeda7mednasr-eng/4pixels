@@ -444,59 +444,288 @@ body[dir='rtl'] .contact-location-card {
   }
 }
 
-/* Refinement pass: clearer contact flow with mobile-first action priority. */
+/* Editorial redesign pass: clearer inquiry flow and stronger premium presence. */
 .contact-page {
-  padding: clamp(96px, 12vw, 128px) 0 clamp(56px, 8vw, 80px);
+  position: relative;
+  padding: clamp(100px, 11.5vw, 132px) 0 clamp(60px, 8vw, 90px);
+}
+
+.contact-page::before,
+.contact-page::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.contact-page::before {
+  top: 60px;
+  right: min(6vw, 64px);
+  width: min(28vw, 320px);
+  height: min(28vw, 320px);
+  background: radial-gradient(circle, rgba(0, 87, 255, 0.1) 0%, transparent 74%);
+}
+
+.contact-page::after {
+  left: min(4vw, 34px);
+  bottom: 80px;
+  width: min(20vw, 220px);
+  height: min(20vw, 220px);
+  background: radial-gradient(circle, rgba(255, 140, 66, 0.1) 0%, transparent 74%);
+}
+
+.contact-shell {
+  display: grid;
+  gap: clamp(28px, 4vw, 40px);
 }
 
 .contact-hero {
-  gap: 28px;
+  grid-template-columns: minmax(0, 1.08fr) minmax(320px, 420px);
+  gap: clamp(24px, 4vw, 40px);
+  align-items: end;
 }
 
-.contact-highlights,
-.contact-methods-grid {
-  align-items: stretch;
+.contact-hero-copy {
+  max-width: 720px;
 }
 
-.contact-highlight-card,
+.contact-hero-copy h1 {
+  margin-top: 16px;
+  font-size: clamp(2.8rem, 6vw, 4.9rem);
+  line-height: 0.94;
+  letter-spacing: -0.055em;
+}
+
+.contact-hero-copy h2 {
+  margin-top: 18px;
+  max-width: 16ch;
+  font-size: clamp(1.58rem, 3.4vw, 2.45rem);
+  line-height: 1.06;
+}
+
+.contact-hero-copy p {
+  margin-top: 18px;
+  max-width: 58ch;
+  font-size: clamp(1rem, 2.05vw, 1.12rem);
+}
+
+.contact-highlights {
+  gap: 16px;
+}
+
+.contact-highlight-card {
+  min-height: 108px;
+  padding: 20px 22px;
+  border-radius: 24px;
+  border: 1px solid rgba(8, 40, 97, 0.08);
+  background: rgba(255, 255, 255, 0.84);
+  box-shadow: 0 18px 42px rgba(8, 31, 70, 0.06);
+  backdrop-filter: blur(10px);
+}
+
+body.dark .contact-highlight-card {
+  border-color: rgba(138, 182, 255, 0.12);
+  background: rgba(11, 20, 36, 0.84);
+  box-shadow: none;
+}
+
+.contact-highlight-card span {
+  font-size: 0.9rem;
+  line-height: 1.62;
+}
+
+.contact-grid {
+  gap: 22px;
+}
+
 .contact-method-card,
 .contact-social-card,
 .contact-next-card,
 .contact-form-panel,
 .contact-location-card {
-  border-radius: 22px;
+  border-radius: 28px;
+  border: 1px solid rgba(8, 40, 97, 0.08);
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 22px 52px rgba(8, 31, 70, 0.08);
+}
+
+body.dark .contact-method-card,
+body.dark .contact-social-card,
+body.dark .contact-next-card,
+body.dark .contact-form-panel,
+body.dark .contact-location-card {
+  border-color: rgba(138, 182, 255, 0.12);
+  background: rgba(11, 20, 36, 0.88);
+  box-shadow: none;
 }
 
 .contact-method-card,
 .contact-social-card,
 .contact-next-card {
-  height: 100%;
+  padding: 24px;
 }
 
 .contact-form-panel {
-  position: sticky;
-  top: calc(var(--header-height) + 22px);
-  align-self: start;
+  padding: 28px;
+  top: calc(var(--header-height) + 26px);
 }
 
-.contact-form-head p {
-  max-width: 56ch;
+.contact-methods-grid {
+  gap: 16px;
+}
+
+.contact-method-card h3,
+.contact-social-card h3,
+.contact-next-card h3 {
+  font-size: 1.08rem;
+}
+
+.contact-link,
+.contact-method-card p {
+  margin-top: 16px;
+  font-size: 0.94rem;
+  line-height: 1.72;
+}
+
+.contact-card-head p {
+  margin-top: 8px;
+  font-size: 0.9rem;
+  line-height: 1.76;
+}
+
+.contact-social-grid {
+  gap: 12px;
 }
 
 .contact-social-link {
-  min-height: 78px;
+  min-height: 86px;
+  padding: 16px;
+  border-radius: 20px;
+  border: 1px solid rgba(8, 40, 97, 0.08);
+  background: rgba(244, 247, 255, 0.84);
+}
+
+body.dark .contact-social-link {
+  border-color: rgba(138, 182, 255, 0.12);
+  background: rgba(16, 28, 47, 0.82);
+}
+
+.contact-next-card ul {
+  margin-top: 18px;
+  gap: 14px;
+}
+
+.contact-next-card li {
+  font-size: 0.92rem;
+  line-height: 1.7;
+}
+
+.contact-form-head h2 {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+}
+
+.contact-form-head p {
+  margin-top: 12px;
+  font-size: 0.92rem;
+  line-height: 1.8;
+}
+
+.contact-form .form-group label {
+  margin-bottom: 10px;
+  font-size: 0.84rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+body[dir='rtl'] .contact-form .form-group label {
+  letter-spacing: 0.02em;
+}
+
+.contact-form input,
+.contact-form select,
+.contact-form textarea {
+  min-height: 54px;
+  border-radius: 18px;
+  border: 1px solid rgba(8, 40, 97, 0.08);
+  background: rgba(244, 247, 255, 0.88);
+  font-size: 0.95rem;
+}
+
+.contact-form textarea {
+  min-height: 160px;
+}
+
+body.dark .contact-form input,
+body.dark .contact-form select,
+body.dark .contact-form textarea {
+  border-color: rgba(138, 182, 255, 0.12);
+  background: rgba(16, 28, 47, 0.9);
+}
+
+.submit-btn {
+  min-height: 54px;
+  border-radius: 18px;
+  box-shadow: 0 18px 34px rgba(0, 87, 255, 0.22);
+}
+
+.submit-btn:hover {
+  transform: translateY(-2px);
+}
+
+.contact-location-card {
+  padding: 28px;
+  grid-template-columns: auto 1fr;
+  gap: 16px;
+  align-items: center;
+}
+
+.contact-location-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 18px;
+  box-shadow: 0 12px 24px rgba(0, 87, 255, 0.16);
+}
+
+.contact-location-card h2 {
+  font-size: clamp(1.3rem, 3vw, 1.8rem);
+}
+
+.contact-location-card p {
+  margin-top: 8px;
+  font-size: 0.96rem;
+}
+
+.contact-location-card span {
+  margin-top: 8px;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 @media (max-width: 1080px) {
+  .contact-page::before,
+  .contact-page::after {
+    display: none;
+  }
+
+  .contact-hero,
+  .contact-grid {
+    grid-template-columns: 1fr;
+  }
+
   .contact-form-panel {
     position: static;
-    order: -1;
   }
 }
 
 @media (max-width: 760px) {
-  .contact-location-card,
-  body[dir='rtl'] .contact-location-card {
-    grid-template-columns: 1fr;
+  .contact-highlight-card,
+  .contact-method-card,
+  .contact-social-card,
+  .contact-next-card,
+  .contact-form-panel,
+  .contact-location-card {
+    border-radius: 22px;
   }
 }

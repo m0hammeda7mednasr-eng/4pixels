@@ -372,53 +372,289 @@ body[dir='rtl'] .about-principles-card li {
   }
 }
 
-/* Refinement pass: steadier section rhythm and more consistent card heights. */
+/* Editorial redesign pass: clearer story, stronger credibility, calmer card system. */
 .about-page {
-  padding-top: clamp(96px, 11vw, 124px);
+  position: relative;
+  padding-top: clamp(98px, 11vw, 128px);
+  padding-bottom: clamp(58px, 8vw, 92px);
+}
+
+.about-page::before,
+.about-page::after {
+  content: '';
+  position: absolute;
+  pointer-events: none;
+  border-radius: 50%;
+}
+
+.about-page::before {
+  top: 70px;
+  right: min(6vw, 64px);
+  width: min(28vw, 300px);
+  height: min(28vw, 300px);
+  background: radial-gradient(circle, rgba(0, 87, 255, 0.1) 0%, transparent 74%);
+}
+
+.about-page::after {
+  left: min(3vw, 28px);
+  bottom: 80px;
+  width: min(20vw, 220px);
+  height: min(20vw, 220px);
+  background: radial-gradient(circle, rgba(255, 140, 66, 0.1) 0%, transparent 74%);
 }
 
 .about-hero {
-  gap: 32px;
+  position: relative;
+  grid-template-columns: minmax(0, 1.08fr) minmax(320px, 430px);
+  gap: clamp(28px, 4vw, 44px);
+  align-items: end;
+}
+
+.about-hero-copy {
+  max-width: 720px;
+}
+
+.about-hero-copy h1 {
+  margin-top: 16px;
+  font-size: clamp(2.8rem, 6vw, 4.8rem);
+  line-height: 0.94;
+  letter-spacing: -0.055em;
 }
 
 .about-hero-copy h2 {
-  max-width: 17ch;
+  margin-top: 18px;
+  max-width: 14ch;
+  font-size: clamp(1.6rem, 3.6vw, 2.55rem);
+  line-height: 1.06;
 }
 
-.about-stats,
+.about-hero-copy p {
+  margin-top: 18px;
+  max-width: 58ch;
+  font-size: clamp(1rem, 2.05vw, 1.12rem);
+}
+
+.about-stats {
+  gap: 16px;
+}
+
+.about-stat-card {
+  min-height: 132px;
+  padding: 22px;
+  border-radius: 26px;
+  border: 1px solid rgba(8, 40, 97, 0.08);
+  background: rgba(255, 255, 255, 0.84);
+  box-shadow: 0 20px 44px rgba(8, 31, 70, 0.06);
+  backdrop-filter: blur(10px);
+}
+
+body.dark .about-stat-card {
+  border-color: rgba(138, 182, 255, 0.12);
+  background: rgba(11, 20, 36, 0.84);
+  box-shadow: none;
+}
+
+.about-stat-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 16px;
+  box-shadow: 0 12px 24px rgba(0, 87, 255, 0.16);
+}
+
+.about-stat-card strong {
+  margin-top: 18px;
+  font-size: clamp(1.8rem, 4vw, 2.4rem);
+}
+
+.about-stat-card span {
+  margin-top: 8px;
+  font-size: 0.8rem;
+  line-height: 1.5;
+}
+
 .about-story-grid,
 .about-values-grid,
 .about-process-grid {
-  align-items: stretch;
+  gap: 20px;
 }
 
-.about-stat-card,
 .about-story-card,
 .about-value-card,
-.about-process-card {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
+.about-principles-card,
+.about-process-card,
+.about-final-card {
+  border-radius: 28px;
+  border: 1px solid rgba(8, 40, 97, 0.08);
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 22px 52px rgba(8, 31, 70, 0.08);
+}
+
+body.dark .about-story-card,
+body.dark .about-value-card,
+body.dark .about-principles-card,
+body.dark .about-process-card,
+body.dark .about-final-card {
+  border-color: rgba(138, 182, 255, 0.12);
+  background: rgba(11, 20, 36, 0.88);
+  box-shadow: none;
+}
+
+.about-story-card {
+  padding: 24px;
+}
+
+.about-story-card h3 {
+  font-size: 1.18rem;
+}
+
+.about-story-card p {
+  margin-top: 12px;
+  font-size: 0.92rem;
+  line-height: 1.78;
+}
+
+.about-values {
+  display: grid;
+  gap: 24px;
+}
+
+.about-values h2 {
+  font-size: clamp(2rem, 4.5vw, 3.2rem);
+}
+
+.about-value-card {
+  padding: 24px;
+}
+
+.about-value-icon {
+  width: 54px;
+  height: 54px;
+  border-radius: 18px;
+  box-shadow: 0 12px 26px rgba(0, 87, 255, 0.16);
+}
+
+.about-value-card h3 {
+  margin-top: 18px;
+  font-size: 1.12rem;
+}
+
+.about-value-card p {
+  margin-top: 12px;
+  font-size: 0.9rem;
+  line-height: 1.78;
+}
+
+.about-approach {
+  gap: 20px;
+}
+
+.about-principles-card,
+.about-process-panel {
+  padding: clamp(24px, 3vw, 30px);
+  border-radius: 30px;
 }
 
 .about-principles-card {
   background:
-    radial-gradient(circle at 12% 20%, rgba(0, 87, 255, 0.1), transparent 40%),
+    linear-gradient(160deg, rgba(255, 255, 255, 0.98), rgba(243, 247, 255, 0.94)),
     var(--surface-light);
 }
 
 body.dark .about-principles-card {
   background:
-    radial-gradient(circle at 12% 20%, rgba(0, 179, 164, 0.1), transparent 40%),
+    linear-gradient(160deg, rgba(11, 20, 36, 0.98), rgba(8, 16, 30, 0.98)),
     var(--surface-dark);
 }
 
-@media (max-width: 760px) {
+.about-principles-card h2,
+.about-process-panel h2 {
+  font-size: clamp(1.45rem, 3vw, 2rem);
+}
+
+.about-principles-card p,
+.about-process-panel p {
+  margin-top: 14px;
+  font-size: 0.94rem;
+  line-height: 1.8;
+}
+
+.about-principles-card ul {
+  margin-top: 20px;
+  gap: 14px;
+}
+
+.about-process-panel {
+  border: 1px solid rgba(8, 40, 97, 0.08);
+  background: rgba(255, 255, 255, 0.86);
+  box-shadow: 0 20px 44px rgba(8, 31, 70, 0.06);
+}
+
+body.dark .about-process-panel {
+  border-color: rgba(138, 182, 255, 0.12);
+  background: rgba(11, 20, 36, 0.84);
+  box-shadow: none;
+}
+
+.about-process-card {
+  padding: 22px;
+}
+
+.about-process-card span {
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+}
+
+.about-process-card h3 {
+  margin-top: 14px;
+  font-size: 1.1rem;
+}
+
+.about-process-card p {
+  margin-top: 12px;
+  font-size: 0.9rem;
+  line-height: 1.78;
+}
+
+.about-final-card {
+  padding: clamp(28px, 4vw, 38px);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(243, 247, 255, 0.94)),
+    var(--surface-light);
+}
+
+body.dark .about-final-card {
+  background:
+    linear-gradient(135deg, rgba(11, 20, 36, 0.98), rgba(8, 16, 30, 0.98)),
+    var(--surface-dark);
+}
+
+.about-final-card h2 {
+  font-size: clamp(1.65rem, 3.6vw, 2.45rem);
+}
+
+.about-final-card p {
+  max-width: 58ch;
+}
+
+@media (max-width: 1080px) {
   .about-hero {
-    gap: 24px;
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 760px) {
+  .about-page::before,
+  .about-page::after {
+    display: none;
   }
 
-  .about-hero-copy h2 {
-    max-width: none;
+  .about-stat-card,
+  .about-story-card,
+  .about-value-card,
+  .about-principles-card,
+  .about-process-card,
+  .about-process-panel,
+  .about-final-card {
+    border-radius: 22px;
   }
 }

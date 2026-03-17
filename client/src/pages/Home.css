@@ -886,8 +886,10 @@ body.dark .home-project-meta span:last-child {
   border: 2px solid rgba(0, 87, 255, 0.12);
 }
 
-.home-review-head span {
+.home-review-rating {
   display: inline-flex;
+  align-items: center;
+  gap: 4px;
   margin-top: 4px;
   color: #f59e0b;
   font-size: 0.86rem;

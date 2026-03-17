@@ -7,6 +7,7 @@ import {
   FiClock,
   FiLayers,
   FiShield,
+  FiStar,
   FiTarget,
   FiTrendingUp,
   FiZap
@@ -778,7 +779,11 @@ const Home = () => {
                     />
                     <div>
                       <h3>{getLocalizedText(review.name, language)}</h3>
-                      <span>{'★'.repeat(review.rating || 5)}</span>
+                      <div className="home-review-rating" aria-label={`${review.rating || 5} stars`}>
+                        {Array.from({ length: review.rating || 5 }, (_, starIndex) => (
+                          <FiStar key={starIndex} />
+                        ))}
+                      </div>
                     </div>
                   </div>
                   <p>{getLocalizedText(review.text, language)}</p>
