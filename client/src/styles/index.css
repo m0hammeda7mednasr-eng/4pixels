@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Alexandria:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=Tajawal:wght@500;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Alexandria:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=Tajawal:wght@500;700;800&display=swap');
 
 *,
 *::before,
@@ -49,7 +49,7 @@
   --font-body-ar: 'Alexandria', sans-serif;
   --font-heading-ar: 'Tajawal', sans-serif;
 
-  --header-height: 78px;
+  --header-height: 65px;
 
   --text-xs: clamp(0.72rem, 1.4vw, 0.8rem);
   --text-sm: clamp(0.84rem, 2vw, 0.92rem);
@@ -517,7 +517,7 @@ img {
   --shadow-sm: 0 10px 24px rgba(8, 31, 70, 0.06);
   --shadow: 0 18px 42px rgba(8, 31, 70, 0.08);
   --shadow-lg: 0 28px 68px rgba(8, 24, 55, 0.12);
-  --header-height: 74px;
+  --header-height: 65px;
   --page-max-width: 1180px;
 }
 
@@ -609,7 +609,7 @@ main {
 
 @media (max-width: 680px) {
   :root {
-    --header-height: 70px;
+    --header-height: 65px;
   }
 
   .container {
