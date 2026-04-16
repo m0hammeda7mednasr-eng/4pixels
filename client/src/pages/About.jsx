@@ -9,6 +9,7 @@ import {
 } from 'react-icons/fi';
 import { useLanguage } from '../context/LanguageContext';
 import './About.css';
+import '../styles/figma-polish.css';
 
 const About = () => {
   const { t, language } = useLanguage();

@@ -1,13 +1,13 @@
 import React, { Suspense, lazy } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { ThemeProvider } from './context/ThemeContext';
 import { LanguageProvider } from './context/LanguageContext';
 import { AuthProvider } from './context/AuthContext';
-import { useLanguage } from './context/LanguageContext';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
 import AdminRoute from './components/AdminRoute';
+
 const Home = lazy(() => import('./pages/Home'));
 const Services = lazy(() => import('./pages/Services'));
 const ServiceDetail = lazy(() => import('./pages/ServiceDetail'));
@@ -28,15 +28,15 @@ const RouteLoader = () => (
 );
 
 const AppShell = () => {
-  const { t } = useLanguage();
+  const location = useLocation();
+  const isAdminArea = location.pathname.startsWith('/admin');
+  const isLoginPage = location.pathname === '/login';
+  const showPublicChrome = !isAdminArea && !isLoginPage;
 
   return (
     <>
       <ScrollToTop />
-      <a href="#main-content" className="skip-link">
-        {t('skipToContent')}
-      </a>
-      <Header />
+      {showPublicChrome ? <Header /> : null}
       <main id="main-content" tabIndex={-1}>
         <Suspense fallback={<RouteLoader />}>
           <Routes>
@@ -76,7 +76,7 @@ const AppShell = () => {
           </Routes>
         </Suspense>
       </main>
-      <Footer />
+      {showPublicChrome ? <Footer /> : null}
     </>
   );
 };

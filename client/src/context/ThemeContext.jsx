@@ -6,14 +6,6 @@ export const useTheme = () => useContext(ThemeContext);
 
 const THEME_STORAGE_KEY = 'theme';
 
-const getSystemTheme = () => {
-  if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') {
-    return 'light';
-  }
-
-  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-};
-
 const getInitialTheme = () => {
   try {
     const storedTheme = localStorage.getItem(THEME_STORAGE_KEY);
@@ -24,7 +16,7 @@ const getInitialTheme = () => {
     // Ignore storage failures and fallback to system preference.
   }
 
-  return getSystemTheme();
+  return 'light';
 };
 
 export const ThemeProvider = ({ children }) => {

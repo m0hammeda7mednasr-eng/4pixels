@@ -27,9 +27,11 @@ import { FaXTwitter } from 'react-icons/fa6';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useLanguage } from '../context/LanguageContext';
+import { figmaServices } from '../content/figmaContent';
 import api, { getCached } from '../services/api';
 import { getLocalizedText } from '../utils/localization';
 import './Contact.css';
+import '../styles/figma-polish.css';
 
 const Contact = () => {
   const { t, language } = useLanguage();
@@ -43,7 +45,7 @@ const Contact = () => {
   });
   const [loading, setLoading] = useState(false);
   const [content, setContent] = useState(null);
-  const [services, setServices] = useState([]);
+  const [services, setServices] = useState(figmaServices);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -51,20 +53,18 @@ const Contact = () => {
 
     const fetchData = async () => {
       try {
-        const [contentData, servicesData] = await Promise.all([
-          getCached('/content', { ttl: 60000, signal: controller.signal }),
-          getCached('/services', { ttl: 120000, signal: controller.signal })
-        ]);
+        const contentData = await getCached('/content', { ttl: 60000, signal: controller.signal });
 
         if (!mounted) {
           return;
         }
 
         setContent(contentData || null);
-        setServices(Array.isArray(servicesData) ? servicesData : []);
+        setServices(figmaServices);
       } catch (err) {
         if (!controller.signal.aborted) {
           console.error('Error fetching contact data:', err.userMessage || err.message);
+          setServices(figmaServices);
         }
       }
     };

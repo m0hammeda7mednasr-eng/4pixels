@@ -12,6 +12,7 @@ import {
 } from 'react-icons/fi';
 import api, { clearApiCache } from '../services/api';
 import './Admin.css';
+import '../styles/figma-polish.css';
 
 const normalizeBilingualField = (value) => {
   if (typeof value === 'string') {

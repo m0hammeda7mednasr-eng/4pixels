@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import {
@@ -10,58 +10,18 @@ import {
   FiUser
 } from 'react-icons/fi';
 import { useLanguage } from '../context/LanguageContext';
-import { getCached } from '../services/api';
+import { figmaProjects } from '../content/figmaContent';
 import { getCategoryLabel, PRIMARY_CATEGORIES } from '../utils/categoryLabels';
 import { getLocalizedText } from '../utils/localization';
 import './Projects.css';
+import '../styles/figma-polish.css';
 
 const Projects = () => {
   const { t, language } = useLanguage();
-  const [projects, setProjects] = useState([]);
+  const projects = figmaProjects;
   const [activeCategory, setActiveCategory] = useState('all');
   const [search, setSearch] = useState('');
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
-
-  useEffect(() => {
-    const controller = new AbortController();
-    let mounted = true;
-
-    const fetchProjects = async () => {
-      try {
-        setError('');
-        const data = await getCached('/projects', { ttl: 120000, signal: controller.signal });
-
-        if (!mounted) {
-          return;
-        }
-
-        setProjects(data || []);
-      } catch (err) {
-        if (controller.signal.aborted || !mounted) {
-          return;
-        }
-
-        console.error('Error fetching projects:', err.userMessage || err.message);
-        setError(
-          language === 'en'
-            ? 'Could not load projects right now.'
-            : 'تعذر تحميل المشاريع في الوقت الحالي.'
-        );
-      } finally {
-        if (mounted) {
-          setLoading(false);
-        }
-      }
-    };
-
-    fetchProjects();
-
-    return () => {
-      mounted = false;
-      controller.abort();
-    };
-  }, [language]);
+  const loading = false;
 
   const categories = useMemo(() => {
     const availableCategories = Array.from(
@@ -186,8 +146,6 @@ const Projects = () => {
             </article>
           </div>
         </header>
-
-        {error ? <p className="projects-feedback">{error}</p> : null}
 
         <div className="projects-toolbar">
           <div className="projects-search">

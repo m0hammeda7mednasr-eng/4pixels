@@ -3,10 +3,12 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { FiArrowLeft, FiCheck, FiClock, FiDollarSign, FiPackage } from 'react-icons/fi';
 import { useLanguage } from '../context/LanguageContext';
+import { getFigmaServiceById } from '../content/figmaContent';
 import api from '../services/api';
 import { getCategoryLabel } from '../utils/categoryLabels';
 import { getLocalizedArray, getLocalizedText } from '../utils/localization';
 import './ServiceDetail.css';
+import '../styles/figma-polish.css';
 
 const ServiceDetail = () => {
   const { id } = useParams();
@@ -56,6 +58,15 @@ const ServiceDetail = () => {
 
   useEffect(() => {
     const fetchService = async () => {
+      const fallbackService = getFigmaServiceById(id);
+
+      if (fallbackService) {
+        setService(fallbackService);
+        setError(null);
+        setLoading(false);
+        return;
+      }
+
       try {
         setLoading(true);
         setError(null);

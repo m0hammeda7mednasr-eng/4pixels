@@ -1,0 +1,938 @@
+:root {
+  --figma-page-blue: #1a6dff;
+  --figma-page-cyan: #00b8ff;
+  --figma-page-ink: #0f172a;
+  --figma-page-muted: #64748b;
+  --figma-page-soft: #94a3b8;
+  --figma-page-line: #eef4ff;
+  --figma-page-line-strong: #e4ecfb;
+  --figma-page-panel: rgba(255, 255, 255, 0.92);
+  --figma-page-panel-soft: rgba(248, 251, 255, 0.9);
+  --figma-page-shadow: 0 10px 30px rgba(15, 23, 42, 0.025);
+  --figma-page-shadow-strong: 0 18px 44px rgba(26, 109, 255, 0.08);
+}
+
+.services-page,
+.projects-page,
+.about-page,
+.contact-page,
+.service-detail,
+.project-detail,
+.not-found-page,
+.shopify-connect-page,
+.shopify-success-page {
+  color: var(--figma-page-ink);
+  background: #ffffff;
+  font-family: Inter, system-ui, sans-serif;
+}
+
+html,
+body,
+#root,
+main {
+  max-width: 100%;
+}
+
+.services-page::before,
+.services-page::after,
+.projects-page::before,
+.projects-page::after,
+.about-page::before,
+.about-page::after,
+.contact-page::before,
+.contact-page::after,
+.services-page-orb,
+.projects-page-orb {
+  display: none;
+}
+
+.services-page .container,
+.projects-page .container,
+.about-page .container,
+.contact-page .container,
+.service-detail .container,
+.project-detail .container,
+.not-found-page .container,
+.shopify-connect-page .container,
+.shopify-success-page .container {
+  width: min(1152px, calc(100% - 48px));
+  padding-inline: 0;
+}
+
+.services-page,
+.projects-page,
+.about-page,
+.contact-page,
+.service-detail,
+.project-detail,
+.shopify-connect-page {
+  padding-top: calc(var(--header-height) + 42px);
+  padding-bottom: 80px;
+}
+
+.services-page-shell,
+.projects-page-shell,
+.contact-shell {
+  gap: 40px;
+}
+
+.services-hero,
+.projects-hero,
+.about-hero,
+.contact-hero {
+  gap: 28px;
+  align-items: center;
+}
+
+.services-hero,
+.projects-hero,
+.about-hero,
+.contact-hero,
+.contact-grid,
+.service-detail-content,
+.project-header,
+.services-hero-panel,
+.services-summary-card,
+.services-card,
+.projects-summary-card,
+.projects-card,
+.about-stat-card,
+.about-story-card,
+.about-value-card,
+.contact-highlight-card,
+.contact-method-card,
+.contact-form-panel {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.services-hero-copy,
+.projects-hero-copy,
+.about-hero-copy,
+.contact-hero-copy,
+.section-copy {
+  max-width: 660px;
+}
+
+.services-hero-copy h1,
+.projects-hero-copy h1,
+.about-hero-copy h1,
+.contact-hero-copy h1,
+.service-header h1,
+.project-header h1,
+.not-found-card h1,
+.shopify-header h1,
+.success-card h1 {
+  margin-top: 16px;
+  color: var(--figma-page-ink);
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(2.25rem, 5vw, 3.6rem);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: 0;
+}
+
+.about-hero-copy h2,
+.contact-hero-copy h2,
+.services-method h2,
+.services-final-card h2,
+.projects-final-card h2,
+.about-values h2,
+.about-principles-card h2,
+.about-process-panel h2,
+.about-final-card h2,
+.contact-form-head h2,
+.contact-location-card h2,
+.project-videos h2,
+.project-tags-section h2,
+.project-cta h2,
+.service-features-section h2,
+.service-faq-section h2,
+.connected-stores h2,
+.shopify-features h2 {
+  color: var(--figma-page-ink);
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+.services-hero-copy p,
+.projects-hero-copy p,
+.about-hero-copy p,
+.contact-hero-copy p,
+.section-copy p,
+.service-subtitle,
+.project-description,
+.project-cta p,
+.not-found-card p,
+.shopify-header p,
+.success-card p {
+  color: var(--figma-page-muted);
+  font-size: 14.08px;
+  line-height: 25.344px;
+  overflow-wrap: break-word;
+}
+
+.page-eyebrow,
+.service-category-pill,
+.project-category,
+.services-card-category,
+.projects-category {
+  min-height: 30px;
+  padding: 0 14px;
+  border: 1px solid rgba(26, 109, 255, 0.08);
+  border-radius: 999px;
+  color: var(--figma-page-blue);
+  background: rgba(26, 109, 255, 0.04);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.055em;
+  line-height: 16.5px;
+  text-transform: uppercase;
+}
+
+.services-hero-panel,
+.services-summary-card,
+.services-toolbar,
+.services-card,
+.services-method-card,
+.services-final-card,
+.projects-summary-card,
+.projects-toolbar,
+.projects-card,
+.projects-empty,
+.projects-loading,
+.projects-final-card,
+.about-stat-card,
+.about-story-card,
+.about-value-card,
+.about-principles-card,
+.about-process-panel,
+.about-process-card,
+.about-final-card,
+.contact-highlight-card,
+.contact-method-card,
+.contact-social-card,
+.contact-next-card,
+.contact-form-panel,
+.contact-location-card,
+.service-main,
+.price-card,
+.why-choose-card,
+.project-header,
+.project-tags-section,
+.project-cta,
+.gallery-main,
+.video-wrapper,
+.not-found-card,
+.connect-form-card,
+.store-card,
+.shopify-connect-page .feature-item,
+.success-card {
+  border: 1px solid rgba(241, 245, 249, 0.95);
+  border-radius: 16px;
+  background: var(--figma-page-panel);
+  box-shadow: var(--figma-page-shadow);
+}
+
+.services-hero-panel,
+.services-card,
+.projects-card,
+.about-story-card,
+.about-value-card,
+.contact-form-panel,
+.service-main,
+.price-card,
+.project-header,
+.connect-form-card,
+.success-card {
+  background: rgba(255, 255, 255, 0.96);
+}
+
+.services-card:hover,
+.projects-card:hover,
+.about-story-card:hover,
+.about-value-card:hover,
+.contact-method-card:hover,
+.shopify-connect-page .feature-item:hover,
+.store-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(26, 109, 255, 0.12);
+  box-shadow: var(--figma-page-shadow-strong);
+}
+
+.services-summary-card strong,
+.projects-summary-card strong,
+.about-stat-card strong,
+.insight-value,
+.price-amount {
+  color: var(--figma-page-ink);
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 600;
+  letter-spacing: 0;
+  -webkit-text-fill-color: currentColor;
+  background: none;
+}
+
+.services-summary-card span,
+.projects-summary-card span,
+.about-stat-card span,
+.project-year,
+.meta-item strong,
+.price-label,
+.contact-location-card span {
+  color: var(--figma-page-soft);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.055em;
+  line-height: 16.5px;
+  text-transform: uppercase;
+}
+
+.btn,
+.submit-btn,
+.btn-shopify,
+.login-btn,
+.project-mobile-actions .btn,
+.admin-dashboard .btn-primary,
+.admin-dashboard .btn-outline,
+.admin-dashboard .btn-sm {
+  border-radius: 999px;
+}
+
+.btn-primary,
+.submit-btn,
+.btn-shopify,
+.login-btn,
+.admin-dashboard .btn-primary,
+.admin-dashboard .btn-sm {
+  color: #ffffff;
+  background: linear-gradient(166deg, var(--figma-page-blue) 0%, var(--figma-page-cyan) 100%);
+  box-shadow: 0 10px 24px rgba(26, 109, 255, 0.18);
+}
+
+.btn-outline,
+.admin-dashboard .btn-outline {
+  color: var(--figma-page-blue);
+  border: 1px solid rgba(26, 109, 255, 0.15);
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.btn-outline:hover,
+.admin-dashboard .btn-outline:hover {
+  color: #ffffff;
+  border-color: transparent;
+  background: linear-gradient(166deg, var(--figma-page-blue) 0%, var(--figma-page-cyan) 100%);
+}
+
+.services-category-list button,
+.projects-filters button,
+.projects-card-tags span,
+.tag,
+.contact-social-link,
+.feature-item,
+.faq-item,
+.price-detail-item,
+.meta-item,
+.input-with-suffix,
+.contact-form .form-group input,
+.contact-form .form-group textarea,
+.contact-form .form-group select,
+.login-form .form-group input {
+  border: 1px solid var(--figma-page-line);
+  border-radius: 14px;
+  background: var(--figma-page-panel-soft);
+}
+
+.services-category-list button.active,
+.projects-filters button.active {
+  color: #ffffff;
+  border-color: transparent;
+  background: linear-gradient(166deg, var(--figma-page-blue) 0%, var(--figma-page-cyan) 100%);
+  box-shadow: 0 10px 22px rgba(26, 109, 255, 0.16);
+}
+
+.services-card h3,
+.projects-card-title,
+.about-story-card h3,
+.about-value-card h3,
+.about-process-card h3,
+.contact-method-card h3,
+.contact-card-head h3,
+.contact-next-card h3,
+.service-features-section h2,
+.service-faq-section h2,
+.why-choose-card h3,
+.project-tags-section h2,
+.project-cta h2,
+.store-info h3,
+.shopify-connect-page .feature-item h3 {
+  color: var(--figma-page-ink);
+}
+
+.services-card p,
+.projects-card-description,
+.about-story-card p,
+.about-value-card p,
+.about-principles-card p,
+.about-process-card p,
+.about-final-card p,
+.contact-card-head p,
+.contact-form-head p,
+.contact-method-card p,
+.contact-next-card li,
+.contact-social-empty,
+.feature-item span,
+.faq-item p,
+.price-note,
+.store-domain,
+.shopify-connect-page .feature-item p {
+  color: var(--figma-page-muted);
+}
+
+.services-method-icon,
+.projects-summary-icon,
+.about-stat-icon,
+.about-value-icon,
+.contact-highlight-icon,
+.contact-icon,
+.contact-location-icon {
+  border-radius: 14px;
+  background: rgba(26, 109, 255, 0.05);
+  color: var(--figma-page-blue);
+  box-shadow: none;
+}
+
+.projects-card-media,
+.service-media,
+.gallery-main {
+  border-radius: 16px;
+  border-color: var(--figma-page-line);
+}
+
+.contact-page .contact-grid {
+  margin-top: 0;
+}
+
+.contact-highlights {
+  grid-template-columns: 1fr;
+}
+
+.contact-highlight-card {
+  min-height: 92px;
+}
+
+.contact-form .form-group label,
+.login-form .form-group label,
+.form-group label {
+  color: var(--figma-page-ink);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.contact-form .form-group input,
+.contact-form .form-group textarea,
+.contact-form .form-group select,
+.login-form .form-group input,
+.input-with-suffix input {
+  color: var(--figma-page-ink);
+  font-size: 15px;
+}
+
+.contact-form .form-group input:focus,
+.contact-form .form-group textarea:focus,
+.contact-form .form-group select:focus,
+.login-form .form-group input:focus,
+.input-with-suffix:focus-within {
+  border-color: rgba(26, 109, 255, 0.28);
+  box-shadow: 0 0 0 3px rgba(26, 109, 255, 0.08);
+  background: #ffffff;
+}
+
+.login-page {
+  background: linear-gradient(180deg, #f6f9ff 0%, #ffffff 100%);
+  font-family: Inter, system-ui, sans-serif;
+}
+
+.login-page::before {
+  display: none;
+}
+
+.login-container {
+  max-width: 960px;
+  border: 1px solid rgba(241, 245, 249, 0.95);
+  border-radius: 18px;
+  background: #ffffff;
+  box-shadow: 0 25px 60px rgba(26, 109, 255, 0.1), 0 5px 20px rgba(0, 0, 0, 0.05);
+}
+
+.login-header h2,
+.illustration-content h3 {
+  color: var(--figma-page-ink);
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 600;
+  letter-spacing: 0;
+  -webkit-text-fill-color: currentColor;
+  background: none;
+}
+
+.login-header p {
+  color: var(--figma-page-muted);
+}
+
+.login-illustration {
+  background:
+    linear-gradient(147deg, rgba(26, 109, 255, 0.1) 0%, rgba(0, 184, 255, 0.06) 100%),
+    #f8fbff;
+}
+
+.illustration-content {
+  color: var(--figma-page-ink);
+}
+
+.illustration-content p {
+  color: var(--figma-page-muted);
+}
+
+.graphic-circle {
+  border-color: rgba(26, 109, 255, 0.14);
+  background: rgba(26, 109, 255, 0.05);
+}
+
+.shopify-icon,
+.store-icon,
+.success-icon,
+.shopify-badge {
+  border-radius: 14px;
+  background: linear-gradient(166deg, #76b82a 0%, #96bf48 100%);
+  box-shadow: 0 10px 24px rgba(118, 184, 42, 0.18);
+}
+
+.not-found-code {
+  color: var(--figma-page-blue);
+  font-family: 'Playfair Display', Georgia, serif;
+  -webkit-text-fill-color: currentColor;
+  background: none;
+}
+
+.admin-dashboard {
+  --admin-accent: var(--figma-page-blue);
+  --admin-accent-strong: #0f56e8;
+  --admin-accent-soft: rgba(26, 109, 255, 0.08);
+  --admin-bg: #ffffff;
+  --admin-bg-soft: #f8fbff;
+  --admin-surface: rgba(255, 255, 255, 0.94);
+  --admin-surface-soft: rgba(248, 251, 255, 0.94);
+  --admin-text: var(--figma-page-ink);
+  --admin-text-muted: var(--figma-page-muted);
+  --admin-border: rgba(241, 245, 249, 0.95);
+  --admin-shadow: 0 10px 30px rgba(15, 23, 42, 0.025);
+  --admin-shadow-strong: 0 18px 44px rgba(26, 109, 255, 0.08);
+  min-height: 100vh;
+  padding-top: 0;
+  background: #ffffff;
+  color: var(--admin-text);
+  font-family: Inter, system-ui, sans-serif;
+}
+
+.admin-sidebar {
+  top: 0;
+  width: 260px;
+  padding: 24px 14px;
+  border-right: 1px solid var(--admin-border);
+  background: rgba(255, 255, 255, 0.84);
+  backdrop-filter: blur(20px);
+}
+
+.admin-logo {
+  padding: 16px;
+  border-radius: 16px;
+  background: linear-gradient(180deg, #f6f9ff 0%, #ffffff 100%);
+  border: 1px solid var(--admin-border);
+  box-shadow: none;
+}
+
+.admin-logo h2 {
+  color: var(--figma-page-ink);
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+.admin-logo p {
+  color: var(--figma-page-soft);
+}
+
+.admin-main {
+  margin-left: 260px;
+  padding: 28px;
+}
+
+.admin-content,
+.tab-content {
+  max-width: 1152px;
+}
+
+.admin-nav button {
+  min-height: 42px;
+  border-radius: 999px;
+  color: var(--figma-page-muted);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.admin-nav button:hover {
+  color: var(--figma-page-blue);
+  background: rgba(26, 109, 255, 0.04);
+}
+
+.admin-nav button.active {
+  color: #ffffff;
+  background: linear-gradient(166deg, var(--figma-page-blue) 0%, var(--figma-page-cyan) 100%);
+  box-shadow: 0 10px 22px rgba(26, 109, 255, 0.16);
+}
+
+.content-header h1,
+.tab-header h2,
+.modal-header h2,
+.form-section h3,
+.card-header h3,
+.admin-dashboard h1,
+.admin-dashboard h2,
+.admin-dashboard h3 {
+  color: var(--figma-page-ink);
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+.content-header h1,
+.tab-header h2 {
+  font-size: clamp(1.75rem, 3vw, 2.45rem);
+}
+
+.content-header p,
+.admin-dashboard p,
+.message-preview p,
+.service-description,
+.project-info p,
+.review-text-preview,
+.message-text,
+.message-details span {
+  color: var(--figma-page-muted);
+}
+
+.stat-card,
+.insight-card,
+.overview-card,
+.service-card,
+.project-card,
+.review-admin-card,
+.message-card,
+.form-section,
+.section-tabs,
+.search-bar,
+.modal-content,
+.project-image-preview {
+  border: 1px solid var(--admin-border);
+  border-radius: 16px;
+  background: var(--admin-surface);
+  box-shadow: var(--admin-shadow);
+}
+
+.stat-icon,
+.review-stars,
+.category-badge,
+.feature-tag,
+.project-category,
+.verified-badge-admin {
+  border-radius: 14px;
+}
+
+.stat-icon {
+  color: var(--figma-page-blue);
+  background: rgba(26, 109, 255, 0.05);
+  box-shadow: none;
+}
+
+.stat-card.success .stat-icon,
+.stat-card.warning .stat-icon,
+.stat-card.info .stat-icon {
+  color: var(--figma-page-blue);
+  background: rgba(26, 109, 255, 0.05);
+}
+
+.admin-dashboard .btn-icon {
+  border-radius: 999px;
+  background: var(--admin-surface-soft);
+}
+
+.admin-dashboard .btn-icon:hover {
+  color: #ffffff;
+  border-color: transparent;
+  background: linear-gradient(166deg, var(--figma-page-blue) 0%, var(--figma-page-cyan) 100%);
+}
+
+.admin-dashboard input,
+.admin-dashboard textarea,
+.admin-dashboard select,
+.search-bar input {
+  color: var(--figma-page-ink);
+}
+
+.modal-overlay {
+  background: rgba(15, 23, 42, 0.36);
+}
+
+body.dark .services-page,
+body.dark .projects-page,
+body.dark .about-page,
+body.dark .contact-page,
+body.dark .service-detail,
+body.dark .project-detail,
+body.dark .not-found-page,
+body.dark .shopify-connect-page,
+body.dark .shopify-success-page,
+body.dark .login-page,
+body.dark .admin-dashboard {
+  color: var(--figma-page-ink);
+  background: #ffffff;
+}
+
+body.dark .services-hero-panel,
+body.dark .services-summary-card,
+body.dark .services-toolbar,
+body.dark .services-card,
+body.dark .services-method-card,
+body.dark .services-final-card,
+body.dark .projects-summary-card,
+body.dark .projects-toolbar,
+body.dark .projects-card,
+body.dark .projects-empty,
+body.dark .projects-loading,
+body.dark .projects-final-card,
+body.dark .about-stat-card,
+body.dark .about-story-card,
+body.dark .about-value-card,
+body.dark .about-principles-card,
+body.dark .about-process-panel,
+body.dark .about-process-card,
+body.dark .about-final-card,
+body.dark .contact-highlight-card,
+body.dark .contact-method-card,
+body.dark .contact-social-card,
+body.dark .contact-next-card,
+body.dark .contact-form-panel,
+body.dark .contact-location-card,
+body.dark .service-main,
+body.dark .price-card,
+body.dark .why-choose-card,
+body.dark .project-header,
+body.dark .project-tags-section,
+body.dark .project-cta,
+body.dark .not-found-card,
+body.dark .connect-form-card,
+body.dark .store-card,
+body.dark .shopify-connect-page .feature-item,
+body.dark .success-card,
+body.dark .login-container,
+body.dark .admin-sidebar {
+  color: var(--figma-page-ink);
+  border-color: rgba(241, 245, 249, 0.95);
+  background: var(--figma-page-panel);
+  box-shadow: var(--figma-page-shadow);
+}
+
+body.dark .services-hero-copy h1,
+body.dark .projects-hero-copy h1,
+body.dark .about-hero-copy h1,
+body.dark .contact-hero-copy h1,
+body.dark .service-header h1,
+body.dark .project-header h1,
+body.dark .not-found-card h1,
+body.dark .shopify-header h1,
+body.dark .success-card h1,
+body.dark .admin-dashboard h1,
+body.dark .admin-dashboard h2,
+body.dark .admin-dashboard h3 {
+  color: var(--figma-page-ink);
+}
+
+body.dark .services-hero-copy p,
+body.dark .projects-hero-copy p,
+body.dark .about-hero-copy p,
+body.dark .contact-hero-copy p,
+body.dark .section-copy p,
+body.dark .service-subtitle,
+body.dark .project-description,
+body.dark .project-cta p,
+body.dark .not-found-card p,
+body.dark .shopify-header p,
+body.dark .success-card p,
+body.dark .admin-dashboard p {
+  color: var(--figma-page-muted);
+}
+
+@media (max-width: 1024px) {
+  .admin-sidebar {
+    width: 230px;
+  }
+
+  .admin-main {
+    margin-left: 230px;
+  }
+}
+
+@media (max-width: 768px) {
+  .site-header-container {
+    width: min(100% - 28px, 1152px);
+  }
+
+  .site-menu-button {
+    display: inline-flex !important;
+    flex: 0 0 42px;
+  }
+
+  .site-brand {
+    min-width: 0;
+  }
+
+  .site-nav {
+    max-width: calc(100vw - 32px);
+  }
+
+  .site-nav:not(.is-open) {
+    visibility: hidden;
+  }
+
+  .services-page .container,
+  .projects-page .container,
+  .about-page .container,
+  .contact-page .container,
+  .service-detail .container,
+  .project-detail .container,
+  .not-found-page .container,
+  .shopify-connect-page .container,
+  .shopify-success-page .container {
+    width: min(100% - 32px, 1152px);
+  }
+
+  .services-page,
+  .projects-page,
+  .about-page,
+  .contact-page,
+  .service-detail,
+  .project-detail,
+  .shopify-connect-page {
+    padding-top: calc(var(--header-height) + 22px);
+    padding-bottom: 54px;
+  }
+
+  .services-hero,
+  .projects-hero,
+  .about-hero,
+  .contact-hero,
+  .contact-grid,
+  .service-detail-content {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  .services-hero-panel,
+  .projects-summary-grid,
+  .about-stats,
+  .contact-highlights,
+  .contact-side,
+  .contact-form-panel {
+    width: 100%;
+  }
+
+  .services-hero-copy h1,
+  .projects-hero-copy h1,
+  .about-hero-copy h1,
+  .contact-hero-copy h1,
+  .service-header h1,
+  .project-header h1 {
+    font-size: 36px;
+    line-height: 40px;
+  }
+
+  .services-hero-panel h2,
+  .contact-hero-copy h2,
+  .about-hero-copy h2 {
+    font-size: 1.34rem;
+    line-height: 1.18;
+    overflow-wrap: break-word;
+  }
+
+  .services-hero-panel li,
+  .services-hero-copy p,
+  .projects-hero-copy p,
+  .about-hero-copy p,
+  .contact-hero-copy p {
+    max-width: 100%;
+  }
+
+  .services-card,
+  .projects-card,
+  .about-stat-card,
+  .about-story-card,
+  .about-value-card,
+  .contact-highlight-card,
+  .contact-method-card,
+  .contact-social-card,
+  .contact-next-card,
+  .contact-form-panel,
+  .service-main,
+  .price-card,
+  .why-choose-card,
+  .project-header,
+  .project-tags-section,
+  .project-cta,
+  .not-found-card,
+  .connect-form-card,
+  .success-card {
+    border-radius: 16px;
+  }
+
+  .admin-sidebar {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    padding: 12px 16px;
+  }
+
+  .admin-main,
+  body[dir='rtl'] .admin-main {
+    margin: 0;
+    padding: 18px 16px 28px;
+  }
+
+  .admin-mobile-nav-toggle {
+    border-radius: 999px;
+  }
+}
+
+@media (max-width: 520px) {
+  .services-page .container,
+  .projects-page .container,
+  .about-page .container,
+  .contact-page .container,
+  .service-detail .container,
+  .project-detail .container,
+  .not-found-page .container,
+  .shopify-connect-page .container,
+  .shopify-success-page .container {
+    width: min(100% - 28px, 1152px);
+  }
+
+  .services-card-footer,
+  body[dir='rtl'] .services-card-footer,
+  .projects-final-card,
+  .services-final-card,
+  .contact-location-card {
+    align-items: stretch;
+  }
+}

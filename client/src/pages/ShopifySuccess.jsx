@@ -5,6 +5,7 @@ import { FiCheckCircle } from 'react-icons/fi';
 import { SiShopify } from 'react-icons/si';
 import { useLanguage } from '../context/LanguageContext';
 import './ShopifySuccess.css';
+import '../styles/figma-polish.css';
 
 const ShopifySuccess = () => {
   const { language } = useLanguage();

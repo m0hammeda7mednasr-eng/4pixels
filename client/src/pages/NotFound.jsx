@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { FiArrowRight } from 'react-icons/fi';
 import { useLanguage } from '../context/LanguageContext';
 import './NotFound.css';
+import '../styles/figma-polish.css';
 
 const NotFound = () => {
   const { language } = useLanguage();

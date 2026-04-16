@@ -3,10 +3,12 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiArrowLeft, FiExternalLink, FiCalendar, FiTag, FiUser, FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 import { useLanguage } from '../context/LanguageContext';
+import { getFigmaProjectById } from '../content/figmaContent';
 import api from '../services/api';
 import { getCategoryLabel } from '../utils/categoryLabels';
 import { getLocalizedText } from '../utils/localization';
 import './ProjectDetail.css';
+import '../styles/figma-polish.css';
 
 const ProjectDetail = () => {
   const { id } = useParams();
@@ -51,6 +53,16 @@ const ProjectDetail = () => {
 
   useEffect(() => {
     const fetchProject = async () => {
+      const fallbackProject = getFigmaProjectById(id);
+
+      if (fallbackProject) {
+        setProject(fallbackProject);
+        setError(null);
+        setCurrentImageIndex(0);
+        setLoading(false);
+        return;
+      }
+
       try {
         setLoading(true);
         setError(null);

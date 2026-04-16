@@ -22,6 +22,7 @@ const allowedOrigins = new Set(
   [
     "http://localhost:3000",
     "http://localhost:3001",
+    "http://localhost:3002",
     "https://4pixels-two.vercel.app",
     "https://4pixels-git-main-mohs-projects-0b03337a.vercel.app",
     process.env.CORS_ORIGIN,

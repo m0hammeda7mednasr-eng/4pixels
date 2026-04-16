@@ -8,6 +8,7 @@ import { toast, ToastContainer } from "react-toastify";
 import api from "../services/api";
 import "react-toastify/dist/ReactToastify.css";
 import "./Login.css";
+import "../styles/figma-polish.css";
 
 const Login = () => {
   const { t, language } = useLanguage();

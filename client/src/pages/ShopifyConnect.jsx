@@ -5,6 +5,7 @@ import { SiShopify } from 'react-icons/si';
 import { useLanguage } from '../context/LanguageContext';
 import api from '../services/api';
 import './ShopifyConnect.css';
+import '../styles/figma-polish.css';
 
 const ShopifyConnect = () => {
   const { language } = useLanguage();

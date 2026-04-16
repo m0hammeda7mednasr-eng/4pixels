@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import {
@@ -11,57 +11,17 @@ import {
   FiZap
 } from 'react-icons/fi';
 import { useLanguage } from '../context/LanguageContext';
-import { getCached } from '../services/api';
+import { figmaServices } from '../content/figmaContent';
 import { getCategoryLabel, PRIMARY_CATEGORIES } from '../utils/categoryLabels';
 import { getLocalizedArray, getLocalizedText } from '../utils/localization';
 import './Services.css';
+import '../styles/figma-polish.css';
 
 const Services = () => {
   const { t, language } = useLanguage();
-  const [services, setServices] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const services = figmaServices;
+  const loading = false;
   const [activeCategory, setActiveCategory] = useState('all');
-  const [error, setError] = useState('');
-
-  useEffect(() => {
-    const controller = new AbortController();
-    let mounted = true;
-
-    const fetchServices = async () => {
-      try {
-        setError('');
-        const data = await getCached('/services', { ttl: 120000, signal: controller.signal });
-
-        if (!mounted) {
-          return;
-        }
-
-        setServices(data || []);
-      } catch (err) {
-        if (controller.signal.aborted || !mounted) {
-          return;
-        }
-
-        console.error('Error fetching services:', err.userMessage || err.message);
-        setError(
-          language === 'en'
-            ? 'Could not load services at the moment.'
-            : 'تعذر تحميل الخدمات في الوقت الحالي.'
-        );
-      } finally {
-        if (mounted) {
-          setLoading(false);
-        }
-      }
-    };
-
-    fetchServices();
-
-    return () => {
-      mounted = false;
-      controller.abort();
-    };
-  }, [language]);
 
   const categories = useMemo(() => {
     const availableCategories = Array.from(
@@ -211,8 +171,6 @@ const Services = () => {
             </Link>
           </aside>
         </header>
-
-        {error ? <p className="services-error">{error}</p> : null}
 
         <div className="services-summary-grid">
           <article className="services-summary-card">
